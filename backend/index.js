@@ -13,12 +13,17 @@ app.use(express.json());
 const usersRouter=require("./routes/users");
 const itemsRouter=require("./routes/items");
 const categoryRouter=require("./routes/category");
+const rolesRouter=require("./routes/roles");
+
+
+
 
 
 // Routes Middleware
 app.use("/users",usersRouter);
 app.use("/items",itemsRouter);
 app.use("/items",categoryRouter);
+app.use("/roles",rolesRouter);
 
 
 // Handles any other endpoints [unassigned - endpoints]
