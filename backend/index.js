@@ -10,10 +10,15 @@ app.use(cors());
 app.use(express.json());
 
 // Import Routers
-
+const usersRouter=require("./routes/users");
+const itemsRouter=require("./routes/items");
+const categoryRouter=require("./routes/category");
 
 
 // Routes Middleware
+app.use("/users",usersRouter);
+app.use("/items",itemsRouter);
+app.use("/items",categoryRouter);
 
 
 // Handles any other endpoints [unassigned - endpoints]
