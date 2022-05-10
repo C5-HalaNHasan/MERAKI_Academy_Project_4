@@ -117,6 +117,7 @@ const login = (req, res) => {
     });
 };
 
+
 // this function updates user personal profile (firstName,lastName,password,photo,country)
 const updateUserProfile = (req, res) => {
   //the user id is going to be taken from the token
@@ -151,9 +152,47 @@ const updateUserProfile = (req, res) => {
     });
 };
 
+
+// this function deletes user //! for admin role
+const deleteUser = (req, res) => {
+  //the user id is going to be taken from the params
+  const userId = req.params.id;
+  //search for the user by his id,then delete,but first it must be ensured that the current admin is not trying to remove himself from the database:
+  if(userId !== req.token.userId){
+    userModel .findByIdAndRemove(userId).then((result) => {
+      if (result) {
+        res.status(200).json({
+          success: true,
+          message: `user ${userId} has been deleted!`
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: "user not found",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    });
+
+  }else{
+    res.status(403).json({
+      success:false,
+      message:"you can't delete this account"
+    })
+  }
+
+};
+
+
 module.exports = {
   createNewUser,
-  getAllUsers,
+  getAllUsers, //! for admin role
   login,
   updateUserProfile,
+  deleteUser,
 };
