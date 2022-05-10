@@ -10,7 +10,7 @@ const userSchema=new mongoose.Schema({
     items:[{type:mongoose.Schema.Types.ObjectId,ref:"item"}],
     //! photo:{type:String} to be added later,
     role:{type:mongoose.Schema.Types.ObjectId,ref:"role"},
-    //!rating:to be added later,
+    //!rating:to be added later, //!
 });
 
 //a middleware to be executed before saving the user to the database:
