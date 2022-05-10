@@ -22,7 +22,7 @@ const rolesRouter=require("./routes/roles");
 // Routes Middleware
 app.use("/users",usersRouter);
 app.use("/items",itemsRouter);
-app.use("/items",categoryRouter);
+app.use("/category",categoryRouter);
 app.use("/roles",rolesRouter);
 
 

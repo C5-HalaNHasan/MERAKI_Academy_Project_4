@@ -1,10 +1,9 @@
 const userModel = require("../models/userSchema");
 const roleModel = require("../models/roleSchema");
-// const itemModel = require("../models/itemSchema");
 //for registration & login (hash,compare password & create token)
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { json } = require("express");
+
 
 // this function creates new user account/registration:
 const createNewUser = (req, res) => {
@@ -47,11 +46,11 @@ const createNewUser = (req, res) => {
       }
     })
     .catch((error) => {
-      console.log("hello world", error.message);
+      console.log(error.message);
     });
 };
 
-// this function gets all registered users/only for admin role:
+// this function gets all registered users (for admin role)
 const getAllUsers = (req, res) => {
   userModel
     .find()
@@ -153,7 +152,7 @@ const updateUserProfile = (req, res) => {
 };
 
 
-// this function deletes user //! for admin role
+// this function deletes user (for admin role)
 const deleteUser = (req, res) => {
   //the user id is going to be taken from the params
   const userId = req.params.id;

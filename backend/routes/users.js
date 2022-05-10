@@ -19,7 +19,7 @@ usersRouter.delete( "/:id", authentication, authorization("DELETE_USER"), delete
 //endpoint for login: POST request
 usersRouter.post("/login", login);
 
-//endpoint for updateUserProfile: POST request
-usersRouter.post("/update", authentication, updateUserProfile);
+//endpoint for updateUserProfile: PUT request
+usersRouter.put("/update", authentication, updateUserProfile);
 
 module.exports = usersRouter;
