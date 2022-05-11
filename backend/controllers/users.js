@@ -188,6 +188,60 @@ const deleteUser = (req, res) => {
 
 };
 
+// this function adds an item by its id to the user wishList
+const addToWishList=(req,res)=>{
+  let userId=req.token.userId;
+  let itemToWishList=req.params.id;
+  //first check if the item is already in the wishList:
+  userModel.findOne({_id:userId}).then((result1)=>{
+    if(result1 && result1.wishList.includes(itemToWishList)===false){
+      userModel.findOneAndUpdate({_id:userId},{$push:{wishList:itemToWishList}},{new:true}).then((result)=>{
+        res.status(200).json({
+          success:true,
+          wishList:result.wishList,
+        })
+      }).catch((error)=>{
+        res.status(500).json({
+          success:false,
+          error:error.message,
+        })
+      })
+    }else{
+      res.status(406).json({
+        success:false,
+        message:`item ${itemToWishList} is already in your wishList!`
+      })
+    }
+  })
+};
+
+// this function adds an item by its id to the user wishList
+const removeFromWishList=(req,res)=>{
+  let userId=req.token.userId;
+  let delItemFromWishList=req.params.id;
+  //first check if the item is already in the wishList:
+  userModel.findOne({_id:userId}).then((result1)=>{
+    if(result1 && result1.wishList.includes(delItemFromWishList)===false){
+      userModel.findOneAndUpdate({_id:userId},{$pull:{wishList:[delItemFromWishList]}},{new:true}).then((result)=>{
+        res.status(200).json({
+          success:true,
+          wishList:result.wishList,
+        })
+      }).catch((error)=>{
+        res.status(500).json({
+          success:false,
+          error:error.message,
+        })
+      })
+    }else{
+      res.status(406).json({
+        success:false,
+        message:`item ${delItemFromWishList} is already not in your wishList!`
+      })
+    }
+  })
+};
+
 
 module.exports = {
   createNewUser,
@@ -195,4 +249,6 @@ module.exports = {
   login,
   updateUserProfile,
   deleteUser,
+  addToWishList,
+  removeFromWishList,
 };
