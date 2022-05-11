@@ -95,12 +95,32 @@ const addCartItem= (req, res) => {
 })
 };
 
-// this function deletes an item from the cartby its id:
+// this function deletes an item from the cart by its id: //! result to be sent by response to be renderd in the cart
 const deleteCartItem = (req, res) => {
+    const userId=req.token.userId; 
+    let deletedItemId=req.params.id;
+    cartModel.updateOne({owner:userId},{$pullAll:{cartItems:[deletedItemId]}}).then((result)=>{ //to delete the item for the user that is logged in and requested
+        console.log(result)//!
+       if(result.modifiedCount!=0){
+           res.status(200).json({
+               success:true,
+               message:`item ${deletedItemId} has been removed from your cart`
+           })
+       }else{
+        res.status(404).json({
+            success:false,
+            message:`item ${deletedItemId} is not in your cart`
+        })
+       }
+ 
+    }).catch((error)=>{
+        res.status(500).json({
+            success:false,
+            error:error.message
+
+        })
+    })
 };
-
-
-
 
 module.exports = {
     createNewCart,
