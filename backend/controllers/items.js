@@ -6,14 +6,17 @@ const categoryModel = require("../models/categorySchema");
 
 // this function creates new item:
 const createNewItem= (req, res) => {
-  const { owner, item, description, exchange, sell, category,photos } = req.body;
+  const { item, description, swap, sell, category,photos,swapConfirmed } = req.body;
+  //owner attribute is going to be taken from the token (userId)
+  const userId=req.token.userId;
+  const owner=userId;
 
-        const newItem = new itemModel({ owner, item, description, exchange, sell, category,photos });
+        const newItem = new itemModel({ owner, item, description, swap, sell, category,photos,swapConfirmed });
         newItem.save().then((result) => {
             res.status(201).json({
               result: {
                 success: true,
-                message: "Item Added Successfully",
+                message: "Item Created Successfully",
                 item: newItem,
               },
             });
