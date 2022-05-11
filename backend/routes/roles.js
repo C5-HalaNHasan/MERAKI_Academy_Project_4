@@ -1,4 +1,4 @@
-//users routes file is set up  to define usersRouter and users APIs
+//roles routes file is set up  to define usersRouter and users APIs
 const express = require("express");
 const { createNewRole } = require("../controllers/roles");
 

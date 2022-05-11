@@ -1,4 +1,4 @@
-//users routes file is set up  to define categoryRouter and items APIs
+//category routes file is set up  to define categoryRouter and items APIs
 const express=require("express");
 const { createNewCategory, getAllCategories, getCategoryById, updateCategoryById, deleteCategoryById} = require("../controllers/category");
 const { authentication } = require("../middleware/authentication");
