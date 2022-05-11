@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String },
   country: { type: String },
+  contactNum: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },
@@ -14,6 +15,8 @@ const userSchema = new mongoose.Schema({
       "https://www.conarc.com/wp-content/uploads/2017/05/unknown-profile-e1493671083650.jpg",
   }, //! to be updated later by cloudinary
   //   !rating:to be added later, //!
+  wishList:[{ type: mongoose.Schema.Types.ObjectId, ref: "item" }],
+  boughtItems:[{ type: mongoose.Schema.Types.ObjectId, ref: "item" }],
 });
 
 // a middleware to be executed before saving the user to the database:
