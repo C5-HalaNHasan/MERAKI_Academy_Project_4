@@ -22,4 +22,6 @@ usersRouter.post("/login", login);
 //endpoint for updateUserProfile: PUT request
 usersRouter.put("/update", authentication, updateUserProfile);
 
+
+
 module.exports = usersRouter;
