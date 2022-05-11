@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 // this function creates new user account/registration:
 const createNewUser = (req, res) => {
-  const { firstName, lastName, country, email, password, role } = req.body;
+  const { firstName, lastName, country, email, password, role,contactNum } = req.body;
 
   //first check if the entered email is in the database or not: if not it will be added, if it exists it will not,
   userModel
@@ -28,6 +28,7 @@ const createNewUser = (req, res) => {
           email,
           password,
           role,
+          contactNum,
         });
         newUser
           .save()
@@ -121,12 +122,12 @@ const login = (req, res) => {
 const updateUserProfile = (req, res) => {
   //the user id is going to be taken from the token
   const userId = req.token.userId;
-  const { firstName, lastName, password, photo, country } = req.body;
+  const { firstName, lastName, password, photo, country,contactNum } = req.body;
   //search for the user by his id,then update
   userModel
     .findByIdAndUpdate(
       userId,
-      { firstName, lastName, password, photo, country },
+      { firstName, lastName, password, photo, country,contactNum },
       { new: true }
     )
     .then((result) => {
