@@ -1,6 +1,6 @@
 //users routes file is set up  to define usersRouter and users APIs
 const express = require("express");
-const { createNewUser, getAllUsers, login, updateUserProfile, deleteUser,addToWishList, removeFromWishList} = require("../controllers/users");
+const { createNewUser, getAllUsers, login, updateUserProfile, deleteUser,addToWishList, removeFromWishList,getUserById} = require("../controllers/users");
 const { authentication } = require("../middleware/authentication");
 const { authorization } = require("../middleware/authorization");
 
@@ -22,11 +22,14 @@ usersRouter.post("/login", login);
 //endpoint for updateUserProfile: PUT request
 usersRouter.put("/update", authentication, updateUserProfile);
 
-//endpoint for addToWishList: PUT request
-usersRouter.put("/update/:id", authentication, addToWishList);
+//endpoint for addToWishList: POST request
+usersRouter.post("/update/:id", authentication, addToWishList);
 
 //endpoint for removeFromWishList: DELETE request
 usersRouter.delete("/update/:id", authentication, removeFromWishList);
+
+//endpoint for getUserById: GET request
+usersRouter.get("/user", authentication, getUserById);
 
 
 

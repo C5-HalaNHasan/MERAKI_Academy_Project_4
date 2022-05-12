@@ -242,6 +242,32 @@ const removeFromWishList=(req,res)=>{
   })
 };
 
+// this function gets a user by id where the id is taken from token(to render cart and wishlist when the user logs in)
+const getUserById = (req, res) => {
+  let userId=req.token.userId;
+  userModel
+    .find({_id:userId})
+    .then((result) => {
+      if (result.length > 0) {
+        res.status(200).json({
+          success: true,
+          user: result,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: "this user is not found",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    });
+};
+
 
 module.exports = {
   createNewUser,
@@ -251,4 +277,5 @@ module.exports = {
   deleteUser,
   addToWishList,
   removeFromWishList,
+  getUserById,
 };
