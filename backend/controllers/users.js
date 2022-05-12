@@ -99,6 +99,7 @@ const login = (req, res) => {
             res.status(200).json({
               success: true,
               message: "Valid login credentials",
+              userId:result._id,
               token: token,
             });
           } else {
