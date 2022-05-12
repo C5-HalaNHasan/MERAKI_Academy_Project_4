@@ -11,12 +11,14 @@ import Login from "./components/Login/Login";
 export const TokenContext=createContext(); 
 
 const App=()=> {
-  const [token,setToken]=useState(JSON.parse(localStorage.getItem("token"))); // if the token exists from previous session it will be restored here as an initial value;if not: its value will be null
+  // if the token & the userId exists from previous session it will be restored here as an initial value;if not: its value will be null
+  const [token,setToken]=useState(localStorage.getItem("token")); 
+  const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
 
   return (
     <div className="App">
       <h1>ItemsEXchange</h1>
-      <TokenContext.Provider value={{token,setToken}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>

@@ -8,7 +8,7 @@ import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/fr
 const Register=()=>{
     const {token,setToken}=useContext(TokenContext); 
     //to save the current userId
-    const [currentUserId,setCurrentUserId]=useState()
+    const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     //the user inputs are going to be collected in an object and sent to the backend to be checked if the user exists or not: the the status of the process will be sent from the BE to the FE 
     let [userData,setUserData]=useState({
         firstName:"",
@@ -19,7 +19,9 @@ const Register=()=>{
         password:"",
         role:"627bf808a52d6cd108770573" //user role added for testing
     });
-    
+
+    const navigate=useNavigate() //! used to redirect the user to the homePage
+
     //to redirect the user to the main page after a successful registration //! not used yet
     // const navigate=useNavigate();
 
@@ -38,7 +40,7 @@ const Register=()=>{
         //when the user clicks on the register button: the userData is going to be sent to the BE by axios!
         let url="http://localhost:5000/users/";
         axios.post(url,userData).then((result)=>{
-            // navigate("/login") //! will make the login automatically so that the user can navigate the site once registered(by using the login component here
+            // will make the login automatically so that the user can navigate the site once registered(by using the login component here
             if(result.data.result.success == true){
                 //the currentUserId is going to be saved and transferred across other components:
                 let userId=result.data.result.user._id;
@@ -51,21 +53,14 @@ const Register=()=>{
             password:userData.password,
         }).then((result1)=>{
                     let reult1Token="Bearer "+result1.data.token;
+                    localStorage.setItem("token",reult1Token);
                     setToken(reult1Token);
-                    localStorage.setItem("token",JSON.stringify(reult1Token));
                     //to redirect the user to the homePage
-                    // navigate("/home"); //! not created yet
+                    navigate("/");
+                }).catch((error1)=>{
+                    console.log("from inside the autologin",error1) //!
                 })
-
-
-
-
-
-
-             //!
-                
             }
-            console.log(result.data.result.message)
 
             setResultMessage(result.data.result.message) //to set the result message below the action button //! not used yet
         }).catch((error)=>{
