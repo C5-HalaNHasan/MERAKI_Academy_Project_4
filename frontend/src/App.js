@@ -2,7 +2,7 @@
 // import './App.css';
 import React,{createContext,useState} from "react";
 import {Routes,Route, Router} from "react-router-dom";
-import HomePage from "./components/homePage/HomePage";
+import HomePage from "./components/HomePage/HomePage";
 import Register from "./components/Register/register";
 import Login from "./components/Login/Login";
 
