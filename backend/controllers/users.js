@@ -193,9 +193,9 @@ const deleteUser = (req, res) => {
 const addToWishList=(req,res)=>{
   let userId=req.token.userId;
   let itemToWishList=req.params.id;
-  //first check if the item is already in the wishList:
+  //first check if the item is already in the wishList or if the user is the owner:
   userModel.findOne({_id:userId}).then((result1)=>{
-    if(result1 && result1.wishList.includes(itemToWishList)===false){
+    if(result1 && result1.wishList.includes(itemToWishList)===false ){ //!user shouldn't be able to add his items to the wish list
       userModel.findOneAndUpdate({_id:userId},{$push:{wishList:itemToWishList}},{new:true}).then((result)=>{
         res.status(200).json({
           success:true,
@@ -247,9 +247,10 @@ const removeFromWishList=(req,res)=>{
 const getUserById = (req, res) => {
   let userId=req.token.userId;
   userModel
-    .find({_id:userId})
+    .findOne({_id:userId}).populate("wishList").populate("boughtItems") //! to be checked,it only returns one object
     .then((result) => {
-      if (result.length > 0) {
+      console.log(result)
+      if (result) {
         res.status(200).json({
           success: true,
           user: result,

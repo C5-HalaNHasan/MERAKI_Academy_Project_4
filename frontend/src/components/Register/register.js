@@ -17,7 +17,7 @@ const Register=()=>{
         country:"",
         email:"",
         password:"",
-        role:"627bf808a52d6cd108770573" //user role added for testing
+        role:"627d86e992bd2ed579b2f1b7" //user role added for testing //!to be updated when deleting the database
     });
 
     const navigate=useNavigate() //! used to redirect the user to the homePage

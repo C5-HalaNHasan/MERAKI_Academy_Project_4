@@ -18,6 +18,7 @@ const NavBar=()=>{
     return <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
     <h1>Logo</h1>
+    {/* onchange the /search is going to be rendered */}
     <Link to="/search">Search </Link>
     <Link to="/wishlist">wishList </Link>
     <Link to="/cart">Cart</Link>
