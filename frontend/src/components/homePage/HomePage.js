@@ -11,7 +11,8 @@ const HomePage=()=>{
     const navigate = useNavigate();
 
     return <div className="HomePage">
-    <NavBar/> //! to be rendered differntly if the user is not logged in
+    {/* //! to be rendered differntly if the user is not logged in */}
+    <NavBar/> 
     <h1>this is the main page</h1>
     </div>
 };

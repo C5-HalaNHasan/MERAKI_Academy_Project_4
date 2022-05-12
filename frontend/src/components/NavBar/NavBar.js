@@ -1,11 +1,7 @@
 import "./navBar.css"
 import React,{useState,useContext} from "react";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate,Link } from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
-import SearchBox from "../SearchBox/SearchBox";
-import WishList from "../WishList/WishList";
-import Cart from "../Cart.js/Cart";
-import UserBoard from "../UserBoard/UserBoard";
 
 const NavBar=()=>{
     //some navbar components/elements are going to be shown only for registered users //!not used yet
@@ -17,18 +13,17 @@ const NavBar=()=>{
     const LogOut=()=>{
         //clear the local storage
         localStorage.clear();
-        //to redirect the user to the homePage again
-        navigate("/")
     }
-    
+
     return <div className="NavBar"> 
-    {/* routes will be navigated once the icons clickked */}
+    {/* routes will be navigated once the icons clicked */}
     <h1>Logo</h1>
-    <SearchBox />
-    <WishList />
-    <Cart />
-    <UserBoard />
-    {LogOut}
+    <Link to="/search">Search </Link>
+    <Link to="/wishlist">wishList </Link>
+    <Link to="/cart">Cart</Link>
+    <Link to="/userboard">UserBoard</Link>
+    {/* use state here to update the logiut to login / the onClick action is going to set the state to login with link to login*/}
+    <Link to="/"><label onClick={LogOut}>Logout</label></Link>
     </div>
 };
 

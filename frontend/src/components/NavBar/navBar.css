@@ -1,0 +1,10 @@
+a {
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+.NavBar h1 {
+    display: inline-block;
+    margin-right: 150px;
+    color: red;
+}

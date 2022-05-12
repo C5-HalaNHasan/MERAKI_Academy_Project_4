@@ -2,6 +2,7 @@ import "./userBoard.css"
 import React,{useState,useContext} from "react";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
+import NavBar from "../NavBar/NavBar";
 
 const UserBoard=()=>{
     const {token,setToken}=useContext(TokenContext);
@@ -9,7 +10,8 @@ const UserBoard=()=>{
     const navigate = useNavigate();
     
     return <div className="HomePage">
-    <h1>this is the main page</h1>
+    <NavBar/>
+    <h1>this is the userBoard</h1>
     </div>
 };
 
