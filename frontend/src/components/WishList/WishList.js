@@ -10,10 +10,11 @@ const WishList=()=>{
     //some home page components are going to be shown only for registered users //!not used yet
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
+    const {isRendered,setIsRendered}=useContext(TokenContext); 
     const [items,setItems]=useState([]);
+    
 
-    const [isRendered,setIsRendered]=useState(false)
-    const navigate = useNavigate();
+    const navigate = useNavigate();//! not used yet
 
     let wishListUrl="http://localhost:5000/users/user";
 
@@ -21,6 +22,7 @@ const WishList=()=>{
         axios.get(wishListUrl,{headers:{authorization:token}}).then((result)=>{
             setItems(result.data.user.wishList)
             setIsRendered(true)
+            console.log("from the wish list page",result.data.user) //! to be deleted
             console.log(result.data.user.wishList) //! it only gives one item from the wishList not all of them
         }).catch((error)=>{
             console.log(error)
@@ -30,7 +32,7 @@ const WishList=()=>{
     
     return <div className="HomePage">
     <NavBar/>
-    <Cards items={items}/>
+    <Cards items={items} type="wishList"/>
     <h1>this is the wishList page</h1>
     </div>
 };

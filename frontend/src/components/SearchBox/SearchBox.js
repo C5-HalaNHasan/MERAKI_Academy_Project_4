@@ -3,6 +3,7 @@ import React,{useState,useContext,useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import NavBar from "../NavBar/NavBar";
+import Cards from "../Cards/Cards";
 import axios from "axios";
 
 
@@ -30,6 +31,9 @@ const SearchBox=()=>{
     return <div className="HomePage">
     <NavBar/>
     <h1>this is the SearchBox</h1>
+    {/* testing the rendered cards here: stil the CARDS component is not finalized but will be used here for testing only */}
+    <Cards items={items} type="search"/>
+
     </div>
 };
 

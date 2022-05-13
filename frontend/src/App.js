@@ -18,10 +18,11 @@ const App=()=> {
   // if the token & the userId exists from previous session it will be restored here as an initial value;if not: its value will be null
   const [token,setToken]=useState(localStorage.getItem("token")); 
   const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
+  const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>

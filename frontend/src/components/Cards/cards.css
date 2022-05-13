@@ -8,4 +8,10 @@
 .card button {
     display: inline-block;
     margin: 0% 1%;
+    clear: left;
+}
+
+.card img {
+    border-radius: 50%;
+    float: left;
 }

@@ -28,7 +28,7 @@ const createNewItem= (req, res) => {
 
 // this function gets all items: //! to be rendered on the screen
 const getAllItems= (req, res) => {
-   itemModel.find().populate({path:"owner",model:"user"}).then((result)=>{
+   itemModel.find().populate({path:"owner",model:"user"}).then((result)=>{ //! can't populate the category,it keeps giving an error in the search box component
         if(result.length >0){ 
           res.status(200).json({
             success:true,
