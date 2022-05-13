@@ -1,6 +1,6 @@
 //items routes file is set up  to define itemsRouter and items APIs
 const express=require("express");
-const { createNewItem,getAllItems,getItemById,updateItemById,deleteItemById,getItemsByRating} = require("../controllers/items");
+const { createNewItem,getAllItems,getItemById,updateItemById,deleteItemById,getItemsByCategory} = require("../controllers/items");
 const { authentication } = require("../middleware/authentication");
 const { authorization } = require("../middleware/authorization");
 
@@ -22,8 +22,8 @@ itemsRouter.put("/:id",authentication, updateItemById);
 //endpoint for deleteItemById: DELETE request
 itemsRouter.delete("/:id",authentication, deleteItemById);
 
-//endpoint for getItemsByRating: GET request
-itemsRouter.get("/:rating",authentication, getItemsByRating);  //! to be added and updated later in the project
+//endpoint for getItemsByCategory: GET request
+itemsRouter.get("/category/:id",authentication, getItemsByCategory);  //! to be added and updated later in the project
 
 
 

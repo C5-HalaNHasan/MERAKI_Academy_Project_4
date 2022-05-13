@@ -112,14 +112,15 @@ const deleteItemById= (req, res) => {
   })
 };
 
-// this function gets all items with a specific rating:
-const getItemsByRating= (req, res) => { //! not tested by postman yet since the rating hasn't beedn added to the items
-  let rating=req.params.rating;
-  itemModel.find({rating:rating}).then((result)=>{
+// this function gets all items with a specific category:
+const getItemsByCategory= (req, res) => { //! not tested by postman yet since the rating hasn't beedn added to the items
+  let category=req.params.id;
+  itemModel.find({category:category}).then((result)=>{
+    
     if(result){
       res.status(200).json({
         success:true,
-        item:result
+        items:result
       })
     }
   }).catch((error)=>{
@@ -138,6 +139,5 @@ module.exports = {
     getItemById,
     updateItemById,
     deleteItemById,
-    getItemsByRating,
-
+    getItemsByCategory,
 };

@@ -1,0 +1,15 @@
+.FilterItems {
+    border: red 2px solid;
+    padding: 0% 1%;
+    width: 50%;
+}
+
+.categories button {
+    display: block;
+    margin: 1% 0%;
+}
+
+.byPrice input {
+    display: block;
+    margin: 1% 0%;
+}

@@ -41,6 +41,7 @@ const Cards=({items,setItems,type})=>{
             <img src="{elem.item}"/>
             <h2>{elem.item}</h2>
             <h3>{elem.description}</h3>
+            <h3>price:{elem.price}</h3>
             <h5>Category:{elem.category}</h5>
             <h5>Owner:{typeof elem.owner==="string"?elem.owner:elem.owner.firstName}</h5>
             <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
