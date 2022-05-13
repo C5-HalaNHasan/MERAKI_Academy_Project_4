@@ -6,12 +6,12 @@ const categoryModel = require("../models/categorySchema");
 
 // this function creates new item:
 const createNewItem= (req, res) => {
-  const { item, description, swap, sell, category,photos,swapConfirmed } = req.body;
+  const { item, description, swap, sell, category,photos,swapConfirmed,price } = req.body;
   //owner attribute is going to be taken from the token (userId)
   const userId=req.token.userId;
   const owner=userId;
 
-        const newItem = new itemModel({ owner, item, description, swap, sell, category,photos,swapConfirmed });
+        const newItem = new itemModel({ owner, item, description, swap, sell, category,photos,swapConfirmed,price });
         newItem.save().then((result) => {
             res.status(201).json({
               result: {
@@ -69,7 +69,7 @@ const getItemById= (req, res) => {
 
 // this function updates an item by its id:
 const updateItemById= (req, res) => {
-  let{  swapConfirmed,isSold,description,swap,sell,photos} =req.body;
+  let{  swapConfirmed,isSold,description,swap,sell,photos,price} =req.body;
   let itemId=req.params.id;
   itemModel.findOneAndUpdate({_id:itemId},{swapConfirmed,isSold,description,swap,sell,photos},{new:true}).populate("category").then((result)=>{
     console.log(result)//!
@@ -131,6 +131,7 @@ const getItemsByRating= (req, res) => { //! not tested by postman yet since the 
 };
 
 
+
 module.exports = {
     createNewItem,
     getAllItems,
@@ -138,4 +139,5 @@ module.exports = {
     updateItemById,
     deleteItemById,
     getItemsByRating,
+
 };

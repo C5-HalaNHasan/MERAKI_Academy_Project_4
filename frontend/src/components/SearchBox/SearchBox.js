@@ -7,20 +7,34 @@ import Cards from "../Cards/Cards";
 import axios from "axios";
 
 
-const SearchBox=()=>{
+const SearchBox=({searchedItem})=>{
+    console.log(searchedItem);
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const [items,setItems]=useState([]);
-    const [isRendered,setIsRendered]=useState(false)
+    const [isRendered,setIsRendered]=useState(TokenContext)
 
     const navigate = useNavigate();
     let searchUrl="http://localhost:5000/items"
 
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
         axios.get(searchUrl,{headers:{authorization:token}}).then((result)=>{
-            setItems(result.data.items)
+            console.log(result)
+            if(result&&result.data.items.lenght !=0&&searchedItem){
+                result.data.items.forEach((elem)=>{
+                    if(elem.title==searchedItem){
+                        setItems(searchedItem);
+                        setIsRendered(true);
+                    }
+                })
+            }else{
+                setItems(items);
+                setIsRendered(true);
+
+            }
+            
             console.log(items)
-            setIsRendered(true)
+      
         }).catch((error)=>{
             console.log(error)
         })
