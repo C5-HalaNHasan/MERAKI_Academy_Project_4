@@ -40,6 +40,24 @@ const createNewCategory= (req, res) => {
 
 // this function gets all categories:
 const getAllCategories= (req, res) => {
+  categoryModel.find().then((result)=>{ 
+    if(result.length >0){ 
+      res.status(200).json({
+        success:true,
+        categories:result,
+      })
+    }else{
+      res.status(404).json({
+        success:false,
+        message:"no categories found"
+      })
+    }
+}).catch((error)=>{
+ res.status(500).json({
+   success:false,
+   error:error.message,
+ })
+})      
 };
 
 // this function gets a category by its id:

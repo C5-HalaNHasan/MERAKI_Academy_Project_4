@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 
-const Cards=({items,type})=>{
+const Cards=({items,setItems,type})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 

@@ -21,17 +21,12 @@ const NavBar=()=>{
         localStorage.clear();
     }
 
-    const LiveSearch=(e)=>{
-        let newVal=e.target.value;
-        setSearchedItem(newVal);
-    }
-
     return <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
     <h1>Logo</h1>
     {/* onchange the /search is going to be rendered */}
     {/* <Link to="/search">Search </Link> */}
-    <input onChange={LiveSearch} placeholder="Search..."></input>
+    <input onChange={(e)=>setSearchedItem(e.target.value)} placeholder="Search..."></input>
     {searchedItem&&<SearchBox searchedItem={searchedItem}/>} //!
     <Link to="/wishlist">wishList </Link>
     <Link to="/cart">Cart</Link>

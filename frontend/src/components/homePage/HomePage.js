@@ -3,6 +3,8 @@ import React,{useState,useContext} from "react";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import NavBar from "../NavBar/NavBar";
+import FilterBox from "../FilterBy/FilterBy";
+
 
 const HomePage=()=>{
     //some home page components are going to be shown only for registered users //!not used yet
@@ -13,6 +15,7 @@ const HomePage=()=>{
     return <div className="HomePage">
     {/* //! to be rendered differntly if the user is not logged in */}
     <NavBar/> 
+    <FilterBox />
     <h1>this is the main page</h1>
     </div>
 };
