@@ -1,0 +1,11 @@
+.card {
+    border: red solid 3px;
+    margin: 2%;
+    padding: 1% 2%;
+    display: inline-block;
+}
+
+.card button {
+    display: inline-block;
+    margin: 0% 1%;
+}

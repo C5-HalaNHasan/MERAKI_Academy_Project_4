@@ -93,7 +93,7 @@ const login = (req, res) => {
               role: result.role,
             };
 
-            let options = { expiresIn: "60m" };
+            let options = { expiresIn: "500m" }; //! increased for testing
             // tokin is going to be generated for each successful login (it holds all the user info as per the payload)
             const token = jwt.sign(payload, process.env.SECRET, options);
             res.status(200).json({
@@ -195,8 +195,10 @@ const addToWishList=(req,res)=>{
   let itemToWishList=req.params.id;
   //first check if the item is already in the wishList or if the user is the owner:
   userModel.findOne({_id:userId}).then((result1)=>{
+    console.log(result1) //!
     if(result1 && result1.wishList.includes(itemToWishList)===false ){ //!user shouldn't be able to add his items to the wish list
-      userModel.findOneAndUpdate({_id:userId},{$push:{wishList:itemToWishList}},{new:true}).then((result)=>{
+      userModel.findOneAndUpdate({_id:userId},{$push:{wishList:itemToWishList}},{new:true}).populate("wishList").then((result)=>{
+        console.log(result)
         res.status(200).json({
           success:true,
           wishList:result.wishList,
@@ -222,8 +224,9 @@ const removeFromWishList=(req,res)=>{
   let delItemFromWishList=req.params.id;
   //first check if the item is already in the wishList:
   userModel.findOne({_id:userId}).then((result1)=>{
-    if(result1 && result1.wishList.includes(delItemFromWishList)===false){
-      userModel.findOneAndUpdate({_id:userId},{$pull:{wishList:[delItemFromWishList]}},{new:true}).then((result)=>{
+    if(result1 && result1.wishList.includes(delItemFromWishList)===true){
+      userModel.findOneAndUpdate({_id:userId},{$pull:{wishList:delItemFromWishList}},{new:true}).then((result)=>{
+        console.log(result)
         res.status(200).json({
           success:true,
           wishList:result.wishList,
@@ -247,9 +250,9 @@ const removeFromWishList=(req,res)=>{
 const getUserById = (req, res) => {
   let userId=req.token.userId;
   userModel
-    .findOne({_id:userId}).populate("wishList").populate("boughtItems") //! to be checked,it only returns one object
+    .findOne({_id:userId}).populate([{path:"wishList",model:"item"},{path:"boughtItems",model:"item"}]).exec() //! to be checked,it only returns one object
     .then((result) => {
-      console.log(result)
+      console.log(result) //! to get the info of the wishList items from here
       if (result) {
         res.status(200).json({
           success: true,

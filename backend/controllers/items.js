@@ -28,7 +28,7 @@ const createNewItem= (req, res) => {
 
 // this function gets all items: //! to be rendered on the screen
 const getAllItems= (req, res) => {
-   itemModel.find().then((result)=>{
+   itemModel.find().populate({path:"owner",model:"user"}).then((result)=>{
         if(result.length >0){ 
           res.status(200).json({
             success:true,
@@ -52,7 +52,7 @@ const getAllItems= (req, res) => {
 // this function gets an item by its id:
 const getItemById= (req, res) => {
   let itemId=req.params.id;
-  itemModel.findOne({_id:itemId}).then((result)=>{
+  itemModel.findOne({_id:itemId}).populate("category").then((result)=>{
     if(result){
       res.status(200).json({
         success:true,
@@ -71,7 +71,7 @@ const getItemById= (req, res) => {
 const updateItemById= (req, res) => {
   let{  swapConfirmed,isSold,description,swap,sell,photos} =req.body;
   let itemId=req.params.id;
-  itemModel.findOneAndUpdate({_id:itemId},{swapConfirmed,isSold,description,swap,sell,photos},{new:true}).then((result)=>{
+  itemModel.findOneAndUpdate({_id:itemId},{swapConfirmed,isSold,description,swap,sell,photos},{new:true}).populate("category").then((result)=>{
     console.log(result)//!
    if(result){
       res.status(200).json({

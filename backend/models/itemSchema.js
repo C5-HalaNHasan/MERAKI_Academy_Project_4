@@ -12,6 +12,7 @@ const itemSchema= new mongoose.Schema({
     rating:{type:Number,min:0,max:5},
     swapConfirmed:{type:Boolean,required:true,default:true},
     isSold:{type:Boolean,default:false},
+    addedOn:{type:Date,default:Date.now()}
 })
 
 module.exports=mongoose.model("item",itemSchema);
