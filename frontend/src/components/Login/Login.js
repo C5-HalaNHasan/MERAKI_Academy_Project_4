@@ -3,6 +3,8 @@ import React,{useState,useContext} from "react";
 import {Link,Routes,Route,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js";
+import abs_wall from "../assets/abs_wall.jpg"
+
 
 const Login=()=>{
   //to save the current user id & token
@@ -52,14 +54,30 @@ const Login=()=>{
         })
     };
 
-    return <div className="loginBox">
+    return <div className="registrationBox">
+
+    <div className="firstPart">
+    <img src={abs_wall} />
+    </div>
+
+    <div className="secondPart">
+    
     <h3>Login:</h3>
+    <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
     <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
     <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>
-    <button onClick={LoginAction}>Login</button>
-    <h3>{resultMessage}</h3> //! to be updated (a moving or loading component is going to be created instead of this)
+    <button onClick={LoginAction} className="btn">Login</button>
+    <h3>{resultMessage}</h3> 
+    {/* //! to be updated (a moving or loading component is going to be created instead of this) */}
+    </form>
+    </div>
 </div>;
 
 }
 
 export default Login;
+
+
+     
+
+    
