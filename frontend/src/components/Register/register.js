@@ -47,8 +47,9 @@ const Register=()=>{
                 let userId=result.data.result.user._id;
                 localStorage.setItem("currentUserId",userId)
                 setCurrentUserId(userId)
+              
 
-             //an automatic login in is going to be made and the user will be redirected to the main page (once created)
+    //an automatic login in is going to be made and the user will be redirected to the main page (once created)
         axios.post("http://localhost:5000/users/login",{
             email:userData.email,
             password:userData.password,
@@ -56,13 +57,23 @@ const Register=()=>{
                     let reult1Token="Bearer "+result1.data.token;
                     localStorage.setItem("token",reult1Token);
                     setToken(reult1Token);
+                    //! adding cart on registration is not working (the block code below)
+                    // cart is going to be added for each registerd user:
+                    let createCartUrl="http://localhost:5000/cart"
+                     axios.post(createCartUrl,{headers:{authorization:reult1Token}}).then((result2)=>{
+                      console.log("cart created successfully!",result2) //! to be deleted
+                      
+                    }).then((error2)=>{
+                      console.log(error2)
+                   })
+                   //!
+                  
                     //to redirect the user to the homePage
                     navigate("/");
                 }).catch((error1)=>{
                     console.log("from inside the autologin",error1) //!
                 })
             }
-
             setResultMessage(result.data.result.message) //to set the result message below the action button //! not used yet
         }).catch((error)=>{
             console.log(error);
@@ -71,7 +82,7 @@ const Register=()=>{
 };
 
 
-    return <div className="registrationBox">
+    return  <div className="registrationBox">
      <div className="firstPart">
     <img src={abs_wall} />
     </div>
@@ -93,6 +104,7 @@ const Register=()=>{
     </div>
 
     </div>
+
 };
 
     

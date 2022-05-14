@@ -6,12 +6,11 @@ const cartModel = require("../models/cartSchema");
 
 // this function creates new cart for the current user when has no items in the before:
 const createNewCart= (req, res) => {
-  const {cartItems} = req.body;
-  const userId=req.token.userId;
-  const owner=userId;
-  cartModel.find({ owner:userId}).then((result)=>{ //to ensure that there is only one cart for each user
-      if(result.length ===0){
-        const newCart = new cartModel({owner,cartItems});
+//   const {cartItems} = req.body;
+  const owner=req.token.userId;
+  cartModel.findOne({owner:owner}).then((result)=>{ //to ensure that there is only one cart for each user
+      if(!result){
+        const newCart = new cartModel({owner});
         newCart.save().then((result) => {
             res.status(201).json({
                 success: true,
@@ -22,16 +21,20 @@ const createNewCart= (req, res) => {
             res.status(406).json(error.message);
           });
 
+      }else{
+          res.status(406).json({
+              success:false,
+              message:"this user has already have a cart!"
+          })
       }
   })
-       
 };
 
 
 // this function gets all cart items for a specific user:
 const getCartItems= (req, res) => {
     const userId=req.token.userId; //to search in cartModel by a spcific user to render his items later in the front end
-    cartModel.findOne({owner:userId}).then((result)=>{
+    cartModel.findOne({owner:userId}).populate({path:"cartItems",model:"item"}).then((result)=>{
         if(result){ 
             if(result.cartItems.length ===0 ){
                 res.status(404).json({
@@ -65,7 +68,6 @@ const addCartItem= (req, res) => {
     let addedItemId=req.params.id;
     cartModel.findOne({owner:userId}).then((result1)=>{
         if(!result1.cartItems.includes(addedItemId)){ // to check that the item is only added one time only to the cart
-           
     cartModel.updateOne({owner:userId},{$push:{ cartItems:addedItemId}}).then((result)=>{
         if(result.matchedCount==1){
             res.status(201).json({

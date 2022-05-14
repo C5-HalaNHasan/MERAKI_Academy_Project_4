@@ -5,6 +5,7 @@
     --mainText: rgba(64, 69, 94, 0.95);
 }
 
+/*
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +17,10 @@
     font-family: 'Secular One', sans-serif;
 }
 
+*/
+
 /* styling the all sections by targeting the app */
+/*
 .App {
     height: 100vh;
     display: flex;
@@ -24,6 +28,7 @@
     align-items: center;
     text-align: center;
 }
+*/
 
 .registrationBox {
     max-width: 978px;
