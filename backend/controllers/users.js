@@ -1,4 +1,5 @@
 const userModel = require("../models/userSchema");
+const itemModel=require("../models/itemSchema");
 const roleModel = require("../models/roleSchema");
 //for registration & login (hash,compare password & create token)
 const bcrypt = require("bcrypt");
@@ -193,10 +194,12 @@ const deleteUser = (req, res) => {
 const addToWishList=(req,res)=>{
   let userId=req.token.userId;
   let itemToWishList=req.params.id;
-  //first check if the item is already in the wishList or if the user is the owner:
+  itemModel.findOne({_id:itemToWishList}).then((result2)=>{ //!user shouldn't be able to add his items to his wishlist
+    if(result2.owner != userId){
+      //first check if the item is already in the wishList or if the user is the owner:
   userModel.findOne({_id:userId}).then((result1)=>{
     console.log(result1) //!
-    if(result1 && result1.wishList.includes(itemToWishList)===false ){ //!user shouldn't be able to add his items to the wish list
+    if(result1 && result1.wishList.includes(itemToWishList)===false ){ 
       userModel.findOneAndUpdate({_id:userId},{$push:{wishList:itemToWishList}},{new:true}).populate("wishList").then((result)=>{
         console.log(result)
         res.status(200).json({
@@ -216,6 +219,20 @@ const addToWishList=(req,res)=>{
       })
     }
   })
+
+    }else{
+      res.status(403).json({
+        success:false,
+        message:"user can't add his items to wishlist",
+      })
+    }
+  }).catch((error2)=>{
+    res.status(500).json({
+      success:false,
+      error:error2.message,
+    })
+  })
+  
 };
 
 // this function adds an item by its id to the user wishList
@@ -251,28 +268,46 @@ const  addToCart=(req,res)=>{
   let userId=req.token.userId;
   let AddItemToCart=req.params.id;
   //first check if the item is already in the cart or if the user is the owner:
-  userModel.findOne({_id:userId}).then((result1)=>{
-    console.log(result1) //!
-    if(result1 && result1.cartItems.includes(AddItemToCart)===false ){ //!user shouldn't be able to add his items to the wish list
-      userModel.findOneAndUpdate({_id:userId},{$push:{cartItems:AddItemToCart}},{new:true}).populate("cartItems").then((result)=>{
-        console.log(result)
-        res.status(200).json({
-          success:true,
-          wishList:result.cartItems,
-        })
-      }).catch((error)=>{
-        res.status(500).json({
-          success:false,
-          error:error.message,
-        })
+  itemModel.findOne({_id:AddItemToCart}).then((result2)=>{ //!user shouldn't be able to add his items to his cart
+    if(result2.owner != userId){
+      userModel.findOne({_id:userId}).then((result1)=>{
+        // console.log(result1) //!
+        if(result1 && result1.cartItems.includes(AddItemToCart)===false ){ 
+          userModel.findOneAndUpdate({_id:userId},{$push:{cartItems:AddItemToCart}},{new:true}).populate("cartItems").then((result)=>{
+            // console.log(result)
+            res.status(200).json({
+              success:true,
+              cartItems:result.cartItems,
+            })
+          }).catch((error)=>{
+            res.status(500).json({
+              success:false,
+              error:error.message,
+            })
+          })
+        }else{
+          res.status(406).json({
+            success:false,
+            message:`item ${AddItemToCart} is already in your cart!`
+          })
+        }
       })
+
     }else{
-      res.status(406).json({
+      res.status(403).json({
         success:false,
-        message:`item ${AddItemToCart} is already in your cart!`
+        message:"user can't add his items to cart",
       })
     }
+
+  }).catch((error2)=>{
+    res.status(500).json({
+      success:false,
+      error:error2.message,
+    })
+
   })
+  
 };
 
 
@@ -288,7 +323,7 @@ const  removeFromCart=(req,res)=>{
         // console.log(result)
         res.status(200).json({
           success:true,
-          wishList:result.cartItems,
+          cartItems:result.cartItems,
         })
       }).catch((error)=>{
         res.status(500).json({
@@ -309,7 +344,7 @@ const  removeFromCart=(req,res)=>{
 const getUserById = (req, res) => {
   let userId=req.token.userId;
   userModel
-    .findOne({_id:userId}).populate([{path:"wishList",model:"item"},{path:"boughtItems",model:"item"}]).exec() //! to be checked,it only returns one object
+    .findOne({_id:userId}).populate([{path:"wishList",model:"item"},{path:"boughtItems",model:"item"},,{path:"cartItems",model:"item"}]).exec() //! to be checked,it only returns one object
     .then((result) => {
       console.log(result) //! to get the info of the wishList items from here
       if (result) {

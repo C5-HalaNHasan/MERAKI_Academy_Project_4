@@ -57,21 +57,10 @@ const Register=()=>{
                     let reult1Token="Bearer "+result1.data.token;
                     localStorage.setItem("token",reult1Token);
                     setToken(reult1Token);
-                //     //! adding cart on registration is not working (the block code below)
-                //     // cart is going to be added for each registerd user:
-                //     let createCartUrl="http://localhost:5000/cart"
-                //      axios.post(createCartUrl,{headers:{authorization:reult1Token}}).then((result2)=>{
-                //       console.log("cart created successfully!",result2) //! to be deleted
-                      
-                //     }).then((error2)=>{
-                //       console.log(error2)
-                //    })
-                //    //!
-                  
                     //to redirect the user to the homePage
                     navigate("/");
                 }).catch((error1)=>{
-                    console.log("from inside the autologin",error1) //!
+                    console.log("from inside the autologin",error1) //! to be deleted
                 })
             }
             setResultMessage(result.data.result.message) //to set the result message below the action button //! not used yet

@@ -14,15 +14,15 @@ const Cart=()=>{
     const [items,setItems]=useState([]);
     const navigate = useNavigate();
 
-    let cartItemstUrl="http://localhost:5000/cart"; //! to be deleted and search for user by id
+    let cartUrl="http://localhost:5000/users/user";
     
 
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
-        axios.get(cartItemstUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log(result)
-            setItems(result.data.cartItems)
+        axios.get(cartUrl,{headers:{authorization:token}}).then((result)=>{
+            setItems(result.data.user.cartItems)
             setIsRendered(true)
-            console.log("from the cart items page",result.data.user) //! to be deleted
+            console.log("from the cart page",result.data.user) //! to be deleted
+            console.log(result.data.user.cartItems) //! it only gives one item from the wishList not all of them
         }).catch((error)=>{
             console.log(error)
         })
