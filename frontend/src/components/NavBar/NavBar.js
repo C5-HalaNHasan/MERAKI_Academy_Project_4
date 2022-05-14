@@ -29,7 +29,7 @@ const NavBar=()=>{
     {/* onchange the /search is going to be rendered */}
     {/* <Link to="/search">Search </Link> */}
     <input onChange={(e)=>setSearchedItem(e.target.value)} placeholder="Search..."></input>
-    {searchedItem&&<SearchBox searchedItem={searchedItem}/>} //! only works with the first change
+    {searchedItem&&<SearchBox searchedItem={searchedItem}/>} 
     <Link to="/wishlist">wishList </Link>
     <Link to="/cart">Cart</Link>
     <Link to="/userboard">UserBoard</Link>

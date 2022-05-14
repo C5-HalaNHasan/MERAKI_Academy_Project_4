@@ -27,7 +27,7 @@ const SearchBox=({searchedItem})=>{
                     }
                 })
                 setItems(filteredItems);
-                // setIsRendered(!isRendered); //! it worked but with infinite loop
+                //setIsRendered(!isRendered); //! it worked but with infinite loop to be handled by saving all the items in a context then filtering the results
             }else{
                 setItems(result.data.items);
             }

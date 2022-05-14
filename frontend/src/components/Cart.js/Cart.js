@@ -14,11 +14,9 @@ const Cart=()=>{
     const [items,setItems]=useState([]);
     const navigate = useNavigate();
 
-    let cartUrl="http://localhost:5000/users/user";
-    
-
+    let userCartUrl="http://localhost:5000/users/user";
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
-        axios.get(cartUrl,{headers:{authorization:token}}).then((result)=>{
+        axios.get(userCartUrl,{headers:{authorization:token}}).then((result)=>{
             setItems(result.data.user.cartItems)
             setIsRendered(true)
             console.log("from the cart page",result.data.user) //! to be deleted
@@ -26,7 +24,6 @@ const Cart=()=>{
         }).catch((error)=>{
             console.log(error)
         })
-        
     },[isRendered])
     
     return <div className="HomePage">

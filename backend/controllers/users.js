@@ -180,14 +180,12 @@ const deleteUser = (req, res) => {
         error: error.message,
       });
     });
-
   }else{
     res.status(403).json({
       success:false,
       message:"you can't delete this account"
     })
   }
-
 };
 
 // this function adds an item by its id to the user wishList

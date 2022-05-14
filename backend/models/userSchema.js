@@ -27,4 +27,14 @@ userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, SALT);
 });
 
+// a middleware to be executed before saving the updated password the database: //! not working yet
+userSchema.pre("findByIdAndUpdate", async function () {
+  SALT = 10;
+  this.password = await bcrypt.hashSync(this.password, SALT);
+
+});
+
+
+
+
 module.exports = mongoose.model("user", userSchema);

@@ -15,22 +15,21 @@ const UserProfile=()=>{
     const navigate = useNavigate();
      //the user updates are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
      const [userData,setUserData]=useState({
-        password:null,
-        firstName:null,
-        lastName:null,
-        photo:null,
-        country:null,
-        contactNum :null,
+        password:undefined,
+        firstName:undefined,
+        lastName:undefined,
+        photo:undefined,
+        country:undefined,
+        contactNum :undefined,
     });
 
     //get user by id to show his picture in the update box:
     let getUserUrl="http://localhost:5000/users/user";
-    useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
+    useEffect(()=>{
         axios.get(getUserUrl,{headers:{authorization:token}}).then((result)=>{
             setUserPic(result.data.user.photo)
             setIsRendered(true)
             console.log("from the get user photo",result.data.user) //! to be deleted
-            console.log(result.data.user.photo) //! it only gives one item from the wishList not all of them
         }).catch((error)=>{
             console.log(error)
         })
@@ -45,7 +44,6 @@ const UserProfile=()=>{
         data.append("file", e.target.files[0]);
         data.append("upload_preset", "rapulojk")
         data.append("cloud_name","difjgm3tp")
-
         let uploadPicUrl="https://api.cloudinary.com/v1_1/difjgm3tp/image/upload"
         axios.post(uploadPicUrl,data).then((result)=>{
             setUserPic(result.data.url);
@@ -71,19 +69,19 @@ const UserProfile=()=>{
         setUserData({...userData,photo:userPic});
         //when the user clicks on the loginbutton: the userData is going to be sent to the BE by axios!
         let updateUserUrl="http://localhost:5000/users/update/";
-        axios.put(updateUserUrl,{headers:{authorization:token}},userData).then((result)=>{
-          console.log(result)
+        axios.put(updateUserUrl,userData,{headers:{authorization:token}}).then((result)=>{
+          console.log("from update profil",result)
             if(result){
                 setResultMessage(result.data.message) //to set the result message below the action button  //ñot used yet
+                navigate("/")
             }
         }).catch((error)=>{
             console.log(error);
-            setResultMessage(error.response.data.message); //! not used yet
+            setResultMessage(error.response.data.message); //! not used yet //! a message telling the user that the update is successful
         })
     };
 //!
 
-    // userBoard page is going to be divided into two parts: update profile & update items:
     return <>
     <NavBar/>
 
