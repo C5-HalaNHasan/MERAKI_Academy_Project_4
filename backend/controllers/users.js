@@ -246,6 +246,65 @@ const removeFromWishList=(req,res)=>{
   })
 };
 
+// this function adds an item by its id to the user cart
+const  addToCart=(req,res)=>{
+  let userId=req.token.userId;
+  let AddItemToCart=req.params.id;
+  //first check if the item is already in the cart or if the user is the owner:
+  userModel.findOne({_id:userId}).then((result1)=>{
+    console.log(result1) //!
+    if(result1 && result1.cartItems.includes(AddItemToCart)===false ){ //!user shouldn't be able to add his items to the wish list
+      userModel.findOneAndUpdate({_id:userId},{$push:{cartItems:AddItemToCart}},{new:true}).populate("cartItems").then((result)=>{
+        console.log(result)
+        res.status(200).json({
+          success:true,
+          wishList:result.cartItems,
+        })
+      }).catch((error)=>{
+        res.status(500).json({
+          success:false,
+          error:error.message,
+        })
+      })
+    }else{
+      res.status(406).json({
+        success:false,
+        message:`item ${AddItemToCart} is already in your cart!`
+      })
+    }
+  })
+};
+
+
+// this function deletes an item by its id from the user cart
+const  removeFromCart=(req,res)=>{
+  let userId=req.token.userId;
+  let removedFromCart=req.params.id;
+  //first check if the item is already in the cart or if the user is the owner:
+  userModel.findOne({_id:userId}).then((result1)=>{
+    console.log(result1) //!
+    if(result1 && result1.cartItems.includes(removedFromCart)===true ){ //!user shouldn't be able to add his items to the wish list
+      userModel.findOneAndUpdate({_id:userId},{$pull:{cartItems: removedFromCart}},{new:true}).populate("cartItems").then((result)=>{
+        // console.log(result)
+        res.status(200).json({
+          success:true,
+          wishList:result.cartItems,
+        })
+      }).catch((error)=>{
+        res.status(500).json({
+          success:false,
+          error:error.message,
+        })
+      })
+    }else{
+      res.status(406).json({
+        success:false,
+        message:`item ${ removedFromCart} is not in your cart!`
+      })
+    }
+  })
+};
+
 // this function gets a user by id where the id is taken from token(to render cart and wishlist when the user logs in)
 const getUserById = (req, res) => {
   let userId=req.token.userId;
@@ -282,5 +341,7 @@ module.exports = {
   deleteUser,
   addToWishList,
   removeFromWishList,
+  addToCart,
+  removeFromCart,
   getUserById,
 };

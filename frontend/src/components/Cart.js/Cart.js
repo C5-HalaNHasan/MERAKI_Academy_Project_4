@@ -14,7 +14,7 @@ const Cart=()=>{
     const [items,setItems]=useState([]);
     const navigate = useNavigate();
 
-    let cartItemstUrl="http://localhost:5000/cart";
+    let cartItemstUrl="http://localhost:5000/cart"; //! to be deleted and search for user by id
     
 
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change

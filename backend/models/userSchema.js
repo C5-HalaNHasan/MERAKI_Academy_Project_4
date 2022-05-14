@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   }, //! to be updated later by cloudinary
   //   !rating:to be added later, //!
   wishList:[{ type: mongoose.Schema.Types.ObjectId, ref: "item" }],
+  cartItems:[{ type: mongoose.Schema.Types.ObjectId, ref: "item" }],
   boughtItems:[{ type: mongoose.Schema.Types.ObjectId, ref: "item" }],
 });
 
