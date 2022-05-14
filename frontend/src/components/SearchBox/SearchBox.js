@@ -17,7 +17,7 @@ const SearchBox=({searchedItem})=>{
     const navigate = useNavigate();
     let searchUrl="http://localhost:5000/items"
 
-    useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
+    useEffect(()=>{ //! the items are rendered twice!!/ the render is going to be invoked on change
         axios.get(searchUrl,{headers:{authorization:token}}).then((result)=>{
             console.log(result) //!to be deleted
             if(result&&result.data.items.length>0&&searchedItem){

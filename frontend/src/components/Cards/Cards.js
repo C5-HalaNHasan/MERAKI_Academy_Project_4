@@ -16,29 +16,56 @@ const Cards=({items,setItems,type})=>{
     // toDo: a function to buy onClick ==> redirect the user to the deliveryPage ==> then redirected to the online payment
     // toDo: a function to swap onClick ==>redirect the user to swapWith items page==> redirect the user to the deliveryPage ==> then redirected to the online payment
     // toDo: a function to remove from wishList onClick ==>remove the item from wishList and re-render the wishListPage
-    //!written as callBack
+    //!not working
     const removeFromWishList=(itemId)=>{
         let removeUrl=`http://localhost:5000/users/update/${itemId}`
         axios.delete(removeUrl,{headers:{authorization:token}}).then((result)=>{
             // setIsRendered(false)
-            console.log("hello")
-            console.log(result.data) //! it only gives one item from the wishList not all of them
+            console.log("hello from delete from wishlist")
+            console.log(result.data)
+            setIsRendered(false)
         }).catch((error)=>{
             console.log(error)
         })
 
     };
     // toDo: a function to add to wishList list onClick ==>add the item to wishList and re-render the wishListPage 
-    //!written as callBack
+    //!not working
     const addToWishList=(itemId)=>{
         let addUrl=`http://localhost:5000/users/update/${itemId}`
             axios.post(addUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log("hello from add to list")
-            console.log(result.data) //! it only gives one item from the wishList not all of them + in the searchbox component it doesn't add the item to the list
+            console.log("hello from add to wishlist")
+            console.log(result.data) 
             setIsRendered(false)
         }).catch((error)=>{
             console.log(error)
         })
+    };
+
+    // toDo: a function to add to cart onClick ==>add the item to cart and re-render the cart page
+    //!not working
+    const addToCart=(itemId)=>{
+        let addCartItemUrl=`http://localhost:5000/users/cart/${itemId}`
+    axios.post(addCartItemUrl,{headers:{authorization:token}}).then((result)=>{
+        console.log("hello from add to cart")
+        console.log(result.data) 
+        setIsRendered(false)
+   }).catch((error)=>{
+    console.log(error)
+    })
+    };
+
+    // toDo: a function to remove from cart onClick ==>remove the item from cart and re-render the cart page
+    //!not working
+    const removeFromCart=(itemId)=>{
+        let addCartItemUrl=`http://localhost:5000/users/cart/${itemId}`
+    axios.post(addCartItemUrl,{headers:{authorization:token}}).then((result)=>{
+        console.log("hello from remove from cart")
+        console.log(result.data) 
+        setIsRendered(false)
+   }).catch((error)=>{
+    console.log(error)
+    })
     };
 
 
@@ -54,59 +81,33 @@ const Cards=({items,setItems,type})=>{
             <h5>Category:{elem.category}</h5>
             <h5>Owner:{typeof elem.owner==="string"?elem.owner:elem.owner.firstName}</h5>
             <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
-            {elem.swap&&<button>swap</button>}
-            {elem.sell&&<button>buy</button>}
+            {elem.swap && elem.owner._id !==currentUserId&&<button>swap</button>}
+            {elem.sell&&elem.owner._id  !==currentUserId&&<button>buy</button>}
+            {type="userBoard" &&elem.owner._id ===currentUserId&&<button>Delete Item</button>}
+            {type="userBoard" &&elem.owner._id ===currentUserId&&<button>Update Item</button>}
 
             {/* remove from whish list button  strats here: add the condition where the element is not in the wish list or cart*/}
             {type==="wishList" || type==="search" &&elem.owner != currentUserId?<button onClick={()=>{
-                let removeUrl=`http://localhost:5000/users/item/${elem._id}`
-                axios.delete(removeUrl,{headers:{authorization:token}}).then((result)=>{
-                console.log("hello from delete from list")
-                console.log(result.data) 
-                setIsRendered(false)
-        }).catch((error)=>{
-            console.log(error)
-        })
+               removeFromWishList(elem._id)
             }}>Remove from WishList</button>:null}
         {/* remove from whish list button ends here*/}
 
         {/* add to wish list button starts here*/}
-       {type==="wishList" || type==="search" && elem.owner != currentUserId?<button onClick={()=>{  
-                let addUrl=`http://localhost:5000/users/item/${elem._id}`
-                axios.delete(addUrl,{headers:{authorization:token}}).then((result)=>{
-                console.log("hello from add to list")
-                console.log(result.data) 
-                setIsRendered(false)
-        }).catch((error)=>{
-            console.log(error)
-        })
+       {type!="wishList"  && elem.owner._id !== currentUserId?<button onClick={()=>{  
+             addToWishList(elem._id)
         }}>Add to WishList</button>:null}
         {/* add to wish list button ends here*/}
 
 
-        {/* add to cart button starts here*/} //! url to be updated:done
-        {type==="wishList" || type==="search" && elem.owner != currentUserId?<button onClick={()=>{  
-                let addCartItemUrl=`http://localhost:5000/users/cart/${elem._id}`
-                axios.post(addCartItemUrl,{headers:{authorization:token}}).then((result)=>{
-                console.log("hello from add to cart")
-                console.log(result.data) 
-                setIsRendered(false)
-        }).catch((error)=>{
-            console.log(error)
-        })
+        {/* add to cart button starts here*/}
+        {type==="wishList"  && elem.owner._id !== currentUserId?<button onClick={()=>{  
+            addToCart(elem._id)
         }}>Add to Cart</button>:null}
         {/* add to cart button ends here*/}
 
-        {/* remove from cart button starts here*/} //! url to be updated:done
-        {type==="cart" && elem.owner != currentUserId?<button onClick={()=>{  
-                let removeCartItemUrl=`http://localhost:5000/users/cart/${elem._id}`
-                axios.delete(removeCartItemUrl,{headers:{authorization:token}}).then((result)=>{
-                console.log("hello from remove from cart")
-                console.log(result.data) 
-                setIsRendered(false)
-        }).catch((error)=>{
-            console.log(error)
-        })
+        {/* remove from cart button starts here*/}
+        {type==="cart" && elem.owner._id !== currentUserId?<button onClick={()=>{  
+              removeFromCart(elem._id)
         }}>Remove from Cart</button>:null}
         {/* remove from cart button ends here*/}
 

@@ -95,7 +95,7 @@ console.log("items from the userItems",items)
 return <div>
 <NavBar/>
 <h3>userItems</h3>
-<Cards items={items} setItems={setItems} type="userBoard"/>
+<Cards items={items} type="userBoard"/>
 </div>
 };
 
