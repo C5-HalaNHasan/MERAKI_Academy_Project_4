@@ -19,8 +19,8 @@ const NavBar=()=>{
         setCurrentUserId(null);
         //clear the local storage
         localStorage.clear();
+        setIsRendered(true)
         navigate("/")
-        setIsRendered(true) //! still not working
     }
 
     return <div className="NavBar"> 

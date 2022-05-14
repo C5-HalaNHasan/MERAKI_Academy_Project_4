@@ -8,7 +8,9 @@ import Login from "./components/Login/Login";
 import SearchBox from "./components/SearchBox/SearchBox";
 import WishList from "./components/WishList/WishList";
 import Cart from "./components/Cart.js/Cart";
-import UserBoard from "./components/UserBoard/UserBoard";
+import UserBoard from "./components/UserBoard/UserItems";
+import UserProfile from "./components/UserBoard/UserProfile";
+import UserItems from "./components/UserBoard/UserItems";
 
 
 //token will be provided from the APP.js to each component where required
@@ -31,6 +33,8 @@ const App=()=> {
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/wishlist" element={<WishList/>}/>
       <Route path="/userboard" element={<UserBoard/>}/>
+      <Route path="/userprofile" element={<UserProfile/>}/>
+      <Route path="/useritems" element={<UserItems/>}/>
       </Routes>
       </TokenContext.Provider>
     </div>
