@@ -44,11 +44,122 @@
     position: relative;
     width: 300px;
     height: 400px;
+    /* depends on the number of buttons that will appear/depending on the item */
     background: linear-gradient(#2196f3, #2196f3 30%, #1d3548 30%, #1d3548);
     margin: 10px;
     flex-wrap: wrap;
     border-radius: 20px;
+    overflow: hidden;
 
 }
 
-.cardsContainer .card
+.cardsContainer .card .imgSection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s ease;
+    z-index: 10;
+    transform-origin: top;
+    border-radius: 20px;
+    overflow: hidden;
+    /* display: none; */
+
+}
+
+.cardsContainer .card:hover .imgSection {
+    /* depends on the number of buttons that will appear/depending on the item */
+    transform: translateY(30px) scale(0.5);
+}
+
+
+.cardsContainer .card .imgSection img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardsContainer .card .itemInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    /* to add smooth Ytransition when hovering over the card */
+    transform: translateY(100%);
+    transition: 0.5s;
+}
+
+.cardsContainer .card:hover .itemInfo {
+    transform: translateY(0);
+}
+
+
+.cardsContainer .card .itemInfo .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: center;
+}
+
+
+.cardsContainer .card .itemInfo .details h2 {
+    color: #fff;
+    font-size: 1.7em;
+    font-weight: 500;
+}
+
+
+.cardsContainer .card .itemInfo .details h3 {
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #03a9f4;
+}
+
+.cardsContainer h3,
+.cardsContainer h5,
+.cardsContainer h6 {
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 400;
+
+}
+
+.details .actionButtons {
+    position: relative;
+    margin-top: 5px;
+}
+
+.actionButtons li {
+    margin: 4px;
+    display: flex;
+    display: inline-block;
+    color: #03a9f4;
+
+}
+
+.actionButtons li a {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #294d69;
+    /* icons to be added instead of buy/swap/... */
+    border-radius: 50%;
+    font-size: 1.5em;
+    transition: 0.5s;
+}
+
+.actionButtons li a:hover {
+    transform: rotate(360deg);
+}

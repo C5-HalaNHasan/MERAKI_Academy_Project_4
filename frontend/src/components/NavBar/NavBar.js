@@ -1,4 +1,7 @@
 import "./navBar.css"
+import {FiLogIn} from "react-icons/fi";
+import {FaRegUserCircle} from "react-icons/fa";
+import {AiOutlineShoppingCart,AiOutlineHeart} from "react-icons/ai";
 import React,{useState,useContext} from "react";
 import { Route, useNavigate,Link } from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
@@ -30,11 +33,11 @@ const NavBar=()=>{
     {/* <Link to="/search">Search </Link> */}
     <input onChange={(e)=>setSearchedItem(e.target.value)} placeholder="Search..."></input>
     {searchedItem&&<SearchBox searchedItem={searchedItem}/>} 
-    <Link to="/wishlist">wishList </Link>
-    <Link to="/cart">Cart</Link>
-    <Link to="/userboard">UserBoard</Link>
+    <Link to="/wishlist"><AiOutlineHeart/>wishList </Link>
+    <Link to="/cart"><AiOutlineShoppingCart/>Cart</Link>
+    <Link to="/userboard"><FaRegUserCircle/>UserBoard</Link>
     {/* use state here to update the logiut to login / the onClick action is going to set the state to login with link to login*/}
-    <Link to="/"><label onClick={LogOut}>Logout</label></Link>
+    <Link to="/"><FiLogIn/><label onClick={LogOut}>Logout</label></Link>
     </div>
 };
 

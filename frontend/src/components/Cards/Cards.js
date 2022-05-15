@@ -1,7 +1,8 @@
 import "./cards.css"
+import {AiOutlineShoppingCart,AiOutlineHeart} from "react-icons/ai";
 import React,{useState,useContext,useEffect} from "react";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
 
@@ -169,54 +170,64 @@ const changeBackGround=()=>{
 }
 
     return <div className="cardsContainer">
-    <h1>here the cards are going to be rendered</h1>
+    {/* <h1>here the cards are going to be rendered</h1> */}
     {items.map((elem)=>{
         return <div className="card">
         <div className="imgSection">
             <img src={abs_wall}/>
         </div>
-            <h2>{elem.item}</h2>
-            <h3>{elem.description}</h3>
+
+        <div className="itemInfo">
+          <div className="details">
+            <h2>{elem.item} </h2>
             <h3>price:{elem.price}</h3>
+            <h3>{elem.description}</h3>
             <h5>Category:{elem.category}</h5>
             <h5>Owner:{typeof elem.owner==="string"?elem.owner:elem.owner.firstName}</h5>
             <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
-            {elem.swap && elem.owner._id !=currentUserId&&<button>swap</button>}
-            {elem.sell&&elem.owner._id  !=currentUserId&&<button>buy</button>}
-            {type="userBoard" &&elem.owner._id ==currentUserId&&<button onClick={()=>{
+          </div>
+
+          <ul className="actionButtons"> 
+
+            {elem.swap && elem.owner._id !=currentUserId&&<li><Link to=""/>swap</li>}
+            {elem.sell&&elem.owner._id  !=currentUserId&&<li><Link to=""/>buy</li>}
+            {type="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 deleteItemFromDb(elem._id)
-            }}>Delete Item</button>}
-            {type="userBoard" &&elem.owner._id ==currentUserId&&<button onClick={()=>{
+            }}><Link to=""/>Delete Item</li>}
+            {type="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 UpdatetemInDb(elem._id)
-            }}>Update Item</button>}
+            }}><Link to=""/>Update Item</li>}
 
             {/* remove from whish list button  strats here: add the condition where the element is not in the wish list or cart*/}
-            {elem.owner._id !== currentUserId && currentUserWishList.includes(elem._id)?<button onClick={()=>{
+            {elem.owner._id !== currentUserId && currentUserWishList.includes(elem._id)?<li onClick={()=>{
                removeFromWishList(elem._id)
-            }}>Remove from WishList</button>:null}
+            }}><Link to=""/>Remove from WishList</li>:null}
         {/* remove from whish list button ends here*/}
 
         {/* add to wish list button starts here*/}
-       {elem.owner._id !== currentUserId && !currentUserWishList.includes(elem._id)?<button onClick={()=>{  
+       {elem.owner._id !== currentUserId && !currentUserWishList.includes(elem._id)?<li onClick={()=>{  
              addToWishList(elem._id)
-        }}>Add to WishList</button>:null}
+        }}><Link to=""/>Add to WishList</li>:null}
         {/* add to wish list button ends here*/}
 
 
         {/* add to cart button starts here*/}
-        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)?<button onClick={()=>{  
+        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)?<li onClick={()=>{  
             addToCart(elem._id)
-        }}>Add to Cart</button>:null}
+        }}><Link to=""/>Add to Cart</li>:null}
         {/* add to cart button ends here*/}
 
         {/* remove from cart button starts here*/}
-        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)?<button onClick={()=>{  
+        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)?<li onClick={()=>{  
               removeFromCart(elem._id)
-        }}>Remove from Cart</button>:null}
-        {/* remove from cart button ends here*/}
+        }}><Link to=""/>Remove from Cart</li>:null}
+        {/* remove from cart button ends here/end of actionButtons div here*/}
+        </ul>
 
-        
         </div>
+      
+        </div>
+        {/* end of array render */}
     })
     }
     </div>
