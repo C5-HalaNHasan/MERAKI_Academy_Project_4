@@ -1,3 +1,4 @@
+/*
 .card {
     border: red solid 3px;
     margin: 2%;
@@ -15,3 +16,39 @@
     border-radius: 50%;
     float: left;
 }
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Warlow Sans', sans-serif;
+    color: var(--mainText);
+    text-decoration: none;
+    list-style: none;
+}
+
+
+.cardsContainer {
+    position: relative;
+    width: 1280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.cardsContainer .card {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background: linear-gradient(#2196f3, #2196f3 30%, #1d3548 30%, #1d3548);
+    margin: 10px;
+    flex-wrap: wrap;
+    border-radius: 20px;
+
+}
+
+.cardsContainer .card

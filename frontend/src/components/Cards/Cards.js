@@ -3,6 +3,8 @@ import React,{useState,useContext,useEffect} from "react";
 import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
+import abs_wall from "../assets/abs_wall.jpg"
+
 
 const Cards=({items,setItems,type})=>{
     // the below three states to be used in every component for authorization and re-rendering:
@@ -11,6 +13,11 @@ const Cards=({items,setItems,type})=>{
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
+
+    //to render on clicking the buttons: //!resulted in too many renders
+    // const [isRemoverd,setIsRemoved]=useState(false);
+    // const [isAdded,setIsAdded]=useState(false)
+
 
     const navigate = useNavigate();
     console.log(items)
@@ -63,7 +70,7 @@ const Cards=({items,setItems,type})=>{
             console.log(result.data) 
             setIsRendered(true)
         }).catch((error)=>{
-            console.log('FRONTEND',error)
+            console.log('FRONTEND',error) //!
         })
     };
 
@@ -155,12 +162,19 @@ console.log(error)
 };
 //! end of update items
 
+const [isHover,setIsHover]=useState()
+const changeBackGround=()=>{
+    setIsHover(!isHover)
+
+}
 
     return <div className="cardsContainer">
     <h1>here the cards are going to be rendered</h1>
     {items.map((elem)=>{
         return <div className="card">
-            <img src="{elem.item}"/>
+        <div className="imgSection">
+            <img src={abs_wall}/>
+        </div>
             <h2>{elem.item}</h2>
             <h3>{elem.description}</h3>
             <h3>price:{elem.price}</h3>
