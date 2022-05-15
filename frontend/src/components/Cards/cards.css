@@ -50,8 +50,9 @@
     margin: 10px;
     flex-wrap: wrap;
     border-radius: 20px;
+    /* to control the translateY upward movement */
     overflow: hidden;
-
+    padding: 10px;
 }
 
 .cardsContainer .card .imgSection {

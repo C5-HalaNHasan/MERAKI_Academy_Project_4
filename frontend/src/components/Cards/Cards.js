@@ -5,6 +5,8 @@ import axios from "axios";
 import { useNavigate,Link} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
+import ModalBox from "../ModalBox/ModalBox";
+
 
 
 const Cards=({items,setItems,type})=>{
@@ -15,15 +17,17 @@ const Cards=({items,setItems,type})=>{
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
 
+    //to set the modal box visibility:
+    const [showModalBox,setShowModalBox]=useState(false)
+
+
     //to render on clicking the buttons: //!resulted in too many renders
     // const [isRemoverd,setIsRemoved]=useState(false);
     // const [isAdded,setIsAdded]=useState(false)
 
 
     const navigate = useNavigate();
-    console.log(items)
-    setIsRendered(true)
-
+    console.log(items) //!to console.log the items sent to the Cards component
 
     // a function to get the current user wishlist and cart items ids/to decide which buttons to show for each card:
     let userCartUrl="http://localhost:5000/users/user";
@@ -163,14 +167,15 @@ console.log(error)
 };
 //! end of update items
 
-const [isHover,setIsHover]=useState()
-const changeBackGround=()=>{
-    setIsHover(!isHover)
-
-}
 
     return <div className="cardsContainer">
     {/* <h1>here the cards are going to be rendered</h1> */}
+    
+    <button onClick={()=>{ //! for testing to be deleted
+        setShowModalBox(true);
+    }}>show modal box </button>
+    <ModalBox showModalBox={showModalBox} setShowModalBox={setShowModalBox}/>
+
     {items.map((elem)=>{
         return <div className="card">
         <div className="imgSection">
