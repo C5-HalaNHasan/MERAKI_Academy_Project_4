@@ -11,6 +11,7 @@ import Cart from "./components/Cart.js/Cart";
 import UserBoard from "./components/UserBoard/UserItems";
 import UserProfile from "./components/UserBoard/UserProfile";
 import UserItems from "./components/UserBoard/UserItems";
+import axios from "axios";
 
 
 //token will be provided from the APP.js to each component where required
@@ -21,10 +22,15 @@ const App=()=> {
   const [token,setToken]=useState(localStorage.getItem("token")); 
   const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
   const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
+  const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search
+
+
+
+
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>

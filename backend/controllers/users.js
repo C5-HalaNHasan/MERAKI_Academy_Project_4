@@ -342,7 +342,8 @@ const  removeFromCart=(req,res)=>{
 const getUserById = (req, res) => {
   let userId=req.token.userId;
   userModel
-    .findOne({_id:userId}).populate([{path:"wishList",model:"item"},{path:"boughtItems",model:"item"},,{path:"cartItems",model:"item"}]).exec() //! to be checked,it only returns one object
+    .findOne({_id:userId}).populate({path:"wishList"}).populate({path : "wishList",populate : {path : "owner"}}).populate({path : "wishList",populate : {path : "category"}}).populate({path:"boughtItems"}).populate({path : "boughtItems",populate : {path : "owner"}}).populate({path : "boughtItems",populate : {path : "category"}}).populate({path:"cartItems"}).populate({path : "cartItems",populate : {path : "owner"}}).populate({path : "cartItems",populate : {path : "category"}}).
+    exec() //! to be checked,it only returns one object
     .then((result) => {
       console.log(result) //! to get the info of the wishList items from here
       if (result) {

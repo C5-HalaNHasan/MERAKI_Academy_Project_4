@@ -115,7 +115,7 @@ const deleteItemById= (req, res) => {
 // this function gets all items with a specific category:
 const getItemsByCategory= (req, res) => { //! not tested by postman yet since the rating hasn't beedn added to the items
   let category=req.params.id;
-  itemModel.find({category:category}).then((result)=>{
+  itemModel.find({category:category}).populate({path:"category",model:"category"}).populate({path:"owner",model:"user"}).then((result)=>{
     
     if(result){
       res.status(200).json({

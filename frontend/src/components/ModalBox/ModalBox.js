@@ -14,7 +14,9 @@ const ModalBox=({showModalBox,setShowModalBox})=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
 
-    if(showModalBox==false){
+
+    //!will be added as a ternary operator later
+    if(showModalBox===false){
         return null;
     }
 
@@ -22,7 +24,7 @@ const ModalBox=({showModalBox,setShowModalBox})=>{
 
 return <div className="modalBox">
 <div className="contentsContainer">
-<img src={abs_wall}/>
+<img src={abs_wall} alt=""/>
 
 <div className="modalRight">
 <span class="closeModalBox"><AiOutlineCloseCircle onClick={()=>{

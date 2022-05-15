@@ -11,6 +11,10 @@ const SearchBox=({searchedItem})=>{
     console.log(searchedItem);
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
+
+    //!not used yet
+    const {allItemsInDb,setAllItemsInDb}=useContext(TokenContext); 
+
     const [items,setItems]=useState([]);
     const [isRendered,setIsRendered]=useState(TokenContext)
 
@@ -35,9 +39,9 @@ const SearchBox=({searchedItem})=>{
         }).catch((error)=>{
             console.log(error)
         })
-        
     },[isRendered])
 
+    console.log("TODAY77777items from the search box",items)
     
     return <div className="SearchBox">
     <NavBar/>

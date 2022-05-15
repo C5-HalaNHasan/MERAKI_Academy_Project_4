@@ -17,7 +17,6 @@ const WishList=()=>{
     const navigate = useNavigate();//! not used yet
 
     let wishListUrl="http://localhost:5000/users/user";
-    
 
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
         axios.get(wishListUrl,{headers:{authorization:token}}).then((result)=>{

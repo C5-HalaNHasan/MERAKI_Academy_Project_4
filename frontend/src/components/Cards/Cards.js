@@ -187,8 +187,10 @@ console.log(error)
             <h2>{elem.item} </h2>
             <h3>price:{elem.price}</h3>
             <h3>{elem.description}</h3>
-            <h5>Category:{elem.category}</h5>
-            <h5>Owner:{typeof elem.owner==="string"?elem.owner:elem.owner.firstName}</h5>
+            {/* elem.category || elem.category.category if populated */}
+            <h5>Category:{elem.category.category}</h5>
+            {/* owner must be populated */}
+            <h5>Owner:{elem.owner.firstName}</h5>
             <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
           </div>
 
