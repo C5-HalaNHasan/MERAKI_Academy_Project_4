@@ -30,7 +30,8 @@
 
 .cardsContainer {
     position: relative;
-    width: 1280px;
+    /* will work further on the responsive design:this value was for testing only */
+    /* width: 1280px; */
     display: flex;
     justify-content: center;
     align-items: center;
