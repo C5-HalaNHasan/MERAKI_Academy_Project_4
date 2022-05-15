@@ -1,5 +1,4 @@
-/*
-.card {
+/* .card {
     border: red solid 3px;
     margin: 2%;
     padding: 1% 2%;
@@ -15,8 +14,15 @@
 .card img {
     border-radius: 50%;
     float: left;
+    width: 100px;
+    display: block;
 }
-*/
+
+li:hover {
+    cursor: pointer;
+    background-color: brown;
+} */
+
 
 * {
     margin: 0;
@@ -28,6 +34,7 @@
     list-style: none;
 }
 
+/*the new style is down here*/
 
 .cardsContainer {
     position: relative;

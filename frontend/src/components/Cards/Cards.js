@@ -23,7 +23,7 @@ const Cards=({items,setItems,type})=>{
 
     //to render on clicking the buttons: //!resulted in too many renders
     // const [isRemoverd,setIsRemoved]=useState(false);
-    // const [isAdded,setIsAdded]=useState(false)
+    const [isAdded,setIsAdded]=useState(false)
 
 
     const navigate = useNavigate();
@@ -62,7 +62,8 @@ const Cards=({items,setItems,type})=>{
         axios.delete(removeUrl,{headers:{authorization:token}}).then((result)=>{
             console.log("hello from delete from wishlist")
             console.log(result.data)
-            setIsRendered(true)
+            setIsRendered(!isRendered)
+            // setIsAdded(!isAdded)
         }).catch((error)=>{
             console.log(error)
         })
@@ -73,7 +74,9 @@ const Cards=({items,setItems,type})=>{
             axios.post(addUrl,{},{headers:{authorization:token}}).then((result)=>{
             console.log("hello from add to wishlist")
             console.log(result.data) 
-            setIsRendered(true)
+            setIsRendered(!isRendered)
+            // setIsAdded(!isAdded)
+
         }).catch((error)=>{
             console.log('FRONTEND',error) //!
         })
@@ -83,10 +86,9 @@ const Cards=({items,setItems,type})=>{
     const addToCart=(itemId)=>{
         let addCartItemUrl=`http://localhost:5000/users/cart/${itemId}`
     axios.post(addCartItemUrl,{},{headers:{authorization:token}}).then((result)=>{
-        console.log("hello from add to cart")
-        console.log(result.data) 
-        setIsRendered(true)
-   }).catch((error)=>{
+        console.log("hello from add to cart",result.data)
+        setIsRendered(!isRendered)
+    }).catch((error)=>{
     console.log(error)
     })
     };
@@ -97,8 +99,8 @@ const Cards=({items,setItems,type})=>{
     axios.delete(addCartItemUrl,{headers:{authorization:token}}).then((result)=>{
         console.log("hello from remove from cart")
         console.log(result.data) 
-        setIsRendered(true)
-   }).catch((error)=>{
+        setIsRendered(!isRendered)
+    }).catch((error)=>{
     console.log(error)
     })
     };
@@ -109,14 +111,14 @@ const Cards=({items,setItems,type})=>{
     axios.delete(DeleteItemUrl,{headers:{authorization:token}}).then((result)=>{
         console.log("item deleted")
         console.log(result.data) 
-        setIsRendered(true)
-   }).catch((error)=>{
+        setIsRendered(!isRendered)
+    }).catch((error)=>{
     console.log(error)
     })
     };
 
 
-//!start of update items
+//!start of update items function //! not working/tested yet
 const [itemPic,setItemPic]=useState([])
  //the item updates are going to be collected in an object and sent to the backend to be checked and updated accordingly
  const [itemData,setItemData]=useState({
@@ -160,12 +162,12 @@ const UpdatetemInDb=(itemId)=>{
 axios.put(UpdateItemUrl,{},{headers:{authorization:token}}).then((result)=>{
     console.log("item updated")
     console.log(result.data) 
-    setIsRendered(true)
+    setIsRendered(!isRendered)
 }).catch((error)=>{
 console.log(error)
 })
 };
-//! end of update items
+//! end of update items//! not working/tested yet
 
 
     return <div className="cardsContainer">
@@ -177,7 +179,7 @@ console.log(error)
     <ModalBox showModalBox={showModalBox} setShowModalBox={setShowModalBox}/>
 
     {items.map((elem)=>{
-        return <div className="card">
+        return <div className="card" key={elem._id}>
         <div className="imgSection">
             <img src={abs_wall}/>
         </div>

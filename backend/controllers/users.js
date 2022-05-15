@@ -124,7 +124,16 @@ const login = (req, res) => {
 const updateUserProfile = (req, res) => {
   //the user id is going to be taken from the token
   const userId = req.token.userId;
-  const { firstName, lastName, password, photo, country,contactNum } = req.body;
+  let { firstName, lastName, password, photo, country,contactNum } = req.body;
+
+   // to hash the password before update:
+   if(password !==undefined){ //! not working yet
+     let salt=10;
+    bcrypt.hash(password, salt, (err, hash) => {
+      password=hash;
+      console.log("hashed password",hash);
+    });
+   }
   //search for the user by his id,then update
   userModel
     .findByIdAndUpdate(
