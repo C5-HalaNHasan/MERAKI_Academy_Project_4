@@ -22,35 +22,29 @@ const ModalBox=({showModalBox,setShowModalBox})=>{
 
 return <div className="modalBox">
 <div className="contentsContainer">
+<img src={abs_wall}/>
 
 <div className="modalRight">
 <span class="closeModalBox"><AiOutlineCloseCircle onClick={()=>{
     setShowModalBox(false)
 }}/></span>
+
+<div className="boxContent">
 <h3>message</h3>
 <p>a message is going to be rendered for the user based on the clicked button: if buy it will show a box to specify address then to the onlinement page, if swap: it will render the elements of the user that are >= price of the element, if add to wishList: it will tell the user that the item has been added/removed to/from the wish list,if add to cart: it will show the user that the item has been added/removed from cart</p>
+</div>
 
 <div className="actionButtonsContainer">
 {/* the buttons are going to be rendered based on the clicked button on the card */}
 <button className="actionButton">Ok</button>
 <button className="actionButton">Cancel</button>
-
-
-
 </div>
 
-
 </div>
-
-<div className="modalLeft">
-<img src={abs_wall}/>
-
-</div>
-
 
 </div>
     
-    </div>
+</div>
 };
 
 export default ModalBox;

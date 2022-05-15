@@ -1,4 +1,4 @@
-/* * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,11 +6,10 @@
     color: var(--mainText);
     text-decoration: none;
     list-style: none;
-} */
+}
 
 
 .modalBox {
-    background-color: rgba(0, 0, 255, 0.3);
     /* to keep the box showing while scrolling */
     position: fixed;
     width: 100%;
@@ -22,19 +21,70 @@
     width: 100%;
     /* to keep the box showing while scrolling */
     position: fixed;
-    top: 25%;
-    left: 25%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
+    /*flex directionto be changed later */
+    flex-direction: column;
     background-color: #fff;
     box-shadow: 0px 0px 18px 0px rgba(0, 0, 255, 0.5);
-
+    border-radius: 1vh;
 }
 
 .modalBox .contentsContainer img {
-    width: 25xp;
+    width: 20%;
     object-fit: cover;
+    border-radius: 1vh;
 }
 
-.modalBox .contentsContainer .modalRight {
+.modalRight {
     width: 100%;
+}
+
+.closeModalBox {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    font-size: 3rem;
+    transition: 0.5s ease;
+}
+
+.closeModalBox:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+.modalRight .boxContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1%;
+    padding: 1%;
+}
+
+
+.actionButtonsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1% 2%;
+}
+
+
+.actionButtonsContainer .actionButton {
+    /* might be checked later with the number of buttons that are going to be rendered */
+    width: 20%;
+    margin: 1%;
+    padding: 1%;
+    border-radius: 5vw;
+    background-color: rgba(173, 216, 230, 0.5);
+    border: none;
+    transition: 0.2s ease;
+}
+
+.actionButtonsContainer .actionButton:hover {
+    /* might be checked later with the number of buttons that are going to be rendered */
+    cursor: pointer;
+    transform: scale(1.2);
 }

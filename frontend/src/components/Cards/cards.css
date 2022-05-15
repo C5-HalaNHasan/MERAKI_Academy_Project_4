@@ -17,6 +17,7 @@
     float: left;
 }
 */
+
 * {
     margin: 0;
     padding: 0;
@@ -41,12 +42,15 @@
     min-height: 100vh;
 }
 
+
 .cardsContainer .card {
     position: relative;
     width: 300px;
     height: 400px;
     /* depends on the number of buttons that will appear/depending on the item */
-    background: linear-gradient(#2196f3, #2196f3 30%, #1d3548 30%, #1d3548);
+    /* background: linear-gradient(#2196f3, #2196f3 30%, #1d3548 30%, #1d3548); */
+    background: rgba(0, 0, 0, 0.5);
+
     margin: 10px;
     flex-wrap: wrap;
     border-radius: 20px;
