@@ -1,6 +1,10 @@
 import "./cards.css"
 import {AiOutlineShoppingCart,AiOutlineHeart} from "react-icons/ai";
+import {IoMdSwap} from "react-icons/io";
 import React,{useState,useContext,useEffect} from "react";
+
+
+
 import axios from "axios";
 import { useNavigate,Link} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
@@ -9,7 +13,7 @@ import ModalBox from "../ModalBox/ModalBox";
 import Swap from "../Swap/Swap";
 
 
-const Cards=({items,setItems,type})=>{
+const Cards=({items,setItems,type,swappedItemId})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
@@ -23,9 +27,6 @@ const Cards=({items,setItems,type})=>{
     const [canSwap,setCanSwap]=useState(false)
 
 
-    //to render on clicking the buttons: //!resulted in too many renders
-    // const [isRemoverd,setIsRemoved]=useState(false);
-    const [isAdded,setIsAdded]=useState(false)
 
 
     const navigate = useNavigate();
@@ -173,42 +174,42 @@ console.log(error)
 //! end of update items//! not working/tested yet
 
 
-//!start of swapAction //! not programmed yet:
-// toDo: if the user has items with price >= item he would like to exchange  && they both live in the same country: the cards are going to be rendered with one button only which is swap
+//swapping the owners of the items and setting the isSold:true  //! swap is working one way
+const [swapOwner,setSwapOwner]=useState()
+const swapOwnersById=(myItemId)=>{
+    let yourItemUrl=`http://localhost:5000/items/${swappedItemId}`
+    let myItemUrl=`http://localhost:5000/items/${myItemId}`
+    console.log("swapOwnersByI ",swappedItemId)
 
-// toDo: when swap is pressed: //! this will be handelled in the cards component
-// toDo-1:the owner of the two items will be exchanged
-// toDo-2:the state of the item will be set to isSold:true so that it will not be rerenderd in the main page
-// toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
-// toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
-const CanSwap=(itemId,itemPrice)=>{ //! moved to swap component
-    let allItemsURL=`http://localhost:5000/items`
-        axios.get(allItemsURL,{headers:{authorization:token}}).then((result)=>{
-           if(result.data.items.length>0){
-            let filteredItems= result.data.items.filter((elem)=>{
-                return elem.owner._id==currentUserId
-            })
-            setUserItems(filteredItems); 
-            console.log("swap filterd items are ",filteredItems)
+      //get the item owner by its id:
+      axios.get(yourItemUrl,{headers:{authorization:token}}).then((result)=>{
+        if(result){
+            console.log("from javascript line 186  ",result.item)
+            setSwapOwner(result.data.item.owner)
+            console.log(result.data.item.owner)
+        }
+     }).catch((error)=>{
+         console.log(error)
+     });
 
-            let filteredItemsByPrice= userItems.filter((elem)=>{
-                return elem.price>=itemPrice
-            })
-            setItems(filteredItemsByPrice); 
-            console.log("swap filterd items are ",filteredItems)
-            if(filteredItemsByPrice.length>0){
-                setCanSwap(true);
-            }
-           }
-        }).catch((error)=>{
-            console.log(error)
-        })
+
+     //update the old
+     axios.put(myItemUrl,{owner:swapOwner,isSold:"true"},{headers:{authorization:token}}).then((result)=>{
+        console.log(result.data) 
+        setIsRendered(!isRendered)
+    }).catch((error)=>{
+    console.log(error)
+    });
+
     
-    console.log("hello from swap action",userItems)
+    //update the bought item owner: from old to me
+    axios.put(yourItemUrl,{owner:currentUserId,isSold:"true"},{headers:{authorization:token}}).then((result)=>{
+        console.log(result.data) 
+        setIsRendered(!isRendered)
+    }).catch((error)=>{
+    console.log(error)
+    });
 };
-
-//! end of swapAction//! not working/tested yet
-
 
 
     return <div className="cardsContainer">
@@ -241,10 +242,10 @@ const CanSwap=(itemId,itemPrice)=>{ //! moved to swap component
 
             {elem.swap && elem.owner._id !=currentUserId&&<li><Link to=""/>swap</li>}
             {elem.sell&&elem.owner._id  !=currentUserId&&<li><Link to=""/>buy</li>}
-            {type="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
+            {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 deleteItemFromDb(elem._id)
             }}><Link to=""/>Delete Item</li>}
-            {type="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
+            {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 UpdatetemInDb(elem._id)
             }}><Link to=""/>Update Item</li>}
 
@@ -276,8 +277,13 @@ const CanSwap=(itemId,itemPrice)=>{ //! moved to swap component
         {/* swap action starts here*/}
         {elem.owner._id !== currentUserId&& <li onClick={()=>{ navigate(`/swap/${elem._id}`)    
         }}><Link to="/swap"/>SWAP</li>}
-        {/* remove from cart button ends here/end of actionButtons div here*/}
-        {canSwap&&<Swap items={userItems}/>}
+        {/* swap action button ends here}
+
+        {/* swap button starts here*/}
+        {type==="swap"&& <li id={elem._id} onClick={()=>{ swapOwnersById(elem._id)  
+        }}><Link to="/swap"/><IoMdSwap/></li>}
+        {/* swap button button ends here/end of actionButtons div here*/}
+      
         </ul>
 
         </div>
