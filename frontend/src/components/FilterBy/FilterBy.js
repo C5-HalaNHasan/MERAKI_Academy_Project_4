@@ -96,17 +96,16 @@ const FilterBox=()=>{
 
 
 
-    return <div className="fiterBox">
-    <h1>this is the filterBox</h1>
-    <div className="FilterItems">
+    return <div className="filterBox">
+    <div className="filterItems">
 
     <h3>Categories</h3>
-    <div className="categories">
+    <ul className="categories">
         {categories.map((elem)=>{
-            return <button id={elem._id} onClick={getItemsByCategory}>{elem.category}</button>
+            return <li id={elem._id} onClick={getItemsByCategory}>{elem.category}</li>
         })
         }
-    <div className="swapORbuy">
+    <div className="swapOrBuy">
         <button id="swap" onClick={getItemsBySwapOrBuy}>Swap</button>
         <button id="sell" onClick={getItemsBySwapOrBuy}>Buy</button>
     </div>
@@ -116,7 +115,7 @@ const FilterBox=()=>{
 
     </div>
 
-    </div>
+    </ul>
 
 
     </div>

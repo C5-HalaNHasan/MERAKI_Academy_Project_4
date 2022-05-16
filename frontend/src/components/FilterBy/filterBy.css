@@ -1,15 +1,74 @@
-.FilterItems {
-    border: red 2px solid;
-    padding: 0% 1%;
-    width: 50%;
+.root {
+    margin-left: 5rem;
 }
 
-.categories button {
-    display: block;
-    margin: 1% 0%;
+.filterBox {
+    display: flex;
+    min-height: 100vh;
+}
+
+.filterItems {
+    flex: 1 1 0;
+    max-width: 300px;
+    padding: 2rem 1rem;
+    background-color: aqua;
+    margin: 0 -1rem;
+
+}
+
+/* will be made as a drop down list */
+.filterItems h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5em;
+    margin-left: 2vw;
+}
+
+.filterItems ul li {
+    font-size: 2vh;
+    margin: 1vh 2vw;
+}
+
+.filterItems li:hover {
+    cursor: pointer;
+    background-color: red;
+}
+
+.swapOrBuy button {
+    display: inline;
+    margin: 1vh 2vw;
+    width: 25%;
+    font-size: 2vh;
+    padding: 1%;
+    border-radius: 2vh;
+    border: none;
+    background-color: whitesmoke;
+    transition: 0.2s ease;
+}
+
+.filterBox button:hover {
+    transform: scale(1.2);
+    background-color: blue;
+    color: whitesmoke;
+    cursor: pointer;
 }
 
 .byPrice input {
     display: block;
-    margin: 1% 0%;
+    margin: 1vh 2vw;
+    border-radius: 2vh;
+    border: 1px solid;
+    padding: 1%;
+    font-size: 2vh;
+}
+
+.byPrice input:focus {
+    border: none;
+    outline: none;
+}
+
+/* to be checked again once items cards are properly designed */
+@media (max-width:1024px) {
+    .filterBox {
+        max-width: 200px;
+    }
 }

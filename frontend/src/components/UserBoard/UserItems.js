@@ -19,7 +19,7 @@ const UserItems=()=>{
     let getAllItemsUrl="http://localhost:5000/items"; //!to be updated
     useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
         axios.get(getAllItemsUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log("hala is tired today",result.data.items)
+            console.log("from userItems",result.data.items)
            let filteredItemsByUser= result.data.items.filter((elem)=>{
                return elem.owner._id==currentUserId;
            })
