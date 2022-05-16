@@ -29,9 +29,11 @@ const NavBar=()=>{
 
     return <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
-   <h1> <Link to="/" className="navBarLogo"/>Logo<IoMdSwap/></h1>
+    <div  className="navBarLogo">
+    <h1><Link to="/">Logo<IoMdSwap/></Link> </h1>
     {/* onchange the /search is going to be rendered */}
     {/* <Link to="/search">Search </Link> */}
+    </div>
     
     <div onClick={()=>setIsClicked(!isClicked)}>
     {/* <FaBars className="burgerMenuIcon"/> */}
@@ -58,7 +60,7 @@ const NavBar=()=>{
     {/* th userBoard will only appear when the user is logged in else/a register will appear instead! */}
 
     <li className="navBarItem">
-    <Link to="/userboard" onClick={()=>setIsDropDown(!isDropDown)}><IoIosArrowDropdownCircle/>UserBoard</Link>
+    <Link to="" onClick={()=>setIsDropDown(!isDropDown)}><IoIosArrowDropdownCircle/>UserBoard</Link>
     {token&&isDropDown&&<UserBoard isDropDown={isDropDown} setIsDropDown={setIsDropDown} isClicked={isClicked} setIsClicked={setIsClicked}/>}
     </li>
 

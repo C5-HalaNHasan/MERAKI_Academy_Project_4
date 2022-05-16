@@ -30,7 +30,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
         navigate("/")
     }
 
-    return <>
+    return <div className="userBoard">
     <ul className={isDropDown? "dropDown clicked": "dropDownMenu"}>
 
     <li className="drpDownItem">
@@ -47,7 +47,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
 
     </ul>
 
-</>
+</div>
 };
 
 export default UserBoard;

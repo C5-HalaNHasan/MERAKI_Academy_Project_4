@@ -11,6 +11,8 @@ import Cart from "./components/Cart.js/Cart";
 import UserBoard from "./components/UserBoard/UserItems";
 import UserProfile from "./components/UserBoard/UserProfile";
 import UserItems from "./components/UserBoard/UserItems";
+import CheckOut from "./components/CheckOut.js/CheckOut";
+import Payment from "./components/Payment/Payment";
 import axios from "axios";
 
 
@@ -41,6 +43,11 @@ const App=()=> {
       <Route path="/userboard" element={<UserBoard/>}/>
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
+      <Route path="/checkout" element={<CheckOut/>}/>
+      <Route path="/payment" element={<Payment/>}/>
+
+      
+
       </Routes>
       </TokenContext.Provider>
     </div>

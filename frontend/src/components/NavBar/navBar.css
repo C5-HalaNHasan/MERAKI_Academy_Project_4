@@ -14,10 +14,8 @@
     display: inline;
 }
 
-.navBarLogo {
-    display: flex;
-    align-items: center;
-
+.navBarLogo :hover {
+    cursor: pointer;
 }
 
 .NavBar h1 {

@@ -82,9 +82,9 @@ const UserProfile=()=>{
     };
 //!
 
-    return <>
+    return( <>
     <NavBar/>
-
+    <div className="mainBox">
      <div className="registrationBox">
     <div className="firstPart">
     <img src={userPic} />
@@ -104,7 +104,8 @@ const UserProfile=()=>{
     </form>
     </div>
 </div>
-</>
+</div>
+</>)
 };
 
 export default UserProfile;

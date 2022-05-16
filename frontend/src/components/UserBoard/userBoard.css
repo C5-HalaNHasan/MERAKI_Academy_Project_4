@@ -1,10 +1,24 @@
+.userBoard ul {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    border-radius: 1vh;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: 1%;
+    padding: 1rem 5rem;
+    position: absolute;
+    right: 0;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
 .dropDownMenu {
     /* to be coordinated with the navBar items */
     width: 20%;
     position: absolute;
     top: 10%;
     list-style: none;
-
 }
 
 .dropDownMenu li {
