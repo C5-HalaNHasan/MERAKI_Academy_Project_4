@@ -19,16 +19,15 @@
 
 
 
-/* styling the all sections by targeting the app */
-/*
-.App {
+
+/* not responsive yet */
+.mainBox {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-*/
 
 .registrationBox {
     max-width: 978px;

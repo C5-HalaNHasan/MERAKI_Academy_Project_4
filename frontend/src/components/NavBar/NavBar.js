@@ -22,9 +22,9 @@ const NavBar=()=>{
     const [isDropDown,setIsDropDown]=useState(false);
 
     const navigate = useNavigate();
-    //to redirect the user to the registration page if not logged in
+    //to redirect the user to the registration page if not logged in //! not set yet
     const toRegisterPage=()=>{
-
+        navigate("/register")
     }
 
     return <div className="NavBar"> 

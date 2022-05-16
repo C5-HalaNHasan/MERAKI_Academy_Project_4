@@ -3,7 +3,8 @@ import React,{useState,useContext} from "react";
 import {Link,Routes,Route,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; //! to make an automatic login
-import abs_wall from "../assets/abs_wall.jpg"
+import abs_wall from "../assets/abs_wall.jpg";
+import NavBar from "../NavBar/NavBar";
 
 
 const Register=()=>{
@@ -71,14 +72,19 @@ const Register=()=>{
 };
 
 
-    return  <div className="registrationBox">
+    return ( 
+        <>
+        <NavBar/>
+    <div className="mainBox">
+    
+    <div className="registrationBox">
      <div className="firstPart">
     <img src={abs_wall} />
     </div>
 
     <div className="secondPart">
     <h3>Register</h3>
-    <span>already a member?<span><Link to="/login">LogIn</Link></span></span>
+    <span>already a member?<span><Link to="/login"> LogIn</Link></span></span>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
         <input type="text" placeholder="First Name..." name="firstName" onChange={saveData}></input>
         <input type="text" placeholder="Last Name..." name="lastName" onChange={saveData}></input>
@@ -89,10 +95,12 @@ const Register=()=>{
         <button onClick={RegisterAction} className="btn">Register</button>
         <h3>{resultMessage}</h3> 
         </form>
-        {/* //! to be updated (a moving or loading component is going to be created instead of this) */}
+        {/* //! to be updated (a modalBox with settime out is going to be shown) */}
     </div>
-
     </div>
+    </div>
+    </>
+    )
 
 };
 
