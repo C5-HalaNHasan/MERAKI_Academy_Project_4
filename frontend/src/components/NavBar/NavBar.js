@@ -1,7 +1,7 @@
 import "./navBar.css"
 import {FiLogIn,FiSearch} from "react-icons/fi";
-import {FaRegUserCircle,FaBars} from "react-icons/fa";
-import {AiOutlineShoppingCart,AiOutlineHeart,AiFillCloseCircle,} from "react-icons/ai";
+import {FaRegUserCircle,FaBars,FaRegTimesCircle} from "react-icons/fa";
+import {AiOutlineShoppingCart,AiOutlineHeart} from "react-icons/ai";
 import {IoIosArrowDropdownCircle,IoMdSwap} from "react-icons/io";
 import React,{useState,useContext} from "react";
 import { Route, useNavigate,Link } from "react-router-dom";
@@ -32,15 +32,14 @@ const NavBar=()=>{
    <h1> <Link to="/" className="navBarLogo"/>Logo<IoMdSwap/></h1>
     {/* onchange the /search is going to be rendered */}
     {/* <Link to="/search">Search </Link> */}
-    <div className="menuIcon" onClick={()=>setIsClicked(!isClicked)}>
-    {isClicked?<FaBars className="burgerMenuIcon"/>:<AiFillCloseCircle  className="normalMenuIcon"/>}
+    
+    <div onClick={()=>setIsClicked(!isClicked)}>
+    {/* <FaBars className="burgerMenuIcon"/> */}
+    {!isClicked?<FaBars className="burgerMenuIcon"/>:<FaRegTimesCircle  className="burgerMenuIcon"/>}
     </div>
 
-    <ul className={isClicked? "navActive": "navMenu"}>
 
-    <li className="navBarItem">
-    <Link to="/" onClick={()=>setIsClicked(!isClicked)}>MainPage </Link>
-    </li>
+    <ul className={isClicked? "navBurger": ""}>
 
     {/* setting onClick when the user presses enter e.key */}
     <li className="navBarItem">

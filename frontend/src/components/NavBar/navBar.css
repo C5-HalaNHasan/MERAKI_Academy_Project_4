@@ -9,6 +9,10 @@
     position: relative;
 }
 
+.NavBar input {
+    display: inline;
+}
+
 .navBarLogo {
     display: flex;
     align-items: center;
@@ -52,4 +56,50 @@
     width: 100%;
 }
 
-.burgerMenuIcon {}
+
+.normalMenuIcon {
+    display: none;
+    font-size: 2rem;
+}
+
+.burgerMenuIcon {
+    display: none;
+    font-size: 2rem;
+}
+
+
+/* to control the appearance of the burgerMenu */
+@media screen and (max-width:800px) {
+    .navBar {
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width:750px) {
+    .burgerMenuIcon {
+        display: block;
+    }
+
+    .NavBar ul {
+        flex-direction: column;
+        position: fixed;
+        top: 7vh;
+        /* same background as the mainNav */
+        background-color: aqua;
+        width: 20%;
+        height: 20%;
+        left: -1000px;
+        /* align-items: center; */
+        justify-content: flex-start;
+        transition: all 0.2s ease;
+    }
+
+    .NavBar input {
+        width: 100%;
+    }
+
+    .NavBar ul.navBurger {
+        left: 0px;
+    }
+
+}
