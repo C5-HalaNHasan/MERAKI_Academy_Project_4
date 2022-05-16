@@ -1,6 +1,6 @@
 import "./swap.css"
 import React,{useState,useContext,useEffect} from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate,useParams} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import axios from "axios";
 import Cards from "../Cards/Cards";
@@ -20,14 +20,64 @@ import UserItems from "../UserBoard/UserItems";
 
 
 
-const Swap=({items})=>{
+const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     let [resultMessage,setResultMessage]=useState("");
+    const [items,setItems]=useState([])
+    const [canSwap,setCanSwap]=useState(false)
+    const [itemPrice,setItemPrice]=useState(0)
 
-    //to search in the current user items if he has items with a value >= wanted item:
+
+
+    //to get the id of the item and search for it in the data base:
+    const {id}=useParams()
+
+//to search for the passed (wanted to be swaped by):
+    useEffect=(()=>{
+        console.log("from searching byid",id)
+
+        let itemByIdURL=`http://localhost:5000/items/${id}`
+        axios.get(itemByIdURL,{headers:{authorization:token}}).then((result)=>{
+           if(result){
+               console.log("from item price ",result)
+               setItemPrice(result.item.price)
+           }
+        }).catch((error)=>{
+            console.log(error)
+        })
+
+    },[isRendered])
+
+
     const {userItems,setUserItems}=useContext(TokenContext); 
+    useEffect=(()=>{
+        let allItemsURL=`http://localhost:5000/items`
+        axios.get(allItemsURL,{headers:{authorization:token}}).then((result)=>{
+           if(result.data.items.length>0){
+            let filteredItems= result.data.items.filter((elem)=>{
+                return elem.owner._id==currentUserId
+            })
+            setUserItems(filteredItems); 
+            console.log("swap filterd items are ",filteredItems)
+    
+            let filteredItemsByPrice= userItems.filter((elem)=>{
+                return elem.price>=itemPrice
+            })
+            setItems(filteredItemsByPrice); 
+            console.log("swap filterd items are ",filteredItems)
+            if(filteredItemsByPrice.length>0){
+                setCanSwap(true);
+            }
+           }
+        }).catch((error)=>{
+            console.log(error)
+        })
+
+    },[isRendered])
+
+console.log("hello from swap action",userItems)
 
    console.log("hello from Swap component, the acceptable elements are :" ,items)
 

@@ -1,7 +1,7 @@
 
 // import './App.css';
 import React,{createContext,useState} from "react";
-import {Routes,Route, Router} from "react-router-dom";
+import {Routes,Route, Router,useParams} from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import Register from "./components/Register/register";
 import Login from "./components/Login/Login";
@@ -46,7 +46,7 @@ const App=()=> {
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/checkout" element={<CheckOut/>}/>
-      <Route path="/swap" element={<Swap/>}/>
+      <Route path="/swap/:id" element={<Swap/>}/>
 
 
       

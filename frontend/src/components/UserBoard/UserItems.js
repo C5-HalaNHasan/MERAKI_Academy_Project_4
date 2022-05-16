@@ -32,7 +32,7 @@ const UserItems=()=>{
 
 return <div>
 <NavBar/>
-<Cards items={items} type="userBoard"/>
+<Cards items={items} setItems={setItems} type="userBoard"/>
 </div>
 };
 

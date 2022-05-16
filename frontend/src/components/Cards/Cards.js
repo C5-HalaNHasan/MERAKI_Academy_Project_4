@@ -181,7 +181,7 @@ console.log(error)
 // toDo-2:the state of the item will be set to isSold:true so that it will not be rerenderd in the main page
 // toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
 // toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
-const swapItem=(itemId,itemPrice)=>{
+const CanSwap=(itemId,itemPrice)=>{ //! moved to swap component
     let allItemsURL=`http://localhost:5000/items`
         axios.get(allItemsURL,{headers:{authorization:token}}).then((result)=>{
            if(result.data.items.length>0){
@@ -274,11 +274,10 @@ const swapItem=(itemId,itemPrice)=>{
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{  
-             swapItem(elem._id,elem._id.price)
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{ navigate(`/swap/${elem._id}`)    
         }}><Link to="/swap"/>SWAP</li>}
         {/* remove from cart button ends here/end of actionButtons div here*/}
-        {/* {canSwap?<Swap items={items}/>:null} */}
+        {canSwap&&<Swap items={userItems}/>}
         </ul>
 
         </div>
