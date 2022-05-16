@@ -6,7 +6,7 @@ import { useNavigate,Link} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
 import ModalBox from "../ModalBox/ModalBox";
-
+import Swap from "../Swap/Swap";
 
 
 const Cards=({items,setItems,type})=>{
@@ -14,11 +14,13 @@ const Cards=({items,setItems,type})=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
+    const {userItems,setUserItems}=useContext(TokenContext); 
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
 
     //to set the modal box visibility:
     const [showModalBox,setShowModalBox]=useState(false)
+    const [canSwap,setCanSwap]=useState(false)
 
 
     //to render on clicking the buttons: //!resulted in too many renders
@@ -27,7 +29,7 @@ const Cards=({items,setItems,type})=>{
 
 
     const navigate = useNavigate();
-    console.log(items) //!to console.log the items sent to the Cards component
+    console.log("items sent to the cards component",items,"type :",type) //!to console.log the items sent to the Cards component
 
     // a function to get the current user wishlist and cart items ids/to decide which buttons to show for each card:
     let userCartUrl="http://localhost:5000/users/user";
@@ -45,6 +47,7 @@ const Cards=({items,setItems,type})=>{
                 })
                 setCurrentUserWishList(wishListItemsIds)
             };
+            
             console.log("from filtered",currentUserCart)
             
             setIsRendered(true)
@@ -178,8 +181,30 @@ console.log(error)
 // toDo-2:the state of the item will be set to isSold:true so that it will not be rerenderd in the main page
 // toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
 // toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
-const swapItem=(itemId)=>{
-    console.log("hello from swap action")
+const swapItem=(itemId,itemPrice)=>{
+    let allItemsURL=`http://localhost:5000/items`
+        axios.get(allItemsURL,{headers:{authorization:token}}).then((result)=>{
+           if(result.data.items.length>0){
+            let filteredItems= result.data.items.filter((elem)=>{
+                return elem.owner._id==currentUserId
+            })
+            setUserItems(filteredItems); 
+            console.log("swap filterd items are ",filteredItems)
+
+            let filteredItemsByPrice= userItems.filter((elem)=>{
+                return elem.price>=itemPrice
+            })
+            setItems(filteredItemsByPrice); 
+            console.log("swap filterd items are ",filteredItems)
+            if(filteredItemsByPrice.length>0){
+                setCanSwap(true);
+            }
+           }
+        }).catch((error)=>{
+            console.log(error)
+        })
+    
+    console.log("hello from swap action",userItems)
 };
 
 //! end of swapAction//! not working/tested yet
@@ -249,10 +274,11 @@ const swapItem=(itemId)=>{
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {type="swap"&&<li onClick={()=>{  
-             swapItem(elem._id)
-        }}><Link to=""/>SWAP</li>}
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{  
+             swapItem(elem._id,elem._id.price)
+        }}><Link to="/swap"/>SWAP</li>}
         {/* remove from cart button ends here/end of actionButtons div here*/}
+        {/* {canSwap?<Swap items={items}/>:null} */}
         </ul>
 
         </div>

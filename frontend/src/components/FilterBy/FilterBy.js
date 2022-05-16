@@ -14,8 +14,8 @@ const FilterBox=()=>{
     const [items,setItems]=useState([]);
     const [categories,setCategories]=useState([]);
     const [price,setPrice]=useState({minPrice:0,maxPrice:0});
-
     const [isRendered,setIsRendered]=useState(TokenContext)
+    
 
     const navigate = useNavigate(); //! not used here yet
 

@@ -12,6 +12,7 @@ import UserBoard from "./components/UserBoard/UserItems";
 import UserProfile from "./components/UserBoard/UserProfile";
 import UserItems from "./components/UserBoard/UserItems";
 import CheckOut from "./components/CheckOut.js/CheckOut";
+import Swap from "./components/Swap/Swap";
 import axios from "axios";
 
 
@@ -24,6 +25,8 @@ const App=()=> {
   const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
   const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
   const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search //!not used yet
+  const [userItems,setUserItems]=useState([]); //! for the live search //!not used yet
+
 
 
 
@@ -31,7 +34,7 @@ const App=()=> {
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,userItems,setUserItems}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>
@@ -43,6 +46,8 @@ const App=()=> {
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/checkout" element={<CheckOut/>}/>
+      <Route path="/swap" element={<Swap/>}/>
+
 
       
 

@@ -1,14 +1,18 @@
-import "./userBoard.css"
+import "./swap.css"
 import React,{useState,useContext,useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import axios from "axios";
 import Cards from "../Cards/Cards";
 import NavBar from "../NavBar/NavBar";
+import UserItems from "../UserBoard/UserItems";
 
+
+
+
+//! this will be handelled in the cards component
 // toDo: if the user has items with price >= item he would like to exchange  && they both live in the same country: the cards are going to be rendered with one button only which is swap
-
-// toDo: when swap is pressed: //! this will be handelled in the cards component
+// toDo: when swap is pressed: 
 // toDo-1:the owner of the two items will be exchanged
 // toDo-2:the state of the item will be set to isSold:true so that it will not be rerenderd in the main page
 // toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
@@ -16,28 +20,19 @@ import NavBar from "../NavBar/NavBar";
 
 
 
-const Swap=()=>{
+const Swap=({items})=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
-    const [items,setItems]=useState([]);
     let [resultMessage,setResultMessage]=useState("");
 
+    //to search in the current user items if he has items with a value >= wanted item:
+    const {userItems,setUserItems}=useContext(TokenContext); 
 
-    //get user by id to show his picture in the update box:
-    let getAllItemsUrl="http://localhost:5000/items"; //!to be updated
-    useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
-        axios.get(getAllItemsUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log("from userItems",result.data.items)
-           let filteredItemsByUser= result.data.items.filter((elem)=>{
-               return elem.owner._id==currentUserId;
-           })
-        setItems( filteredItemsByUser);
-        setIsRendered(true);
-        }).catch((error)=>{
-            console.log(error)
-        })
-    },[isRendered])
+   console.log("hello from Swap component, the acceptable elements are :" ,items)
+
+
+
 
 return <div>
 <NavBar/>
