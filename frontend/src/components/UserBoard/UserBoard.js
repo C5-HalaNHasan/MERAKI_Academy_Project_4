@@ -11,7 +11,7 @@ import NavBar from "../NavBar/NavBar";
 import UserItems from "./UserItems";
 import UserProfile from "./UserProfile";
 
-const UserBoard=({isDropDown,setIsDropDown})=>{
+const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
     const {token,setToken}=useContext(TokenContext);//!not used yet
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); //!not used yet
     const {isRendered,setIsRendered}=useContext(TokenContext); //!not used yet
@@ -26,18 +26,28 @@ const UserBoard=({isDropDown,setIsDropDown})=>{
         //clear the local storage
         localStorage.clear();
         setIsRendered(true)
+        setIsClicked(!isClicked)
         navigate("/")
     }
 
-    return <div>
-    <h3>from the dashboard</h3>
-    {/* links are not showing in the /userboard */}
-    <Link to="/userprofile"><FaRegUserCircle/>Profile</Link>
-    <Link to="/useritems"><AiOutlineProfile/>Items</Link>
-    <Link to="/" onClick={()=>setIsDropDown(!setIsDropDown)}><FiLogIn/><label onClick={LogOut}>Logout</label></Link>
+    return <>
+    <ul className={isDropDown? "dropDown clicked": "dropDownMenu"}>
 
-  
-</div>
+    <li className="drpDownItem">
+    <Link to="/userprofile" onClick={()=>setIsClicked(!isClicked)}><FaRegUserCircle/>Profile</Link>
+    </li>
+
+    <li className="drpDownItem">
+    <Link to="/useritems" onClick={()=>setIsClicked(!isClicked)}><AiOutlineProfile/>Items</Link>
+    </li>
+
+    <li className="drpDownItem">
+    <Link to="/" onClick={()=>LogOut}><FiLogIn/>Logout</Link>
+    </li>
+
+    </ul>
+
+</>
 };
 
 export default UserBoard;

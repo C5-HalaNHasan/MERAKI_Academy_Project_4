@@ -1,0 +1,29 @@
+.dropDownMenu {
+    /* to be coordinated with the navBar items */
+    width: 20%;
+    position: absolute;
+    top: 10%;
+    list-style: none;
+
+}
+
+.dropDownMenu li {
+    background-color: var(--mainColor);
+    cursor: pointer;
+}
+
+.dropDownMenu li:hover {
+    background-color: red;
+}
+
+.dropDownMenu .clicked {
+    display: none;
+}
+
+/* not working as intended */
+.dropDown a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: red;
+}

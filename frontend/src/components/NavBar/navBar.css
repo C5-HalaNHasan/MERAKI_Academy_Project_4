@@ -1,8 +1,55 @@
-:root {
-    --mainColor: rgba(0, 0, 255, 0.866);
+.NavBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 7vh;
+    background-color: aqua;
+    color: whitesmoke;
+    padding: 0 5rem;
+    position: relative;
 }
 
-.NavBar input {
-    border-radius: 1vh;
-    outline: none;
+.navBarLogo {
+    display: flex;
+    align-items: center;
+
 }
+
+.NavBar h1 {
+    letter-spacing: 3px;
+}
+
+.NavBar ul {
+    display: flex;
+}
+
+.NavBar ul li {
+    margin: 0 1rem;
+}
+
+.navBarItem a {
+    display: block;
+    color: blue;
+    position: relative;
+}
+
+.navBarItem a:hover {
+    color: black;
+}
+
+.navBarItem a::after {
+    content: "";
+    position: absolute;
+    height: 0.1rem;
+    width: 0;
+    left: 0;
+    top: 1.5rem;
+    background-color: black;
+    transition: width 0.3s linear;
+}
+
+.navBarItem a:hover::after {
+    width: 100%;
+}
+
+.burgerMenuIcon {}

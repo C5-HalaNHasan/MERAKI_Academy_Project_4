@@ -2,7 +2,7 @@ import "./navBar.css"
 import {FiLogIn,FiSearch} from "react-icons/fi";
 import {FaRegUserCircle,FaBars} from "react-icons/fa";
 import {AiOutlineShoppingCart,AiOutlineHeart,AiFillCloseCircle,} from "react-icons/ai";
-import {IoIosArrowDropdownCircle} from "react-icons/io";
+import {IoIosArrowDropdownCircle,IoMdSwap} from "react-icons/io";
 import React,{useState,useContext} from "react";
 import { Route, useNavigate,Link } from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
@@ -29,11 +29,11 @@ const NavBar=()=>{
 
     return <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
-    <Link to="/" className="navBarLogo">Logo</Link>
+   <h1> <Link to="/" className="navBarLogo"/>Logo<IoMdSwap/></h1>
     {/* onchange the /search is going to be rendered */}
     {/* <Link to="/search">Search </Link> */}
     <div className="menuIcon" onClick={()=>setIsClicked(!isClicked)}>
-    {isClicked?<FaBars/>:<AiFillCloseCircle/>}
+    {isClicked?<FaBars className="burgerMenuIcon"/>:<AiFillCloseCircle  className="normalMenuIcon"/>}
     </div>
 
     <ul className={isClicked? "navActive": "navMenu"}>
@@ -60,7 +60,7 @@ const NavBar=()=>{
 
     <li className="navBarItem">
     <Link to="/userboard" onClick={()=>setIsDropDown(!isDropDown)}><IoIosArrowDropdownCircle/>UserBoard</Link>
-    {token&&isDropDown&&<UserBoard isDropDown={isDropDown} setIsDropDown={setIsDropDown}/>}
+    {token&&isDropDown&&<UserBoard isDropDown={isDropDown} setIsDropDown={setIsDropDown} isClicked={isClicked} setIsClicked={setIsClicked}/>}
     </li>
 
     {/* register: not working */}

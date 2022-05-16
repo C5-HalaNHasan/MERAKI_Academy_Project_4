@@ -32,7 +32,6 @@ const UserItems=()=>{
 
 return <div>
 <NavBar/>
-<h3>userItems</h3>
 <Cards items={items} type="userBoard"/>
 </div>
 };
