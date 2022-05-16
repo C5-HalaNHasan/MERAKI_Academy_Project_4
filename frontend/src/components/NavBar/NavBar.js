@@ -2,10 +2,12 @@ import "./navBar.css"
 import {FiLogIn,FiSearch} from "react-icons/fi";
 import {FaRegUserCircle,FaBars} from "react-icons/fa";
 import {AiOutlineShoppingCart,AiOutlineHeart,AiFillCloseCircle,} from "react-icons/ai";
+import {IoIosArrowDropdownCircle} from "react-icons/io";
 import React,{useState,useContext} from "react";
 import { Route, useNavigate,Link } from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import SearchBox from "../SearchBox/SearchBox";
+import UserBoard from "../UserBoard/UserBoard";
 
 const NavBar=()=>{
     //some navbar components/elements are going to be shown only for registered users //!not used yet
@@ -16,16 +18,13 @@ const NavBar=()=>{
 
     //to control the hamburger menu:
     const [isClicked,setIsClicked]=useState(false);
+    //to control the dropdown of the userBoard menu: where the update profile,user items && logout actions
+    const [isDropDown,setIsDropDown]=useState(false);
 
     const navigate = useNavigate();
-    //logout function that is going to delete the token & userId and remove some components/elements from the homePage & the NavBar
-    const LogOut=()=>{
-        setToken(null);
-        setCurrentUserId(null);
-        //clear the local storage
-        localStorage.clear();
-        setIsRendered(true)
-        navigate("/")
+    //to redirect the user to the registration page if not logged in
+    const toRegisterPage=()=>{
+
     }
 
     return <div className="NavBar"> 
@@ -43,6 +42,7 @@ const NavBar=()=>{
     <Link to="/" onClick={()=>setIsClicked(!isClicked)}>MainPage </Link>
     </li>
 
+    {/* setting onClick when the user presses enter e.key */}
     <li className="navBarItem">
     <FiSearch/><input onChange={(e)=>setSearchedItem(e.target.value)} placeholder="Search..."></input>
     {searchedItem&&<SearchBox searchedItem={searchedItem}/>}
@@ -56,13 +56,18 @@ const NavBar=()=>{
     <Link to="/cart" onClick={()=>setIsClicked(!isClicked)}><AiOutlineShoppingCart/>Cart</Link>
     </li>
 
-    <li className="navBarItem">
-    <Link to="/userboard" onClick={()=>setIsClicked(!isClicked)}><FaRegUserCircle/>UserBoard</Link>
-    </li>
+    {/* th userBoard will only appear when the user is logged in else/a register will appear instead! */}
 
     <li className="navBarItem">
-    <Link to="/" onClick={()=>setIsClicked(!isClicked)}><FiLogIn/><label onClick={LogOut}>Logout</label></Link>
+    <Link to="/userboard" onClick={()=>setIsDropDown(!isDropDown)}><IoIosArrowDropdownCircle/>UserBoard</Link>
+    {token&&isDropDown&&<UserBoard isDropDown={isDropDown} setIsDropDown={setIsDropDown}/>}
     </li>
+
+    {/* register: not working */}
+    {/* {!token?<li className="navBarItem">
+    <Link to="/register" onClick={()=>setIsClicked(!isClicked)}><FiLogIn/></Link>
+    </li> */}
+
     </ul>
 
     </div>

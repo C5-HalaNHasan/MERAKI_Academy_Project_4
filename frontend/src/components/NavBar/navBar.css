@@ -1,10 +1,8 @@
-a {
-    margin-right: 6px;
-    margin-left: 6px;
+:root {
+    --mainColor: rgba(0, 0, 255, 0.866);
 }
 
-.NavBar h1 {
-    display: inline-block;
-    margin-right: 150px;
-    color: red;
+.NavBar input {
+    border-radius: 1vh;
+    outline: none;
 }
