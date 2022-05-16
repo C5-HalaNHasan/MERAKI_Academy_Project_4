@@ -8,7 +8,7 @@ import abs_wall from "../assets/abs_wall.jpg"
 import { FaRegFileArchive } from "react-icons/fa";
 
 
-const ModalBox=({showModalBox,setShowModalBox})=>{
+const ModalBox=({showModalBox,setShowModalBox,message})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
@@ -20,10 +20,9 @@ const ModalBox=({showModalBox,setShowModalBox})=>{
         return null;
     }
 
-
-
 return <div className="modalBox">
 <div className="contentsContainer">
+{/* diferent pictures are going to be rendered based on the success of the operation */}
 <img src={abs_wall} alt=""/>
 
 <div className="modalRight">
@@ -32,12 +31,13 @@ return <div className="modalBox">
 }}/></span>
 
 <div className="boxContent">
-<h3>message</h3>
+
+<h3>{message}</h3>
 <p>a message is going to be rendered for the user based on the clicked button: if buy it will show a box to specify address then to the onlinement page, if swap: it will render the elements of the user that are >= price of the element, if add to wishList: it will tell the user that the item has been added/removed to/from the wish list,if add to cart: it will show the user that the item has been added/removed from cart</p>
 </div>
 
 <div className="actionButtonsContainer">
-{/* the buttons are going to be rendered based on the clicked button on the card */}
+{/* the buttons are going to be rendered based on the clicked button on the card (as symbols)*/}
 <button className="actionButton">Ok</button>
 <button className="actionButton">Cancel</button>
 </div>

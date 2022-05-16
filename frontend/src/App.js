@@ -12,7 +12,6 @@ import UserBoard from "./components/UserBoard/UserItems";
 import UserProfile from "./components/UserBoard/UserProfile";
 import UserItems from "./components/UserBoard/UserItems";
 import CheckOut from "./components/CheckOut.js/CheckOut";
-import Payment from "./components/Payment/Payment";
 import axios from "axios";
 
 
@@ -24,7 +23,7 @@ const App=()=> {
   const [token,setToken]=useState(localStorage.getItem("token")); 
   const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
   const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
-  const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search
+  const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search //!not used yet
 
 
 
@@ -44,7 +43,6 @@ const App=()=> {
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/checkout" element={<CheckOut/>}/>
-      <Route path="/payment" element={<Payment/>}/>
 
       
 

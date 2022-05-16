@@ -170,13 +170,29 @@ console.log(error)
 //! end of update items//! not working/tested yet
 
 
+//!start of swapAction //! not programmed yet:
+// toDo: if the user has items with price >= item he would like to exchange  && they both live in the same country: the cards are going to be rendered with one button only which is swap
+
+// toDo: when swap is pressed: //! this will be handelled in the cards component
+// toDo-1:the owner of the two items will be exchanged
+// toDo-2:the state of the item will be set to isSold:true so that it will not be rerenderd in the main page
+// toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
+// toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
+const swapItem=(itemId)=>{
+    console.log("hello from swap action")
+};
+
+//! end of swapAction//! not working/tested yet
+
+
+
     return <div className="cardsContainer">
     {/* <h1>here the cards are going to be rendered</h1> */}
     
     <button onClick={()=>{ //! for testing to be deleted
         setShowModalBox(true);
     }}>show modal box </button>
-    <ModalBox showModalBox={showModalBox} setShowModalBox={setShowModalBox}/>
+    <ModalBox showModalBox={showModalBox} setShowModalBox={setShowModalBox} message={"hello from the cards component"}/>
 
     {items.map((elem)=>{
         return <div className="card" key={elem._id}>
@@ -230,6 +246,12 @@ console.log(error)
         {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)?<li onClick={()=>{  
               removeFromCart(elem._id)
         }}><Link to=""/>Remove from Cart</li>:null}
+        {/* remove from cart button ends here/end of actionButtons div here*/}
+
+        {/* swap action starts here*/}
+        {type="swap"&&<li onClick={()=>{  
+             swapItem(elem._id)
+        }}><Link to=""/>SWAP</li>}
         {/* remove from cart button ends here/end of actionButtons div here*/}
         </ul>
 

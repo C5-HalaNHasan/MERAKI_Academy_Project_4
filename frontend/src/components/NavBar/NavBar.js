@@ -43,7 +43,7 @@ const NavBar=()=>{
 
     <ul className={isClicked? "navBurger": ""}>
 
-    {/* setting onClick when the user presses enter e.key */}
+    {/* setting onClick when the user presses enter e.key /also the search bar will only appear in the MAIN PAGE*/}
     <li className="navBarItem">
     <FiSearch/><input onChange={(e)=>setSearchedItem(e.target.value)} placeholder="Search..."></input>
     {searchedItem&&<SearchBox searchedItem={searchedItem}/>}

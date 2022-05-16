@@ -21,12 +21,12 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
 
     //logout function that is going to delete the token & userId and remove some components/elements from the homePage & the NavBar
     const LogOut=()=>{
+        setIsClicked(!isClicked)
         setToken(null);
         setCurrentUserId(null);
         //clear the local storage
         localStorage.clear();
         setIsRendered(true)
-        setIsClicked(!isClicked)
         navigate("/")
     }
 
@@ -36,6 +36,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
     <li className="drpDownItem">
     <Link to="/userprofile" onClick={()=>setIsClicked(!isClicked)}><FaRegUserCircle/>Profile</Link>
     </li>
+    {/* when clicking on the items it will redirect the user to his items but the dropdown menu stops responding */}
 
     <li className="drpDownItem">
     <Link to="/useritems" onClick={()=>setIsClicked(!isClicked)}><AiOutlineProfile/>Items</Link>
