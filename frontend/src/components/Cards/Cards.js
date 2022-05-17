@@ -18,14 +18,15 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
-    const {userItems,setUserItems}=useContext(TokenContext); 
+    const {currentUserItems,setCurrentUserItems}=useContext(TokenContext); 
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
 
     //to set the modal box visibility:
     const [showModalBox,setShowModalBox]=useState(false)
     //to show messages by modal box:
-    const [modalBoxMesage,setModaBoxlMessage]=useState(false)
+    const [modalBoxMessage,setModalBoxlMessage]=useState(false)
+    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
     //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
     const [canSwap,setCanSwap]=useState(false)
 
@@ -176,53 +177,72 @@ console.log(error)
 };
 //! end of update items//! not working/tested yet
 
-//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true
-const [itemPrice,setItemPrice]=useState(0)
-const [itemOwnerCountry,setItemOwnerCountry]=useState();
+//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
+//! use states are not ging to be used
+// const [currentUserCountry,setCurrentUserCountry]=useState();
+// const [itemsCanBeSwaped,setitemsCanBeSwaped]=useState([])
 
-const [myCountry,setmyCountry]=useState();
-const canSwapThis=(ClickedItemId)=>{
-    //to search for the clicked item price:
-    let itemByIdURL=`http://localhost:5000/items/${ClickedItemId}`
-    axios.get(itemByIdURL,{headers:{authorization:token}}).then((result)=>{
-       if(result){
-           console.log("HELLOOOO from item price ",result.data.item)
-           setItemPrice(result.data.item.price)
-           setItemOwnerCountry(result.data.item.owner.country)
-           console.log("HELLOOOO from item OWNER COUNTRY ",result.data.item.owner.country)
-       }
-    }).catch((error)=>{
-        console.log(error)
-    });
-
+const canSwapThis=async (ClickedItemId,clickedItemCountry,ClickedItemPrice)=>{
+    //to search for the current user country:
+    let getUser="http://localhost:5000/users/user";
+    axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
+        if(result1){
+    //! nested axios to handle all the operations:
     //to search in the user items if he has items with a value >= wanted item:
     let allItemsURL="http://localhost:5000/items"
-        axios.get(allItemsURL,  {headers: {authorization: token }}).then((result)=>{
-            console.log(result);
+    axios.get(allItemsURL,  {headers: {authorization: token }}).then( (result2)=>{
+        if(result2.data.items.length>0){
+            let filteredItems= result2.data.items.filter((elem)=>{
+                return elem.owner._id==currentUserId
+            });
+            // setCurrentUserItems(filteredItems); 
+            // console.log("currentuserItems are", currentUserItems) //! to be deleted
+            console.log(result1.data.user.country,clickedItemCountry)
 
-            if(result.data.items.length>0){
-                let filteredItems= result.data.items.filter((elem)=>{
-                    return elem.owner._id==currentUserId
-                })
-                setUserItems(filteredItems); 
-                console.log("swap filterd items are ",filteredItems)
-        
-                let filteredItemsByPrice= userItems.filter((elem)=>{
-                    return elem.price>=itemPrice  //! items with lower price are returned!
-                })
-                setItems(filteredItemsByPrice); 
-                console.log("swap filterd items FOR THE USER >= ITEM PRICE",filteredItems)
-                if(items.length>0){
-                    setCanSwap(true); //! not working as intended
-                }
-               }
-            //    console.log("can swap??",canSwap,"acceptable items are", items) //! to be deleted
-        }).catch((err)=>{
-            console.log(err);
-        })
+            let filteredItemsByPrice=  filteredItems.filter((elem)=>{ //! not working
+                 return elem.price >= ClickedItemPrice //! items with lower price are returned!
+            });
+            console.log(filteredItemsByPrice); //!
+            if(filteredItemsByPrice.length>0&&result1.data.user.country==clickedItemCountry){
+                // setitemsCanBeSwaped(filteredItemsByPrice) //!this will be sent to the swap page not the itemsCan beswaped
+                setCanSwap(true)
+                navigate("/swap")
+            }else if(filteredItemsByPrice.length==0){
+                setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")
+                setModalBoxlMessageType("notOk")
+            }else if(result1.data.user.country.toLowerCase() != clickedItemCountry.toLowerCase()){
+                setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")
+                setModalBoxlMessageType("notOk")
+            }
+           };
+           console.log(canSwap)
+    }).catch((err)=>{
+        console.log(err);
+    })
+
+    
+
+
+    }
+
+
+
+    }).catch((error1)=>{
+        console.log(error1);
+    })
+
+  
+
 
 
 };
+
+// useEffect(()=>{
+//     if(canSwap){
+
+//     }
+
+// },[canSwap])
 //swapping the owners of the items and setting the isSold:true  //! swap is working one way //! this action is in /swap/:d page
 const [swapOwner,setSwapOwner]=useState()
 const swapOwnersById=(myItemId)=>{
@@ -321,7 +341,7 @@ const swapOwnersById=(myItemId)=>{
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>canSwapThis(elem._id)}   
+        {elem.owner._id !== currentUserId&& <li onClick={()=>canSwapThis(elem._id,elem.owner.country,elem.price)}   
         ><Link to="/swap"/>SWAP1</li>}
         {/* swap action button ends here}*/}
 

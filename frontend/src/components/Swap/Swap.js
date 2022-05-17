@@ -26,7 +26,8 @@ const Swap=()=>{
     const {userItems,setUserItems}=useContext(TokenContext); 
 
     //to get the id of the item and search for it in the data base:
-    const {id}=useParams()
+    // const {id}=useParams() //! setparams is removed from APP.js
+    let id; //! just to remove error
     console.log("from searching byid",id) //! to be deleted
 
 
