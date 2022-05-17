@@ -24,6 +24,9 @@ const Cards=({items,setItems,type,swappedItemId})=>{
 
     //to set the modal box visibility:
     const [showModalBox,setShowModalBox]=useState(false)
+    //to show messages by modal box:
+    const [modalBoxMesage,setModaBoxlMessage]=useState(false)
+    //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
     const [canSwap,setCanSwap]=useState(false)
 
 
@@ -122,7 +125,7 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     };
 
 
-//!start of update items function //! not working/tested yet
+//!start of update items function //! NOT WORKING/TESTED YET
 const [itemPic,setItemPic]=useState([])
  //the item updates are going to be collected in an object and sent to the backend to be checked and updated accordingly
  const [itemData,setItemData]=useState({
@@ -173,8 +176,54 @@ console.log(error)
 };
 //! end of update items//! not working/tested yet
 
+//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true
+const [itemPrice,setItemPrice]=useState(0)
+const [itemOwnerCountry,setItemOwnerCountry]=useState();
 
-//swapping the owners of the items and setting the isSold:true  //! swap is working one way
+const [myCountry,setmyCountry]=useState();
+const canSwapThis=(ClickedItemId)=>{
+    //to search for the clicked item price:
+    let itemByIdURL=`http://localhost:5000/items/${ClickedItemId}`
+    axios.get(itemByIdURL,{headers:{authorization:token}}).then((result)=>{
+       if(result){
+           console.log("HELLOOOO from item price ",result.data.item)
+           setItemPrice(result.data.item.price)
+           setItemOwnerCountry(result.data.item.owner.country)
+           console.log("HELLOOOO from item OWNER COUNTRY ",result.data.item.owner.country)
+       }
+    }).catch((error)=>{
+        console.log(error)
+    });
+
+    //to search in the user items if he has items with a value >= wanted item:
+    let allItemsURL="http://localhost:5000/items"
+        axios.get(allItemsURL,  {headers: {authorization: token }}).then((result)=>{
+            console.log(result);
+
+            if(result.data.items.length>0){
+                let filteredItems= result.data.items.filter((elem)=>{
+                    return elem.owner._id==currentUserId
+                })
+                setUserItems(filteredItems); 
+                console.log("swap filterd items are ",filteredItems)
+        
+                let filteredItemsByPrice= userItems.filter((elem)=>{
+                    return elem.price>=itemPrice  //! items with lower price are returned!
+                })
+                setItems(filteredItemsByPrice); 
+                console.log("swap filterd items FOR THE USER >= ITEM PRICE",filteredItems)
+                if(items.length>0){
+                    setCanSwap(true); //! not working as intended
+                }
+               }
+            //    console.log("can swap??",canSwap,"acceptable items are", items) //! to be deleted
+        }).catch((err)=>{
+            console.log(err);
+        })
+
+
+};
+//swapping the owners of the items and setting the isSold:true  //! swap is working one way //! this action is in /swap/:d page
 const [swapOwner,setSwapOwner]=useState()
 const swapOwnersById=(myItemId)=>{
     let yourItemUrl=`http://localhost:5000/items/${swappedItemId}`
@@ -231,16 +280,13 @@ const swapOwnersById=(myItemId)=>{
             <h2>{elem.item} </h2>
             <h3>price:{elem.price}</h3>
             <h3>{elem.description}</h3>
-            {/* elem.category || elem.category.category if populated */}
             <h5>Category:{elem.category.category}</h5>
-            {/* owner must be populated */}
             <h5>Owner:{elem.owner.firstName}</h5>
             <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
           </div>
 
           <ul className="actionButtons"> 
 
-            {elem.swap && elem.owner._id !=currentUserId&&<li><Link to=""/>swap</li>}
             {elem.sell&&elem.owner._id  !=currentUserId&&<li><Link to=""/>buy</li>}
             {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 deleteItemFromDb(elem._id)
@@ -275,15 +321,21 @@ const swapOwnersById=(myItemId)=>{
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{ navigate(`/swap/${elem._id}`)    
-        }}><Link to="/swap"/>SWAP</li>}
-        {/* swap action button ends here}
+        {elem.owner._id !== currentUserId&& <li onClick={()=>canSwapThis(elem._id)}   
+        ><Link to="/swap"/>SWAP1</li>}
+        {/* swap action button ends here}*/}
 
-        {/* swap button starts here*/}
-        {type==="swap"&& <li id={elem._id} onClick={()=>{ swapOwnersById(elem._id)  
+
+        {/* {elem.owner._id !== currentUserId&& <li onClick={()=>{ navigate(`/swap/${elem._id}`)    
+        }}><Link to="/swap"/>SWAP1</li>} */} freezed for testing
+
+        
+        
+
+        {/* swap button starts here /it appears in the swapped items page /swap/:id */}
+        {type==="swap"&& <li id={elem._id} onClick={()=>{ swapOwnersById(elem._id)  //! country check and modal box
         }}><Link to="/swap"/><IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
-      
         </ul>
 
         </div>

@@ -50,9 +50,9 @@ const getAllItems= (req, res) => {
 };
 
 // this function gets an item by its id:
-const getItemById= (req, res) => {
+const getItemById= (req, res) => { //! user populated on 17/5 tuesday
   let itemId=req.params.id;
-  itemModel.findOne({_id:itemId}).populate({path:"category",model:"category"}).then((result)=>{
+  itemModel.findOne({_id:itemId}).populate({path:"category",model:"category"}).populate({path:"owner",model:"user"}).then((result)=>{
     if(result){
       res.status(200).json({
         success:true,

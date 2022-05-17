@@ -8,7 +8,7 @@ import abs_wall from "../assets/abs_wall.jpg"
 import { FaRegFileArchive } from "react-icons/fa";
 
 
-const ModalBox=({showModalBox,setShowModalBox,message})=>{
+const ModalBox=({showModalBox,setShowModalBox,message,type})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 

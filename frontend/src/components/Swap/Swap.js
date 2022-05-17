@@ -20,8 +20,8 @@ const Swap=()=>{
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     let [resultMessage,setResultMessage]=useState("");
     const [items,setItems]=useState([])
-    const [canSwap,setCanSwap]=useState(false)
-    const [itemPrice,setItemPrice]=useState(0)
+    const [canSwap,setCanSwap]=useState(false) //! to be used in the CARDS COMPONENT NOT HERE to check: if canSwap then this page will be rendered if not a modal box will tell the user that he can swap: by using ternary operator in the SWAP button
+    const [itemPrice,setItemPrice]=useState(0) //!moved to cards component
 
     const {userItems,setUserItems}=useContext(TokenContext); 
 
@@ -43,7 +43,7 @@ const searchById=((id)=>{
         })
 });
 
- useEffect(()=>{
+ useEffect(()=>{ //!taken to cards component
         searchById(id);
         setCanSwap(false);
         let allItemsURL="http://localhost:5000/items"
