@@ -35,12 +35,11 @@ const swapOwnersById=async ()=>{
         //update my item owner to the user is wapped his item:
        await axios.put(yourItemUrl,{owner:ownerId,isSold:"true"},{headers:{authorization:token}}).then(async (result2)=>{
             console.log("from checkout result2 ",result2)
-            
         }).catch((error2)=>{
             console.log(error2);
         })
-    
-        }).catch((error1)=>{
+
+    }).catch((error1)=>{
             console.log(error1)
         })
         console.log("hello from swap owner by id function")
@@ -50,18 +49,18 @@ const swapOwnersById=async ()=>{
 
 
 const CheckOutAction=async ()=>{ 
-        console.log("from the checkout page ",ownerId==swappedItem.ownerId)
+        console.log("from the checkout page ",swappedItem)
         console.log("swapped item info ",swappedItem.ownerId)
         console.log("my item info:  ",ownerId)
 
-        if(ownerId!==swappedItem.ownerId){//! swap action==>swapping is done then redirected to his items page
-            swapOwnersById();
+        if(ownerId!==swappedItem.ownerId ){//! swap action==>swapping is done then redirected to his items page
+            // swapOwnersById();
             navigate("/useritems")
-            console.log("swapped!!")
+            console.log("swapped!!")//! to be deleted
 
         }else{ //! buy action==>redirected to the payment page
             navigate(`/onlinepayment/${swappedItem.id}/${swappedItem.price}/${swappedItem.country}/${swappedItem.category}/${swappedItem.ownerId}/${swappedItem.img}`) //! then once payment complete:the item will be swapped as before
-            console.log("not swapped!")
+            console.log("not swapped!")//! to be deleted
         
             //! modal box will be shown when pressing ok then it will be redirected to the userItems page
         }
@@ -77,8 +76,6 @@ return (
      <div className="firstPart">
      {/* //! the swappd item will be shown b y setting a ternary operator if swapped item id saved in context===the id sent to the checkout page */}
     <img src={abs_wall} /> 
-    <img src={abs_wall} /> //! the swappd item will be shown
-
     </div>
 
     <div className="secondPart">
@@ -90,7 +87,7 @@ return (
         <input type="text" placeholder="Contact Number..." name="contactNum" ></input>
         <input type="text" placeholder="City..." name="city" ></input>
         <input type="text" placeholder="Address..." name="address" ></input>
-        <button onClick={CheckOutAction} className="btn">Proceed</button>
+        <button onClick={()=>{CheckOutAction()}} className="btn">Proceed</button>
         <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
         </form>
         {/* //! to be updated (a modalBox with settime out is going to be shown) */}

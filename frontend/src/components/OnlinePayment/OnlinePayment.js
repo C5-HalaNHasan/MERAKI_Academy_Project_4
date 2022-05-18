@@ -13,7 +13,7 @@ const OnlinePayment=()=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
 
     //to save the swapped item data so that it can be transferred to the check out page
-    const {id,price,country,category,ownerId,img}=useParams();//! this is my item info
+    const {item,id,price,country,category,ownerId,img}=useParams();//! this is my item info
     const {swappedItem,setSwappedItem}=useContext(TokenContext);//this is the swapped item info
 
     //to show messages by modal box: //!MODALBOX WILL BE USED AS CONTEXT FROM APP: SHOW,TYPE,MESSAGE
