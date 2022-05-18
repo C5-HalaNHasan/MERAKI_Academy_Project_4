@@ -46,7 +46,7 @@ const App=()=> {
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/checkout" element={<CheckOut/>}/>
-      <Route path="/swap" element={<Swap/>}/>
+      <Route path="/swap/:id/:price/:country" element={<Swap/>}/>
 
 
       

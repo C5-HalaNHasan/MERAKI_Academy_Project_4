@@ -2,15 +2,14 @@ import "./cards.css"
 import {AiOutlineShoppingCart,AiOutlineHeart} from "react-icons/ai";
 import {IoMdSwap} from "react-icons/io";
 import React,{useState,useContext,useEffect} from "react";
-
-
-
 import axios from "axios";
-import { useNavigate,Link} from "react-router-dom";
+import { useNavigate,Link,useParams} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
 import ModalBox from "../ModalBox/ModalBox";
 import Swap from "../Swap/Swap";
+import UserItems from "../UserBoard/UserItems";
+
 
 
 const Cards=({items,setItems,type,swappedItemId})=>{
@@ -177,15 +176,14 @@ console.log(error)
 };
 //! end of update items//! not working/tested yet
 
-//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
-//! use states are not ging to be used
-// const [currentUserCountry,setCurrentUserCountry]=useState();
-// const [itemsCanBeSwaped,setitemsCanBeSwaped]=useState([])
 
+//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
+
+//!this function is moved to the swap component
 const canSwapThis=async (ClickedItemId,clickedItemCountry,ClickedItemPrice)=>{
     //to search for the current user country:
     let getUser="http://localhost:5000/users/user";
-    axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
+    await axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
         if(result1){
     //! nested axios to handle all the operations:
     //to search in the user items if he has items with a value >= wanted item:
@@ -195,89 +193,73 @@ const canSwapThis=async (ClickedItemId,clickedItemCountry,ClickedItemPrice)=>{
             let filteredItems= result2.data.items.filter((elem)=>{
                 return elem.owner._id==currentUserId
             });
-            // setCurrentUserItems(filteredItems); 
-            // console.log("currentuserItems are", currentUserItems) //! to be deleted
-            console.log(result1.data.user.country,clickedItemCountry)
-
-            let filteredItemsByPrice=  filteredItems.filter((elem)=>{ //! not working
-                 return elem.price >= ClickedItemPrice //! items with lower price are returned!
+            let filteredItemsByPrice=  filteredItems.filter((elem)=>{ 
+                 return elem.price >= ClickedItemPrice 
             });
-            console.log(filteredItemsByPrice); //!
-            if(filteredItemsByPrice.length>0&&result1.data.user.country==clickedItemCountry){
-                // setitemsCanBeSwaped(filteredItemsByPrice) //!this will be sent to the swap page not the itemsCan beswaped
-                setCanSwap(true)
-                navigate("/swap")
+
+            if(filteredItems){
+            if(filteredItemsByPrice.length>0&&result1.data.user.country===clickedItemCountry){
+                navigate(`/swap/${ClickedItemId}`)
+                setItems(filteredItemsByPrice) //! items
+                setCanSwap(true) 
+
             }else if(filteredItemsByPrice.length==0){
+                setCanSwap(false) 
                 setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")
                 setModalBoxlMessageType("notOk")
             }else if(result1.data.user.country.toLowerCase() != clickedItemCountry.toLowerCase()){
+                setCanSwap(false) 
                 setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")
                 setModalBoxlMessageType("notOk")
             }
+            }
            };
-           console.log(canSwap)
-    }).catch((err)=>{
-        console.log(err);
+
+    }).catch((error2)=>{
+        console.log(error2);
     })
 
-    
-
-
-    }
-
-
-
+    }//end if statement where all nested axios
     }).catch((error1)=>{
         console.log(error1);
     })
-
-  
-
-
-
 };
 
-// useEffect(()=>{
-//     if(canSwap){
+//toDo:before swap operation is done:
+//once clicked the button:the user will be redirected to the address page to deliver the item for him
+//the location page has two buttons:cancel that will return to the homepage ,and proceed that will make the swap action then redirect the user to the home page
 
-//     }
-
-// },[canSwap])
-//swapping the owners of the items and setting the isSold:true  //! swap is working one way //! this action is in /swap/:d page
-const [swapOwner,setSwapOwner]=useState()
-const swapOwnersById=(myItemId)=>{
+//! same problem as before! keeps giving undefined :"(
+//swapping the owners of the items and setting the isSold:true  //! swap is working FINALLY :")
+const swapOwnersById=async (myItemId)=>{ //! this will be handelled once the user agrees on the modalBox message
     let yourItemUrl=`http://localhost:5000/items/${swappedItemId}`
     let myItemUrl=`http://localhost:5000/items/${myItemId}`
-    console.log("swapOwnersByI ",swappedItemId)
 
-      //get the item owner by its id:
-      axios.get(yourItemUrl,{headers:{authorization:token}}).then((result)=>{
-        if(result){
-            console.log("from javascript line 186  ",result.item)
-            setSwapOwner(result.data.item.owner)
-            console.log(result.data.item.owner)
-        }
-     }).catch((error)=>{
-         console.log(error)
+      //get the clickeditem owner by its id:
+      await axios.get(yourItemUrl,{headers:{authorization:token}}).then(async (result1)=>{
+        if(result1){
+            console.log("current owner of the wanted item",result1.data.item) //!to be deleted
+
+    //update the old:
+     await axios.put(myItemUrl,{owner:result1.data.item.owner,isSold:"true"},{headers:{authorization:token}}).then(async (result2)=>{
+        console.log("new owner of the wanted item",result2.data.item," which should match the current userId") //!to be deleted
+
+    //update the clicked item owner: from old to me:
+    await axios.put(yourItemUrl,{owner:currentUserId,isSold:"true"},{headers:{authorization:token}}).then(async (result3)=>{
+        console.log("my new item in the list owner",result3.data.item," which should match the current userId whish is me") //!to be deleted
+
+    }).catch((error3)=>{
+    console.log(error3)
+    });
+
+    }).catch((error2)=>{
+    console.log(error2)
+    });
+
+    } //end of if result1 statement
+     }).catch((error1)=>{
+         console.log(error1)
      });
-
-
-     //update the old
-     axios.put(myItemUrl,{owner:swapOwner,isSold:"true"},{headers:{authorization:token}}).then((result)=>{
-        console.log(result.data) 
-        setIsRendered(!isRendered)
-    }).catch((error)=>{
-    console.log(error)
-    });
-
-    
-    //update the bought item owner: from old to me
-    axios.put(yourItemUrl,{owner:currentUserId,isSold:"true"},{headers:{authorization:token}}).then((result)=>{
-        console.log(result.data) 
-        setIsRendered(!isRendered)
-    }).catch((error)=>{
-    console.log(error)
-    });
 };
 
 
@@ -341,20 +323,14 @@ const swapOwnersById=(myItemId)=>{
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>canSwapThis(elem._id,elem.owner.country,elem.price)}   
-        ><Link to="/swap"/>SWAP1</li>}
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}`)  
+        }}>SWAP</li>}
         {/* swap action button ends here}*/}
 
 
-        {/* {elem.owner._id !== currentUserId&& <li onClick={()=>{ navigate(`/swap/${elem._id}`)    
-        }}><Link to="/swap"/>SWAP1</li>} */} freezed for testing
-
-        
-        
-
-        {/* swap button starts here /it appears in the swapped items page /swap/:id */}
-        {type==="swap"&& <li id={elem._id} onClick={()=>{ swapOwnersById(elem._id)  //! country check and modal box
-        }}><Link to="/swap"/><IoMdSwap/></li>}
+        {/* swap button starts here /it appears in the swapped items page /swap */}
+        {type==="swap"&& <li id={elem._id} onClick={()=>{ swapOwnersById(elem._id)  //!modalBox
+        }}><IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>
 

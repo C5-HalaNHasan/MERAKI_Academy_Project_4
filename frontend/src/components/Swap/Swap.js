@@ -18,74 +18,81 @@ const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
-    let [resultMessage,setResultMessage]=useState("");
     const [items,setItems]=useState([])
-    const [canSwap,setCanSwap]=useState(false) //! to be used in the CARDS COMPONENT NOT HERE to check: if canSwap then this page will be rendered if not a modal box will tell the user that he can swap: by using ternary operator in the SWAP button
-    const [itemPrice,setItemPrice]=useState(0) //!moved to cards component
+    let [resultMessage,setResultMessage]=useState("");
+    const {userItems,setUserItems}=useContext(TokenContext);
+    
+    const {id,price,country}=useParams();
+    console.log(id,price,country)//!to be deleted
 
-    const {userItems,setUserItems}=useContext(TokenContext); 
+    //to show messages by modal box:
+    const [modalBoxMessage,setModalBoxlMessage]=useState(false)
+    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
+    //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
+    const [canSwap,setCanSwap]=useState(false)
 
-    //to get the id of the item and search for it in the data base:
-    // const {id}=useParams() //! setparams is removed from APP.js
-    let id; //! just to remove error
-    console.log("from searching byid",id) //! to be deleted
+
+//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
+
+const canSwapThis=async (id,price,country)=>{ //! TO BE CHECKED NOT WORKING AS INTENDED
+    //to search for the current user country:
+    let getUser="http://localhost:5000/users/user";
+    await axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
+        if(result1){
+    //! nested axios to handle all the operations:
+    //to search in the user items if he has items with a value >= wanted item:
+    let allItemsURL="http://localhost:5000/items"
+    axios.get(allItemsURL,  {headers: {authorization: token }}).then( (result2)=>{
+        if(result2.data.items.length>0){
+            let filteredItems= result2.data.items.filter((elem)=>{
+                return elem.owner._id==currentUserId
+            });
+            let filteredItemsByPrice=  filteredItems.filter((elem)=>{ 
+                 return elem.price >= price
+            });
+
+            if(filteredItemsByPrice.length>0&&result1.data.user.country==country){
+                console.log("you can swap!!")//! to be deleted
+                setItems(filteredItemsByPrice) 
+                setCanSwap(true) 
+                console.log(filteredItemsByPrice,"from the inside of the swap component")//! to be deleted
+
+            }else if(filteredItemsByPrice.length==0){
+                console.log("Sorry! you don't have an item equivalent to this item price!")
+                setCanSwap(false) 
+                setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")
+                setModalBoxlMessageType("notOk")
+            }else if(result1.data.user.country.toLowerCase() != country.toLowerCase()){
+                console.log("Sorry! Our delivery services is only within the same country!")//! to be deleted
+
+                setCanSwap(false) 
+                setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")
+                setModalBoxlMessageType("notOk")
+            }
+         
+           };
+
+    }).catch((error2)=>{
+        console.log(error2);
+    })
+    }//end if statement where all nested axios
+    }).catch((error1)=>{
+        console.log(error1);
+    })
+};
 
 
-//to search for the passed (wanted to be swaped by):
-const searchById=((id)=>{
-        let itemByIdURL=`http://localhost:5000/items/${id}`
-        axios.get(itemByIdURL,{headers:{authorization:token}}).then((result)=>{
-           if(result){
-               console.log("from item price ",result)
-               setItemPrice(result.item.price)
-           }
-        }).catch((error)=>{
-            console.log(error)
-        })
-});
+useEffect(()=>{
+    canSwapThis(id,price,country);
+},[])
 
- useEffect(()=>{ //!taken to cards component
-        searchById(id);
-        setCanSwap(false);
-        let allItemsURL="http://localhost:5000/items"
-        axios.get(allItemsURL,  {headers: {authorization: token }}).then((result)=>{
-            console.log(result);
-
-            if(result.data.items.length>0){
-                let filteredItems= result.data.items.filter((elem)=>{
-                    return elem.owner._id==currentUserId
-                })
-                setUserItems(filteredItems); 
-                console.log("swap filterd items are ",filteredItems)
-        
-                let filteredItemsByPrice= userItems.filter((elem)=>{
-                    return elem.price>=itemPrice  //! items with lower price are returned!
-                })
-                setItems(filteredItemsByPrice); 
-                console.log("swap filterd items FOR THE USER >= ITEM PRICE",filteredItems)
-                if(items.length>0){
-                    setCanSwap(true); //! not working as intended
-                }
-               }
-            //    console.log("can swap??",canSwap,"acceptable items are", items) //! to be deleted
-        }).catch((err)=>{
-            console.log(err);
-        })
-    },[])
-
-   
-// console.log("hello from swap action",userItems)
-
-// console.log("hello from Swap component, the acceptable elements are :" ,items)
-
-console.log("can swap??",canSwap,"acceptable items are", items) //! to be deleted
+console.log("THIS IS THE SWAP COMPONENT", items,"can he swap?? ",canSwap) //! to be deleted
 
 
 
 return <div>
 <NavBar/>
-{canSwap?<h1>yes</h1>:<h1>modalBox:no</h1>}
-<Cards items={items} swappedItemId={id} type="swap"/>
+<Cards items={items} setItems={setItems} swappedItemId={id} type="swap"/>
 
 </div>
 };

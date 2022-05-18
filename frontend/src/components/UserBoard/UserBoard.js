@@ -21,13 +21,13 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
 
     //logout function that is going to delete the token & userId and remove some components/elements from the homePage & the NavBar
     const LogOut=()=>{
-        setIsClicked(!isClicked)
-        setToken(null);
-        setCurrentUserId(null);
-        //clear the local storage
-        localStorage.clear();
-        setIsRendered(true)
-        navigate("/")
+        // setIsClicked(!isClicked)
+        // setToken(null);
+        // setCurrentUserId(null);
+        // localStorage.clear();
+        // setIsRendered(true)
+        // navigate("/")
+        console.log("hello from log out")
     }
 
     return <div className="userBoard">
