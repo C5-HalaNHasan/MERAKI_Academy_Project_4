@@ -6,7 +6,7 @@ import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/fr
 import abs_wall from "../assets/abs_wall.jpg";
 import NavBar from "../NavBar/NavBar";
 
-
+//! 19/5: TO BE CHECKED,SWAPPING IS NOT WORKING ALL THE TIMES!
 const CheckOut=()=>{
     const {token,setToken}=useContext(TokenContext); 
     //to save the current userId

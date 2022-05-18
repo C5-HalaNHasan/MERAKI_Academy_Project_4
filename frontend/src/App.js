@@ -38,6 +38,13 @@ const App=()=> {
     ownerId:"",
   });
 
+  //modalBox to show messages for the user: //! to be implemented wherever required
+  const [modalBox,setModalBox]=useState({
+    type:"",
+    message:"",
+    showModalBox:"false",
+  });
+
 
 
 

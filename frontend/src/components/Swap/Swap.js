@@ -15,7 +15,7 @@ import NavBar from "../NavBar/NavBar";
 // toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
 
 
-
+//! 19/5: TO BE CHECKED,MODALBOX TO BE SET IF THE COUNTRIES OR THE FILTERED ITEMS CRITERIA
 const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
