@@ -41,7 +41,7 @@ const PaymentAction=()=>{
         <>
         <NavBar/>
     <div className="mainBox">
-    <h1>hello from the payment page</h1>
+    <h1>hello from the payment page/STILL NOT WORKING YET</h1>
     </div>
     </>
     )

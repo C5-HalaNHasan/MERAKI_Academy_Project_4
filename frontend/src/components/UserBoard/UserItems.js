@@ -6,13 +6,13 @@ import axios from "axios";
 import Cards from "../Cards/Cards";
 import NavBar from "../NavBar/NavBar";
 
-
 const UserItems=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const [items,setItems]=useState([]);
     let [resultMessage,setResultMessage]=useState("");
+    const navigate=useNavigate();
 
 
     //get user by id to show his picture in the update box:
@@ -30,8 +30,10 @@ const UserItems=()=>{
         })
     },[isRendered])
 
+
 return <div>
 <NavBar/>
+<button style={{fontSize:"30px",borderRadius:"50%",padding:"15px",float:"right",margin:"25px"}} onClick={()=>navigate("/additem")}>ADD+</button>
 <Cards items={items} setItems={setItems} type="userBoard"/>
 </div>
 };

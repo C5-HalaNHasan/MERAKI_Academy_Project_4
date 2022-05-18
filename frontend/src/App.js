@@ -14,6 +14,8 @@ import UserItems from "./components/UserBoard/UserItems";
 import CheckOut from "./components/CheckOut.js/CheckOut";
 import Swap from "./components/Swap/Swap";
 import OnlinePayment from "./components/OnlinePayment/OnlinePayment";
+import UpdateItem from "./components/UserBoard/UpdateItem";
+import AddItem from "./components/UserBoard/AddItem";
 import axios from "axios";
 
 
@@ -57,6 +59,10 @@ const App=()=> {
       <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
       <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
       <Route path="/onlinepayment/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>
+      <Route path="/updateitem/:id/:img" element={<UpdateItem />}/>
+      <Route path="/additem/" element={<AddItem />}/>
+
+
 
 
 

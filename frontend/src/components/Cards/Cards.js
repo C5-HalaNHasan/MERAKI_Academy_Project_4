@@ -127,57 +127,6 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     };
 
 
-//!start of update items function //! NOT WORKING/TESTED YET
-const [itemPic,setItemPic]=useState([])
- //the item updates are going to be collected in an object and sent to the backend to be checked and updated accordingly
- const [itemData,setItemData]=useState({
-    swapConfirmed:undefined,
-    isSold: undefined,
-    description: undefined,
-    swap: undefined,
-    sell: undefined,
-    photos: [],
-});
-
-const changeItemPic=(e)=>{
-setItemPic(e.target.files[0]);//! not set yet
-//cloudinary is used to uplad the images==>then the url is going to be stored in the database,
-const data = new FormData()
-data.append("file", e.target.files[0]); //!multiphotos to be added (by map function)
-data.append("upload_preset", "rapulojk")
-data.append("cloud_name","difjgm3tp")
-
-let uploadPicUrl="https://api.cloudinary.com/v1_1/difjgm3tp/image/upload"
-axios.post(uploadPicUrl,data).then((result)=>{
-    setItemPic(result.data.url);
-    console.log(result);
-}).catch((error)=>{
-    console.log(error);
-})
-};
-
-const saveItemUpdatedData=(e)=>{
-//with each change on the input field;the value is going to be saved
-let newVal=e.target.value;
-let targetField=e.target.name;
-// this method is easier to detect the change on the userData and save it!
-setItemData({...itemData,[targetField]:newVal})
-};
-
-//a function to update item in the database by id:
-const UpdatetemInDb=(itemId)=>{
-    setItemData({...itemData,photos:itemPic}); //! to be checked :supposed to be an array
-    let UpdateItemUrl=`http://localhost:5000/items/${itemId}`
-axios.put(UpdateItemUrl,{},{headers:{authorization:token}}).then((result)=>{
-    console.log("item updated")
-    console.log(result.data) 
-    setIsRendered(!isRendered)
-}).catch((error)=>{
-console.log(error)
-})
-};
-//! end of update items//! not working/tested yet
-
 
 return <div className="cardsContainer">
     {/* <h1>here the cards are going to be rendered</h1> */}
@@ -216,7 +165,7 @@ return <div className="cardsContainer">
                 deleteItemFromDb(elem._id)
             }}>Delete Item</li>}
             {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
-                UpdatetemInDb(elem._id)
+                navigate(`/updateitem/${elem._id}/${elem.photos[0]}`)
             }}>Update Item</li>}
 
             {/* remove from whish list button  strats here: add the condition where the element is not in the wish list or cart*/}
