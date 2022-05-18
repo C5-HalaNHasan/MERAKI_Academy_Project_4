@@ -41,10 +41,10 @@ const Swap=()=>{
     console.log(swappedItem)//!to be deleted
 
     //to show messages by modal box:
-    const [modalBoxMessage,setModalBoxlMessage]=useState(false)
-    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
+    const [modalBoxMessage,setModalBoxlMessage]=useState(false)//! to be handelled as context
+    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")//! to be handelled as context
     //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
-    const [canSwap,setCanSwap]=useState(false) 
+    const [canSwap,setCanSwap]=useState(false) //! to be deleted
 
 
 //a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
@@ -68,22 +68,21 @@ const canSwapThis=async (id,price,countrycategory,ownerId,img)=>{ //! TO BE CHEC
             if(filteredItemsByPrice.length>0&&result1.data.user.country==country){
                 console.log("you can swap!!")//! to be deleted
                 setItems(filteredItemsByPrice) 
-                setCanSwap(true) 
+                setCanSwap(true) //! to be deleted
                 console.log(filteredItemsByPrice,"from the inside of the swap component")//! to be deleted
 
             }else if(filteredItemsByPrice.length==0){
                 console.log("Sorry! you don't have an item equivalent to this item price!")
-                setCanSwap(false) 
-                setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")
-                setModalBoxlMessageType("notOk")
+                setCanSwap(false) //! to be deleted
+                setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")//! to be handelled as context
+                setModalBoxlMessageType("notOk")//! to be handelled as context
             }else if(result1.data.user.country.toLowerCase() != country.toLowerCase()){
                 console.log("Sorry! Our delivery services is only within the same country!")//! to be deleted
 
-                setCanSwap(false) 
-                setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")
-                setModalBoxlMessageType("notOk")
+                setCanSwap(false) //! to be deleted
+                setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")//! to be handelled as context
+                setModalBoxlMessageType("notOk")//! to be handelled as context
             }
-         
            };
 
     }).catch((error2)=>{
@@ -107,7 +106,6 @@ console.log("THIS IS THE SWAP COMPONENT", items,"can he swap?? ",canSwap) //! to
 return <div>
 <NavBar/>
 <Cards items={items} setItems={setItems} swappedItemId={id} type="swap"/>
-
 </div>
 };
 

@@ -13,6 +13,7 @@ import UserProfile from "./components/UserBoard/UserProfile";
 import UserItems from "./components/UserBoard/UserItems";
 import CheckOut from "./components/CheckOut.js/CheckOut";
 import Swap from "./components/Swap/Swap";
+import OnlinePayment from "./components/OnlinePayment/OnlinePayment";
 import axios from "axios";
 
 
@@ -55,6 +56,8 @@ const App=()=> {
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
       <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
+      <Route path="/OnlinePayment/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>
+
 
 
 

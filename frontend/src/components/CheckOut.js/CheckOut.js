@@ -11,7 +11,6 @@ const CheckOut=()=>{
     const {token,setToken}=useContext(TokenContext); 
     //to save the current userId
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
-    //the user checkOut inputs are going to be collected in an object 
 
     //to save the swapped item data so that it can be transferred to the check out page
     const {id,price,country,category,ownerId,img}=useParams();//! this is my item info
@@ -21,12 +20,66 @@ const CheckOut=()=>{
     const navigate=useNavigate() //! used to redirect the user to the onlinePaymentPage if he clicked proceed
     //!and THIS DEPENDS IF THE OPERATION IS SWAP OR BY//and return to the previous page if he clicked cancel
 
+    //to show messages by modal box: //!MODALBOX WILL BE USED AS CONTEXT FROM APP: SHOW,TYPE,MESSAGE
+    const [modalBoxMessage,setModalBoxlMessage]=useState(false)
+    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
+
 
     //! THIS FUNCTION either SWAP OR REDIRECT TO THE ONLINE PAYMENT PAGE: THIS DEPENDS on:
     //if  ownerId==swappedItem.ownerId then its buy==> proceed to the online payment else proceed to swap
     //if swapped: //! amodalBox will appear telling the user that it's a successful operation //then when pressing ok it will redirect the user to the main page
+//!SWAPPING IS NOT GOING TO BE HANDELED IN THIS PAGE:IT WILL BE HANDELED IN THE CHECKOUT PAGE /
+//:the owners of the items and setting the isSold:tru
+const swapOwnersById=async ()=>{ 
+    let yourItemUrl=`http://localhost:5000/items/${swappedItem.id}`
+    let myItemUrl=`http://localhost:5000/items/${id}`
+    //update the swapped item from its original owner to the current user:
+    await axios.put(myItemUrl,{owner:swappedItem.ownerId,isSold:"true"},{headers:{authorization:token}}).then(async (result1)=>{
+    //update my item owner to the user is wapped his item:
+
+    await axios.put(yourItemUrl,{owner:ownerId,isSold:"true"},{headers:{authorization:token}}).then(async (result2)=>{
+        
+    }).catch((error2)=>{
+        console.log(error2);
+    })
+
+    }).catch((error1)=>{
+        console.log(error1)
+    })
+};//! end of swapped owner function
+
+
+//!buyAction is the same as swap! but it will be handelled in the online payment page
+const BuyAction=async ()=>{ 
+  
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
     const CheckOutAction=()=>{ 
-      
+        console.log("from the checkout page ",ownerId==swappedItem.ownerId)
+        if(!ownerId==swappedItem.ownerId){
+            swapOwnersById();
+            //! modal box will be shown when pressing ok then it will be redirected to the userItems page
+         
+        }else{ //! if not swap the user will be redirected to the online payment page (to be set)
+            navigate("/")
+
+        }
 };
 
 
