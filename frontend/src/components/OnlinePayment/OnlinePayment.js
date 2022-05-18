@@ -26,34 +26,13 @@ const OnlinePayment=()=>{
 
 //! same function as used in the checkout page:
 const Buy=async ()=>{ 
-    let yourItemUrl=`http://localhost:5000/items/${swappedItem.id}`
-    let myItemUrl=`http://localhost:5000/items/${id}`
-    //update the swapped item from its original owner to the current user:
-    await axios.put(myItemUrl,{owner:swappedItem.ownerId,isSold:"true"},{headers:{authorization:token}}).then(async (result1)=>{
-    //update my item owner to the user is wapped his item:
-
-    await axios.put(yourItemUrl,{owner:ownerId,isSold:"true"},{headers:{authorization:token}}).then(async (result2)=>{
-        
-    }).catch((error2)=>{
-        console.log(error2);
-    })
-
-    }).catch((error1)=>{
-        console.log(error1)
-    })
+    
 };//! end of swapped owner function
 
 
 //!PaymentAction is the same as swap!
 const PaymentAction=()=>{ 
-        console.log("from the payment page ",ownerId==swappedItem.ownerId)
-        if(!ownerId==swappedItem.ownerId){ //! this condition to be checked
-            // swapOwnersById();
-            //! modal box will be shown when pressing ok then it will be redirected to the userItems page
-         
-        }else{ //! if not swap the user will be redirected to the online payment page (to be set)
-            navigate("/")
-        }
+ 
 };
 
 

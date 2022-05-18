@@ -179,47 +179,7 @@ console.log(error)
 //! end of update items//! not working/tested yet
 
 
-
-
-
-
-
-
-//!SWAPPING IS NOT GOING TO BE HANDELED IN THIS PAGE:IT WILL BE HANDELED IN THE CHECKOUT PAGE /
-//:the owners of the items and setting the isSold:tru
-const swapOwnersById=async (myItemId)=>{ 
-    let yourItemUrl=`http://localhost:5000/items/${swappedItemId}`
-    let myItemUrl=`http://localhost:5000/items/${myItemId}`
-
-      //get the clickeditem owner by its id:
-      await axios.get(yourItemUrl,{headers:{authorization:token}}).then(async (result1)=>{
-        if(result1){
-            console.log("current owner of the wanted item",result1.data.item) //!to be deleted
-
-    //update the old:
-     await axios.put(myItemUrl,{owner:result1.data.item.owner,isSold:"true"},{headers:{authorization:token}}).then(async (result2)=>{
-        console.log("new owner of the wanted item",result2.data.item," which should match the current userId") //!to be deleted
-
-    //update the clicked item owner: from old to me:
-    await axios.put(yourItemUrl,{owner:currentUserId,isSold:"true"},{headers:{authorization:token}}).then(async (result3)=>{
-        console.log("my new item in the list owner",result3.data.item," which should match the current userId whish is me") //!to be deleted
-
-    }).catch((error3)=>{
-    console.log(error3)
-    });
-
-    }).catch((error2)=>{
-    console.log(error2)
-    });
-
-    } //end of if result1 statement
-     }).catch((error1)=>{
-         console.log(error1)
-     });
-};
-
-//! end of swapping function
-    return <div className="cardsContainer">
+return <div className="cardsContainer">
     {/* <h1>here the cards are going to be rendered</h1> */}
     
     <button onClick={()=>{ //! for testing to be deleted
@@ -245,41 +205,47 @@ const swapOwnersById=async (myItemId)=>{
 
           <ul className="actionButtons"> 
 
-            {elem.sell&&elem.owner._id  !=currentUserId&&<li><Link to=""/>buy</li>}
+            {/* buy action starts here*/}
+            {elem.sell&&elem.owner._id  !=currentUserId&&<li onClick={()=>{
+                navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+            }}>buy</li>}
+            {/* buy action ends here*/}
+
+
             {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 deleteItemFromDb(elem._id)
-            }}><Link to=""/>Delete Item</li>}
+            }}>Delete Item</li>}
             {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
                 UpdatetemInDb(elem._id)
-            }}><Link to=""/>Update Item</li>}
+            }}>Update Item</li>}
 
             {/* remove from whish list button  strats here: add the condition where the element is not in the wish list or cart*/}
             {elem.owner._id !== currentUserId && currentUserWishList.includes(elem._id)?<li onClick={()=>{
                removeFromWishList(elem._id)
-            }}><Link to=""/>Remove from WishList</li>:null}
+            }}>Remove from WishList</li>:null}
         {/* remove from whish list button ends here*/}
 
         {/* add to wish list button starts here*/}
        {elem.owner._id !== currentUserId && !currentUserWishList.includes(elem._id)?<li onClick={()=>{  
              addToWishList(elem._id)
-        }}><Link to=""/>Add to WishList</li>:null}
+        }}>Add to WishList</li>:null}
         {/* add to wish list button ends here*/}
 
 
         {/* add to cart button starts here*/}
         {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)?<li onClick={()=>{  
             addToCart(elem._id)
-        }}><Link to=""/>Add to Cart</li>:null}
+        }}>Add to Cart</li>:null}
         {/* add to cart button ends here*/}
 
         {/* remove from cart button starts here*/}
         {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)?<li onClick={()=>{  
               removeFromCart(elem._id)
-        }}><Link to=""/>Remove from Cart</li>:null}
+        }}>Remove from Cart</li>:null}
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)  //! photos are saved as an array //might cause error here
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}>SWAP</li>}
         {/* swap action button ends here}*/}
 

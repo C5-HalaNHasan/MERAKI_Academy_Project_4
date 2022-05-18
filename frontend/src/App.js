@@ -28,7 +28,7 @@ const App=()=> {
   const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search //!not used yet
   const [currentUserItems,setCurrentUserItems]=useState([]); //! for the live search //!not used yet
   const [swappedItem,setSwappedItem]=useState({
-    _id:"",
+    id:"",
     price:"",
     img:"",
     category:"",
@@ -56,7 +56,7 @@ const App=()=> {
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
       <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
-      <Route path="/OnlinePayment/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>
+      <Route path="/onlinepayment/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>
 
 
 

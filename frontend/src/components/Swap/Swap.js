@@ -29,7 +29,7 @@ const Swap=()=>{
 
     useEffect(()=>{
         setSwappedItem({ 
-            _id:id,
+            id:id,
             price:price,
             img:img,
             category:category,
