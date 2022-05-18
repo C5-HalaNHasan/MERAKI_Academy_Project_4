@@ -26,6 +26,14 @@ const App=()=> {
   const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
   const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search //!not used yet
   const [currentUserItems,setCurrentUserItems]=useState([]); //! for the live search //!not used yet
+  const [swappedItem,setSwappedItem]=useState({
+    _id:"",
+    price:"",
+    img:"",
+    category:"",
+    country:"",
+    ownerId:"",
+  });
 
 
 
@@ -34,7 +42,7 @@ const App=()=> {
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,currentUserItems,setCurrentUserItems}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,currentUserItems,setCurrentUserItems,swappedItem,setSwappedItem}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>
@@ -45,8 +53,9 @@ const App=()=> {
       <Route path="/userboard" element={<UserBoard/>}/>
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
-      <Route path="/checkout" element={<CheckOut/>}/>
-      <Route path="/swap/:id/:price/:country" element={<Swap/>}/>
+      <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
+      <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
+
 
 
       

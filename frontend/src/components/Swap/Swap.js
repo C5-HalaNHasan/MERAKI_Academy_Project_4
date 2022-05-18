@@ -14,27 +14,41 @@ import NavBar from "../NavBar/NavBar";
 // toDo-3:the user will be redirected to the deliveryPage where he enters his address so that the item will be delivered to him
 // toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
 
+
+
 const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const [items,setItems]=useState([])
-    let [resultMessage,setResultMessage]=useState("");
-    const {userItems,setUserItems}=useContext(TokenContext);
+    const {userItems,setUserItems}=useContext(TokenContext); //! not used yet
+
+    //to save the swapped item data so that it can be transferred to the check out page
+    const {id,price,country,category,ownerId,img}=useParams();
+    const {swappedItem,setSwappedItem}=useContext(TokenContext);
+
+    useEffect(()=>{
+        setSwappedItem({ 
+            _id:id,
+            price:price,
+            img:img,
+            category:category,
+            country:country,
+            ownerId:ownerId,
+        })
+    },[])
     
-    const {id,price,country}=useParams();
-    console.log(id,price,country)//!to be deleted
+    console.log(swappedItem)//!to be deleted
 
     //to show messages by modal box:
     const [modalBoxMessage,setModalBoxlMessage]=useState(false)
     const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
     //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
-    const [canSwap,setCanSwap]=useState(false)
+    const [canSwap,setCanSwap]=useState(false) 
 
 
 //a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
-
-const canSwapThis=async (id,price,country)=>{ //! TO BE CHECKED NOT WORKING AS INTENDED
+const canSwapThis=async (id,price,countrycategory,ownerId,img)=>{ //! TO BE CHECKED NOT WORKING AS INTENDED
     //to search for the current user country:
     let getUser="http://localhost:5000/users/user";
     await axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{

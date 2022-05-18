@@ -29,6 +29,8 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
     const [canSwap,setCanSwap]=useState(false)
 
+    //swapped item data that is taken from the SWAP COMPONENT:
+    const {swappedItem,setSwappedItem}=useContext(TokenContext);
 
 
 
@@ -177,61 +179,15 @@ console.log(error)
 //! end of update items//! not working/tested yet
 
 
-//a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
 
-//!this function is moved to the swap component
-const canSwapThis=async (ClickedItemId,clickedItemCountry,ClickedItemPrice)=>{
-    //to search for the current user country:
-    let getUser="http://localhost:5000/users/user";
-    await axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
-        if(result1){
-    //! nested axios to handle all the operations:
-    //to search in the user items if he has items with a value >= wanted item:
-    let allItemsURL="http://localhost:5000/items"
-    axios.get(allItemsURL,  {headers: {authorization: token }}).then( (result2)=>{
-        if(result2.data.items.length>0){
-            let filteredItems= result2.data.items.filter((elem)=>{
-                return elem.owner._id==currentUserId
-            });
-            let filteredItemsByPrice=  filteredItems.filter((elem)=>{ 
-                 return elem.price >= ClickedItemPrice 
-            });
 
-            if(filteredItems){
-            if(filteredItemsByPrice.length>0&&result1.data.user.country===clickedItemCountry){
-                navigate(`/swap/${ClickedItemId}`)
-                setItems(filteredItemsByPrice) //! items
-                setCanSwap(true) 
 
-            }else if(filteredItemsByPrice.length==0){
-                setCanSwap(false) 
-                setModalBoxlMessage("Sorry! you don't have an item equivalent to this item price!")
-                setModalBoxlMessageType("notOk")
-            }else if(result1.data.user.country.toLowerCase() != clickedItemCountry.toLowerCase()){
-                setCanSwap(false) 
-                setModalBoxlMessage("Sorry! Our delivery services is only within the same country!")
-                setModalBoxlMessageType("notOk")
-            }
-            }
-           };
 
-    }).catch((error2)=>{
-        console.log(error2);
-    })
 
-    }//end if statement where all nested axios
-    }).catch((error1)=>{
-        console.log(error1);
-    })
-};
 
-//toDo:before swap operation is done:
-//once clicked the button:the user will be redirected to the address page to deliver the item for him
-//the location page has two buttons:cancel that will return to the homepage ,and proceed that will make the swap action then redirect the user to the home page
-
-//! same problem as before! keeps giving undefined :"(
-//swapping the owners of the items and setting the isSold:true  //! swap is working FINALLY :")
-const swapOwnersById=async (myItemId)=>{ //! this will be handelled once the user agrees on the modalBox message
+//!SWAPPING IS NOT GOING TO BE HANDELED IN THIS PAGE:IT WILL BE HANDELED IN THE CHECKOUT PAGE /
+//:the owners of the items and setting the isSold:tru
+const swapOwnersById=async (myItemId)=>{ 
     let yourItemUrl=`http://localhost:5000/items/${swappedItemId}`
     let myItemUrl=`http://localhost:5000/items/${myItemId}`
 
@@ -262,7 +218,7 @@ const swapOwnersById=async (myItemId)=>{ //! this will be handelled once the use
      });
 };
 
-
+//! end of swapping function
     return <div className="cardsContainer">
     {/* <h1>here the cards are going to be rendered</h1> */}
     
@@ -323,7 +279,7 @@ const swapOwnersById=async (myItemId)=>{ //! this will be handelled once the use
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}`)  
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)  //! photos are saved as an array //might cause error here
         }}>SWAP</li>}
         {/* swap action button ends here}*/}
 
