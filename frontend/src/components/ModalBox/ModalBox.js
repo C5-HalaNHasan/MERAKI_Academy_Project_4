@@ -4,42 +4,50 @@ import React,{useState,useContext,useEffect} from "react";
 import axios from "axios";
 import { useNavigate,Link} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
-import abs_wall from "../assets/abs_wall.jpg"
+import ok from "../assets/ok.png"
+import alert from "../assets/alert.png"
+import notOk from "../assets/notOk.jpg"
 import { FaRegFileArchive } from "react-icons/fa";
+import abs_wall from "../assets/abs_wall.jpg"
 
 
+
+//! 19/5: unused variables/functions/components to be deleted
 const ModalBox=({showModalBox,setShowModalBox,message,type})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
+    const {modalBox,setModalBox}=useContext(TokenContext); 
 
 
-    //!will be added as a ternary operator later
-    if(showModalBox===false){
+    if(modalBox.showModalBox===false){
         return null;
     }
 
+console.log(modalBox)//! to be deleted
 return <div className="modalBox">
 <div className="contentsContainer">
 {/* diferent pictures are going to be rendered based on the success of the operation */}
-<img src={abs_wall} alt=""/>
+{modalBox.type==="ok" && <img src={ok} alt="ok"/>}
+{modalBox.type==="notOk" && <img src={notOk} alt="notOk"/>}
+{modalBox.type==="alert" && <img src={alert} alt="alert"/>}
 
 <div className="modalRight">
 <span class="closeModalBox"><AiOutlineCloseCircle onClick={()=>{
-    setShowModalBox(false)
+    setModalBox({type:"", message:"",details:"", showModalBox:false})
 }}/></span>
 
 <div className="boxContent">
-
-<h3>{message}</h3>
-<p>a message is going to be rendered for the user based on the clicked button: if buy it will show a box to specify address then to the onlinement page, if swap: it will render the elements of the user that are >= price of the element, if add to wishList: it will tell the user that the item has been added/removed to/from the wish list,if add to cart: it will show the user that the item has been added/removed from cart</p>
+<h1>{modalBox.message}</h1>
+<h2>{modalBox.details}</h2>
 </div>
 
 <div className="actionButtonsContainer">
 {/* the buttons are going to be rendered based on the clicked button on the card (as symbols)*/}
-<button className="actionButton">Ok</button>
-<button className="actionButton">Cancel</button>
+<button className="actionButton" onClick={()=>{
+    setModalBox({type:"", message:"",details:"", showModalBox:false})
+}}>Ok</button>
 </div>
 
 </div>

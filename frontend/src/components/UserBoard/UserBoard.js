@@ -18,16 +18,19 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
     const [items,setItems]=useState([]);//!not used yet
     let [resultMessage,setResultMessage]=useState("");//!not used yet
     const navigate = useNavigate();//!not used yet
+    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); //! to show and hide buy & swap buttons 
+
 
     //logout function that is going to delete the token & userId and remove some components/elements from the homePage & the NavBar
-    const LogOut=()=>{
-        // setIsClicked(!isClicked)
-        // setToken(null);
-        // setCurrentUserId(null);
-        // localStorage.clear();
-        // setIsRendered(true)
-        // navigate("/")
-        console.log("hello from log out")
+    const LogOut=()=>{ //! 19/5 to be checked not working as intended when logout is clicked //! when logiut is clicked the dropdownlist freezes
+        setIsClicked(!isClicked)
+        setToken(null);
+        setCurrentUserId(null);
+        setCurrentUserCountry(null)
+        localStorage.clear();
+        setIsRendered(true)
+        navigate("/")
+        console.log("hello from log out") //!to be deleted
     }
 
     return <div className="userBoard">
@@ -43,7 +46,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
     </li>
 
     <li className="drpDownItem">
-    <Link to="/" onClick={()=>LogOut}><FiLogIn/>Logout</Link>
+    <Link to="/" onClick={()=>LogOut()}><FiLogIn/>LogOut</Link>
     </li>
 
     </ul>

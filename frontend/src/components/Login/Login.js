@@ -11,6 +11,8 @@ const Login=()=>{
   //to save the current user id & token
     const {token,setToken}=useContext(TokenContext); 
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
+    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
+
     //the user inputs are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
     const [userData,setUserData]=useState({
         email:"",
@@ -41,6 +43,7 @@ const Login=()=>{
                 //token will be stored in the local storage to be used in other requests
                 localStorage.setItem("token",reultToken);
                 localStorage.setItem("currentUserId",result.data.userId);
+                localStorage.setItem("currentUserCountry",result.data.userCountry);
 
                 setResultMessage(result.data.message) //to set the result message below the action button 
                 //to redirect the user to the homePage

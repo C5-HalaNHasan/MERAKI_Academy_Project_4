@@ -7,35 +7,29 @@ import { useNavigate,Link,useParams} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
 import ModalBox from "../ModalBox/ModalBox";
-import Swap from "../Swap/Swap";
-import UserItems from "../UserBoard/UserItems";
 
 
+//! 19/5: parameter swappedItemiD TO BE DELETD
 
 const Cards=({items,setItems,type,swappedItemId})=>{
     // the below three states to be used in every component for authorization and re-rendering:
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
-    const {currentUserItems,setCurrentUserItems}=useContext(TokenContext); 
+    const {currentUserItems,setCurrentUserItems}=useContext(TokenContext); //! 19/5 to be deleted 
+    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); //! to show and hide buy & swap buttons 
+
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
 
-    //to set the modal box visibility:
-    const [showModalBox,setShowModalBox]=useState(false)
-    //to show messages by modal box:
-    const [modalBoxMessage,setModalBoxlMessage]=useState(false)
-    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")
-    //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
-    const [canSwap,setCanSwap]=useState(false)
+    //to send messages by modalbox:
+    const {modalBox,setModalBox}=useContext(TokenContext); 
 
-    //swapped item data that is taken from the SWAP COMPONENT:
-    const {swappedItem,setSwappedItem}=useContext(TokenContext);
 
 
 
     const navigate = useNavigate();
-    console.log("items sent to the cards component",items,"type :",type) //!to console.log the items sent to the Cards component
+    console.log("items sent to the cards component",items,"type :",type) //!to console.log the items sent to the Cards component //!to be deleted
 
     // a function to get the current user wishlist and cart items ids/to decide which buttons to show for each card:
     let userCartUrl="http://localhost:5000/users/user";
@@ -53,26 +47,18 @@ const Cards=({items,setItems,type,swappedItemId})=>{
                 })
                 setCurrentUserWishList(wishListItemsIds)
             };
-            
-            console.log("from filtered",currentUserCart)
-            
+            console.log("from filtered",currentUserCart) //! to be deleted
             setIsRendered(true)
         }).catch((error)=>{
             console.log(error)
         })
     },[isRendered])
 
-    // toDo: a function to buy onClick ==> redirect the user to the deliveryPage ==> then redirected to the online payment
-    // toDo: a function to swap onClick ==>redirect the user to swapWith items page==> redirect the user to the deliveryPage ==> then redirected to the online payment
-
     //a function to remove from wishList onClick ==>remove the item from wishList and re-render the wishListPage
     const removeFromWishList=(itemId)=>{
         let removeUrl=`http://localhost:5000/users/item/${itemId}`
         axios.delete(removeUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log("hello from delete from wishlist")
-            console.log(result.data)
             setIsRendered(!isRendered)
-            // setIsAdded(!isAdded)
         }).catch((error)=>{
             console.log(error)
         })
@@ -81,13 +67,9 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const addToWishList=(itemId)=>{
         let addUrl=`http://localhost:5000/users/item/${itemId}`
             axios.post(addUrl,{},{headers:{authorization:token}}).then((result)=>{
-            console.log("hello from add to wishlist")
-            console.log(result.data) 
             setIsRendered(!isRendered)
-            // setIsAdded(!isAdded)
-
         }).catch((error)=>{
-            console.log('FRONTEND',error) //!
+            console.log(error)
         })
     };
 
@@ -118,8 +100,7 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const deleteItemFromDb=(itemId)=>{
         let DeleteItemUrl=`http://localhost:5000/items/${itemId}`
     axios.delete(DeleteItemUrl,{headers:{authorization:token}}).then((result)=>{
-        console.log("item deleted")
-        console.log(result.data) 
+        setModalBox({type:"alert", message:"Deleted",details:"your item has been deleted!", showModalBox:true})
         setIsRendered(!isRendered)
     }).catch((error)=>{
     console.log(error)
@@ -127,19 +108,21 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     };
 
 
+    console.log("current user country",currentUserCountry)
 
+//! a condition to be added if the userCountry != elem.country no swap or buy buttons will appear!
+//! item img to be rendered instead of using abs_wall
 return <div className="cardsContainer">
-    {/* <h1>here the cards are going to be rendered</h1> */}
-    
+
     <button onClick={()=>{ //! for testing to be deleted
-        setShowModalBox(true);
+    setModalBox({type:"alert", message:"hello from cards component",details:"this is for testing only", showModalBox:true})
     }}>show modal box </button>
-    <ModalBox showModalBox={showModalBox} setShowModalBox={setShowModalBox} message={"hello from the cards component"}/>
+    <ModalBox />
 
     {items.map((elem)=>{
         return <div className="card" key={elem._id}>
         <div className="imgSection">
-            <img src={abs_wall}/>
+            <img src={abs_wall}/> 
         </div>
 
         <div className="itemInfo">
@@ -155,7 +138,7 @@ return <div className="cardsContainer">
           <ul className="actionButtons"> 
 
             {/* buy action starts here*/}
-            {elem.sell&&elem.owner._id  !=currentUserId&&<li onClick={()=>{
+            {elem.sell&& elem.owner._id !=currentUserId &&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{
                 navigate(`/checkout/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
             }}>buy</li>}
             {/* buy action ends here*/}
@@ -194,7 +177,7 @@ return <div className="cardsContainer">
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}>SWAP</li>}
         {/* swap action button ends here}*/}
 

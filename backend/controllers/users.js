@@ -89,6 +89,7 @@ const login = (req, res) => {
           if (result1 === true) {
             let payload = {
               userId: result._id,
+              userCountry:result.country,
               userEmail: result.email,
               firstName: result.firstName,
               role: result.role,
@@ -101,6 +102,7 @@ const login = (req, res) => {
               success: true,
               message: "Valid login credentials",
               userId:result._id,
+              userCountry:result.country.toLowerCase(),
               token: token,
             });
           } else {

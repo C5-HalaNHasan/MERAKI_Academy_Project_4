@@ -25,6 +25,7 @@ const App=()=> {
   // if the token & the userId exists from previous session it will be restored here as an initial value;if not: its value will be null
   const [token,setToken]=useState(localStorage.getItem("token")); 
   const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("currentUserId"));
+  const [currentUserCountry,setCurrentUserCountry]=useState(localStorage.getItem("currentUserCountry"));//! for swap and buy buttons
   const [isRendered,setIsRendered]=useState(false); //! to detect any change and rerender
   const [allItemsInDb,setAllItemsInDb]=useState([]); //! for the live search //!not used yet
   const [currentUserItems,setCurrentUserItems]=useState([]); //! for the live search //!not used yet
@@ -42,7 +43,9 @@ const App=()=> {
   const [modalBox,setModalBox]=useState({
     type:"",
     message:"",
-    showModalBox:"false",
+    details:"",
+    action:"",
+    showModalBox:false,
   });
 
 
@@ -52,7 +55,7 @@ const App=()=> {
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,currentUserItems,setCurrentUserItems,swappedItem,setSwappedItem}}>
+      <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,currentUserItems,setCurrentUserItems,swappedItem,setSwappedItem,modalBox,setModalBox,currentUserCountry,setCurrentUserCountry}}>
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>
