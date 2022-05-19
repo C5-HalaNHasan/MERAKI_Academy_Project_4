@@ -33,7 +33,7 @@ const UserItems=()=>{
 
 return <div>
 <NavBar/>
-<button style={{fontSize:"30px",borderRadius:"50%",padding:"15px",float:"right",margin:"25px"}} onClick={()=>navigate("/additem")}>ADD+</button>
+<button style={{fontSize:"60px",borderRadius:"20px",paddingRight:"15px",paddingLeft:"15px",float:"right",margin:"25px",border:"none",color:"white",backgroundColor:"blue"}} onClick={()=>navigate("/additem")}>+</button>
 <Cards items={items} setItems={setItems} type="userBoard"/>
 </div>
 };

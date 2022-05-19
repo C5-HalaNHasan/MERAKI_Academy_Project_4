@@ -24,10 +24,10 @@ const Swap=()=>{
     const {userItems,setUserItems}=useContext(TokenContext); //! not used yet
 
     //to save the swapped item data so that it can be transferred to the check out page
-    const {id,price,country,category,ownerId,img}=useParams();
+    const {item,id,price,country,category,ownerId,img}=useParams();
     const {swappedItem,setSwappedItem}=useContext(TokenContext);
 
-    useEffect(()=>{
+    useEffect(()=>{ //! 19/5 to be checked why I used useEffect?
         setSwappedItem({ 
             id:id,
             price:price,
@@ -35,6 +35,7 @@ const Swap=()=>{
             category:category,
             country:country,
             ownerId:ownerId,
+            item:item,
         })
     },[])
     

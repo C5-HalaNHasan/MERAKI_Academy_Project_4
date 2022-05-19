@@ -36,6 +36,7 @@ const App=()=> {
     category:"",
     country:"",
     ownerId:"",
+    item:"",
   });
 
   //modalBox to show messages for the user: //! to be implemented wherever required
@@ -63,9 +64,10 @@ const App=()=> {
       <Route path="/userboard" element={<UserBoard/>}/>
       <Route path="/userprofile" element={<UserProfile/>}/>
       <Route path="/useritems" element={<UserItems/>}/>
-      <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
-      <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
-      <Route path="/onlinepayment/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>
+      <Route path="/swap/:item/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
+      <Route path="/checkout/:item/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
+
+      <Route path="/onlinepayment/:item/:id/:price/:country/:category/:ownerId/:img" element={<OnlinePayment/>}/>//! not needed to be deletd
       <Route path="/updateitem/:id/:img" element={<UpdateItem />}/>
       <Route path="/additem/" element={<AddItem />}/>
 

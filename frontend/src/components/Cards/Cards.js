@@ -156,7 +156,7 @@ return <div className="cardsContainer">
 
             {/* buy action starts here*/}
             {elem.sell&&elem.owner._id  !=currentUserId&&<li onClick={()=>{
-                navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+                navigate(`/checkout/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
             }}>buy</li>}
             {/* buy action ends here*/}
 
@@ -194,14 +194,14 @@ return <div className="cardsContainer">
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+        {elem.owner._id !== currentUserId&& <li onClick={()=>{navigate(`/swap/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}>SWAP</li>}
         {/* swap action button ends here}*/}
 
 
         {/* swap button starts here /it appears in the swapped items page /swap */}
         {type==="swap"&& <li id={elem._id} onClick={()=>{
-            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+            navigate(`/checkout/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}><IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>

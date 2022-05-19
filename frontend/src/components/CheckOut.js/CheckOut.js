@@ -2,6 +2,7 @@ import "./checkOut.css";
 import React,{useState,useContext,useEffect} from "react";
 import {Link,Routes,Route,useNavigate,useParams} from "react-router-dom";
 import axios from "axios";
+import StripeCheckout from "react-stripe-checkout";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; //! to make an automatic login
 import abs_wall from "../assets/abs_wall.jpg";
 import NavBar from "../NavBar/NavBar";
@@ -12,9 +13,10 @@ const CheckOut=()=>{
     //to save the current userId
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
 
+
     //to save the swapped item data so that it can be transferred to the check out page
-    const {id,price,country,category,ownerId,img}=useParams();//! this is my item info
-    const {swappedItem,setSwappedItem}=useContext(TokenContext);//this is the swapped item info
+    const {item,id,price,country,category,ownerId,img}=useParams();//! this is my item info if swap is clicked
+    const {swappedItem,setSwappedItem}=useContext(TokenContext);//this is the swapped item info if swap is clicked
 
     const navigate=useNavigate() //! used to redirect the user to the onlinePaymentPage if he clicked proceed
     //!and THIS DEPENDS IF THE OPERATION IS SWAP OR BY//and return to the previous page if he clicked cancel
@@ -46,22 +48,43 @@ const swapOwnersById=async ()=>{
 };//! end of swapped owner function
 
 
+const buyAction=(tokenPay)=>{
+    const body={
+        tokenPay,
+        item,
+    }
+    
+    const headers={
+        "Content-Type":"application/json",
+        authorization:token,
+    }
 
+    let paymentUrl="http://localhost:5000/items/buy"
+
+    axios.post(paymentUrl,body,headers).then((result)=>{
+        console.log("payment is done",result)
+    }).catch((error)=>{
+        console.log(error)
+    })
+
+}
 
 const CheckOutAction=async ()=>{ 
         console.log("from the checkout page ",swappedItem)
         console.log("swapped item info ",swappedItem.ownerId)
         console.log("my item info:  ",ownerId)
 
+        //!19/5 THE CONDITION TO BE CHECKED: ITS ONLY SWAPPING
+
         if(ownerId!==swappedItem.ownerId ){//! swap action==>swapping is done then redirected to his items page
-            // swapOwnersById();
+            // swapOwnersById(); //! freezed for testing only: once the condition is fixed then it will be unfreezed
             navigate("/useritems")
             console.log("swapped!!")//! to be deleted
 
-        }else{ //! buy action==>redirected to the payment page
-            navigate(`/onlinepayment/${swappedItem.id}/${swappedItem.price}/${swappedItem.country}/${swappedItem.category}/${swappedItem.ownerId}/${swappedItem.img}`) //! then once payment complete:the item will be swapped as before
+        }else{ //! buy action==>the payment box will appear:
+            // navigate(`/onlinepayment/${swappedItem.title}/${swappedItem.id}/${swappedItem.price}/${swappedItem.country}/${swappedItem.category}/${swappedItem.ownerId}/${swappedItem.img}`) //! then once payment complete:the item will be swapped as before
             console.log("not swapped!")//! to be deleted
-        
+
             //! modal box will be shown when pressing ok then it will be redirected to the userItems page
         }
 };
@@ -87,8 +110,10 @@ return (
         <input type="text" placeholder="Contact Number..." name="contactNum" ></input>
         <input type="text" placeholder="City..." name="city" ></input>
         <input type="text" placeholder="Address..." name="address" ></input>
-        <button onClick={()=>{CheckOutAction()}} className="btn">Proceed</button>
+        {ownerId==currentUserId&&<button onClick={()=>{CheckOutAction()}} className="btn">Proceed SWAPPING</button>}
         <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
+        {ownerId!=currentUserId&&<StripeCheckout stripeKey="pk_test_51L19d0B6UNWpymKvotIty0vQIXPdDEABTSctm5BgKlIWyLmHoJTq3gC20TjcxmV9cm63sHWvwnDQA2zUlRMcsQDR00A7FLa0CA" tokenPay={CheckOutAction} name="" amount={parseInt(price)*100}><button onClick={()=>{CheckOutAction()}} className="btn">BUY NOW!</button></StripeCheckout>}
+
         </form>
         {/* //! to be updated (a modalBox with settime out is going to be shown) */}
     </div>

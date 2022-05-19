@@ -2,6 +2,10 @@ const userModel = require("../models/userSchema");
 const itemModel = require("../models/itemSchema");
 const categoryModel = require("../models/categorySchema");
 
+//! to implement stripe online payment:
+const stripe=require("stripe")("sk_test_51L19d0B6UNWpymKvQ35P37CVKCSGbC7il7Vh9XPkivsrSanUYvlW1ozaMf5uWHZ3wXTLkiY5L8ldNoxZ7P7W61Ht003jxfASDJ");
+const uuid=require("uuid");
+
 
 
 // this function creates new item:
@@ -131,6 +135,32 @@ const getItemsByCategory= (req, res) => { //! not tested by postman yet since th
   })
 };
 
+const buyItem=(req,res)=>{ //! created for stripe online payment //! gives an error
+  const {item,tokenPay} = req.body;
+
+  const idempotencyKey=uuid.v4(); //to ensure thet the user is only charged once
+  return stripe.customers.create({
+    email:tokenPay.email, //! or taken from filling the card in the frontend
+    source:tokenPay.id, 
+  }).then((customer)=>{
+    stripe.charges.create({
+      amount:item.price*100,
+      currency:"usd", //JOD currency is not supported in stripe so USD is used instead
+      customer:customer.id,
+      receipt_email:tokenPay.email, //so the user receives an email about the payment
+    },{idempotencyKey})
+
+  }).then((result)=>{
+    console.log(result)
+    res.status(200).json(result)
+  }).catch((error)=>{
+    res.json(error.message)
+  })
+  // res.json({idempotencyKey})
+
+
+}
+
 
 
 module.exports = {
@@ -140,4 +170,5 @@ module.exports = {
     updateItemById,
     deleteItemById,
     getItemsByCategory,
+    buyItem,
 };
