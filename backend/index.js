@@ -15,7 +15,6 @@ const usersRouter=require("./routes/users");
 const itemsRouter=require("./routes/items");
 const categoryRouter=require("./routes/category");
 const rolesRouter=require("./routes/roles");
-const cartRouter=require("./routes/cart"); //! to be delted/not used
 
 
 
@@ -26,7 +25,6 @@ app.use("/users",usersRouter);
 app.use("/items",itemsRouter);
 app.use("/category",categoryRouter);
 app.use("/roles",rolesRouter);
-app.use("/cart",cartRouter); //! to be delted/not used
 
 
 // Handles any other endpoints [unassigned - endpoints]

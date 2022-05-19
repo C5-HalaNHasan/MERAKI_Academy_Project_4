@@ -82,7 +82,7 @@ const CheckOutAction=async ()=>{
             console.log("swapped!!")//! to be deleted
 
         }else{ //! buy action==>the payment box will appear:
-            // navigate(`/onlinepayment/${swappedItem.title}/${swappedItem.id}/${swappedItem.price}/${swappedItem.country}/${swappedItem.category}/${swappedItem.ownerId}/${swappedItem.img}`) //! then once payment complete:the item will be swapped as before
+           //! then once payment complete:the item will be swapped as before
             console.log("not swapped!")//! to be deleted
 
             //! modal box will be shown when pressing ok then it will be redirected to the userItems page
