@@ -6,21 +6,25 @@ import StripeCheckout from "react-stripe-checkout";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; //! to make an automatic login
 import abs_wall from "../assets/abs_wall.jpg";
 import NavBar from "../NavBar/NavBar";
+import ModalBox from "../ModalBox/ModalBox";
 
-//! 19/5: TO BE CHECKED,SWAPPING IS NOT WORKING ALL THE TIMES!
+
+//! 19/5: TO BE MODIFIED FOR BUYACTION/AND REDIRECTING THE USER TO HP AFTER PAYMENT IS DONE
 const CheckOut=()=>{
     const {token,setToken}=useContext(TokenContext); 
     //to save the current userId
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
+    const {modalBox,setModalBox}=useContext(TokenContext); 
+
 
 
     //to save the swapped item data so that it can be transferred to the check out page
-    const {item,id,price,country,category,ownerId,img}=useParams();//! this is my item info if swap is clicked
+    const {id,price,country,category,ownerId,img}=useParams();//! this is my item info if swap is clicked
     const {swappedItem,setSwappedItem}=useContext(TokenContext);//this is the swapped item info if swap is clicked
 
     const navigate=useNavigate() //! used to redirect the user to the onlinePaymentPage if he clicked proceed
     //!and THIS DEPENDS IF THE OPERATION IS SWAP OR BY//and return to the previous page if he clicked cancel
-
+    console.log("from ckeckoutpage: my item data ",id,price,country,category,ownerId,img)
     //to show messages by modal box: //!MODALBOX WILL BE USED AS CONTEXT FROM APP: SHOW,TYPE,MESSAGE
     const [modalBoxMessage,setModalBoxlMessage]=useState(false) //! to be handelled as context
     const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk") //! to be handelled as context
@@ -45,46 +49,44 @@ const swapOwnersById=async ()=>{
             console.log(error1)
         })
         console.log("hello from swap owner by id function")
+        navigate("/useritems")
+
 };//! end of swapped owner function
 
 
 const buyAction=(tokenPay)=>{
     const body={
         tokenPay,
-        item,
-    }
-    
+        item:"",
+    };
     const headers={
         "Content-Type":"application/json",
         authorization:token,
-    }
-
+    };
     let paymentUrl="http://localhost:5000/items/buy"
-
     axios.post(paymentUrl,body,headers).then((result)=>{
         console.log("payment is done",result)
+         //! sameswap action and the user will be redirected to the main page
+        
+
     }).catch((error)=>{
         console.log(error)
-    })
+
+    });
 
 }
 
-const CheckOutAction=async ()=>{ 
+const CheckOutAction=()=>{ 
         console.log("from the checkout page ",swappedItem)
         console.log("swapped item info ",swappedItem.ownerId)
         console.log("my item info:  ",ownerId)
 
-        //!19/5 THE CONDITION TO BE CHECKED: ITS ONLY SWAPPING
-
-        if(ownerId!==swappedItem.ownerId ){//! swap action==>swapping is done then redirected to his items page
-            // swapOwnersById(); //! freezed for testing only: once the condition is fixed then it will be unfreezed
-            navigate("/useritems")
-            console.log("swapped!!")//! to be deleted
+        if(ownerId!==swappedItem.ownerId ){//! swap action==>swapping is done then redirected to his items page: it worked when moved navigate inside the swapOwnersById function
+            swapOwnersById(); 
 
         }else{ //! buy action==>the payment box will appear:
            //! then once payment complete:the item will be swapped as before
             console.log("not swapped!")//! to be deleted
-
             //! modal box will be shown when pressing ok then it will be redirected to the userItems page
         }
 };
@@ -112,7 +114,8 @@ return (
         <input type="text" placeholder="Address..." name="address" ></input>
         {ownerId==currentUserId&&<button onClick={()=>{CheckOutAction()}} className="btn">Proceed SWAPPING</button>}
         <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
-        {ownerId!=currentUserId&&<StripeCheckout stripeKey="pk_test_51L19d0B6UNWpymKvotIty0vQIXPdDEABTSctm5BgKlIWyLmHoJTq3gC20TjcxmV9cm63sHWvwnDQA2zUlRMcsQDR00A7FLa0CA" tokenPay={CheckOutAction} name="" amount={parseInt(price)*100}><button onClick={()=>{CheckOutAction()}} className="btn">BUY NOW!</button></StripeCheckout>}
+        {/* action to be checked */}
+        {ownerId!=currentUserId&&<StripeCheckout stripeKey="pk_test_51L19d0B6UNWpymKvotIty0vQIXPdDEABTSctm5BgKlIWyLmHoJTq3gC20TjcxmV9cm63sHWvwnDQA2zUlRMcsQDR00A7FLa0CA" tokenPay={CheckOutAction()} name="Online Payment" amount={parseInt(price)*100}><button onClick={()=>{CheckOutAction()}} className="btn">BUY NOW!</button></StripeCheckout>}
 
         </form>
         {/* //! to be updated (a modalBox with settime out is going to be shown) */}

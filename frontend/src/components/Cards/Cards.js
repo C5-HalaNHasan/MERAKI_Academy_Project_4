@@ -17,7 +17,8 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const {currentUserItems,setCurrentUserItems}=useContext(TokenContext); //! 19/5 to be deleted 
-    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); //! to show and hide buy & swap buttons 
+    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
+
 
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
@@ -108,8 +109,6 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     };
 
 
-    console.log("current user country",currentUserCountry)
-
 //! a condition to be added if the userCountry != elem.country no swap or buy buttons will appear!
 //! item img to be rendered instead of using abs_wall
 return <div className="cardsContainer">
@@ -139,7 +138,7 @@ return <div className="cardsContainer">
 
             {/* buy action starts here*/}
             {elem.sell&& elem.owner._id !=currentUserId &&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{
-                navigate(`/checkout/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+                navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
             }}>buy</li>}
             {/* buy action ends here*/}
 
@@ -165,26 +164,26 @@ return <div className="cardsContainer">
 
 
         {/* add to cart button starts here*/}
-        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)?<li onClick={()=>{  
+        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{  
             addToCart(elem._id)
-        }}>Add to Cart</li>:null}
+        }}>Add to Cart</li>}
         {/* add to cart button ends here*/}
 
         {/* remove from cart button starts here*/}
-        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)?<li onClick={()=>{  
+        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{  
               removeFromCart(elem._id)
-        }}>Remove from Cart</li>:null}
+        }}>Remove from Cart</li>}
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
-        {/* swap action starts here*/}
-        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+        {/* swap action starts here */}
+        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}>SWAP</li>}
         {/* swap action button ends here}*/}
 
 
         {/* swap button starts here /it appears in the swapped items page /swap */}
         {type==="swap"&& <li id={elem._id} onClick={()=>{
-            navigate(`/checkout/${elem.title}/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
         }}><IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>

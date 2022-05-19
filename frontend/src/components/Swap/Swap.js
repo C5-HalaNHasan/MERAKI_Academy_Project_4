@@ -17,7 +17,7 @@ import ModalBox from "../ModalBox/ModalBox";
 // toDo-4: when the other user logs in: he will be notified with this action (also if the item has swapConfirmed set to true:extra)
 
 
-//! 19/5: TO BE CHECKED,MODALBOX TO BE SET IF THE COUNTRIES OR THE FILTERED ITEMS CRITERIA
+//! 19/5: TO BE CHECKED,MODALBOX TO BE SET IF THE COUNTRIES OR THE FILTERED ITEMS CRITERIA //! worked fine with useEffect 
 const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
@@ -25,13 +25,15 @@ const Swap=()=>{
     const [items,setItems]=useState([])
     const {userItems,setUserItems}=useContext(TokenContext); //! not used yet
     const {modalBox,setModalBox}=useContext(TokenContext); 
+    const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
+
 
 
     //to save the swapped item data so that it can be transferred to the check out page
-    const {item,id,price,country,category,ownerId,img}=useParams();
+    const {id,price,country,category,ownerId,img}=useParams();
     const {swappedItem,setSwappedItem}=useContext(TokenContext);
 
-    useEffect(()=>{ //! 19/5 to be checked why I used useEffect?
+    useEffect(()=>{ //! 19/5 to be checked why I used useEffect? beacuse the page will be infinetly rendered! 
         setSwappedItem({ 
             id:id,
             price:price,
@@ -39,16 +41,11 @@ const Swap=()=>{
             category:category,
             country:country,
             ownerId:ownerId,
-            item:item,
         })
     },[])
     
     console.log(swappedItem)//!to be deleted
 
-    //to show messages by modal box:
-    const [modalBoxMessage,setModalBoxlMessage]=useState(false)//! to be handelled as context
-    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk")//! to be handelled as context
-    //this state is set to true if the owner and the swapper are in the same country and the swapper has items with price >= wanted item
     const [canSwap,setCanSwap]=useState(false) //! to be deleted
 
 //a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
@@ -69,7 +66,7 @@ const canSwapThis=async (id,price,country,category,ownerId,img)=>{ //! TO BE CHE
                  return elem.price >= price
             });
 
-            if(filteredItemsByPrice.length>0&&result1.data.user.country==country){
+            if(filteredItemsByPrice.length>0&&result1.data.user.country.toLowerCase()==country.toLowerCase()){
                 console.log("you can swap!!")//! to be deleted
                 setItems(filteredItemsByPrice) 
                 setCanSwap(true) //! to be deleted
@@ -94,9 +91,9 @@ const canSwapThis=async (id,price,country,category,ownerId,img)=>{ //! TO BE CHE
     })
 };
 
-
+//! why I used this?
 useEffect(()=>{
-    canSwapThis(id,price,country);
+    canSwapThis(id,price,country,category,ownerId,img);
 },[canSwap])
 
 console.log("THIS IS THE SWAP COMPONENT", items,"can he swap?? ",canSwap) //! to be deleted

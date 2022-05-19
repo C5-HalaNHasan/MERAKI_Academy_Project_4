@@ -13,6 +13,7 @@ const Login=()=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
 
+    
     //the user inputs are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
     const [userData,setUserData]=useState({
         email:"",
@@ -40,6 +41,7 @@ const Login=()=>{
             if(result){
                 let reultToken="Bearer "+result.data.token;
                 setToken(reultToken);
+                setCurrentUserId(result.data.userId);
                 //token will be stored in the local storage to be used in other requests
                 localStorage.setItem("token",reultToken);
                 localStorage.setItem("currentUserId",result.data.userId);
@@ -50,9 +52,10 @@ const Login=()=>{
                 navigate("/"); 
             }
         }).catch((error)=>{
-            //to remove the preset token
+            //to remove the preset token and saved user data
             setToken(null);
-            setCurrentUserId(null)
+            setCurrentUserId(null);
+            setCurrentUserCountry(null);
             localStorage.clear();//! to remove the userId and token
             setResultMessage(error.response.data.message);
         })

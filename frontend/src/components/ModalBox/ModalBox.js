@@ -19,6 +19,7 @@ const ModalBox=({showModalBox,setShowModalBox,message,type})=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const {modalBox,setModalBox}=useContext(TokenContext); 
+    const navigate=useNavigate();
 
 
     if(modalBox.showModalBox===false){
@@ -48,6 +49,7 @@ return <div className="modalBox">
 <button className="actionButton" onClick={()=>{
     setModalBox({type:"", message:"",details:"", showModalBox:false})
 }}>Ok</button>
+{/* {modalBox.action=="goHome"&&navigate("/")&&setModalBox({type:"", message:"",details:"", showModalBox:false})} */}
 </div>
 
 </div>
