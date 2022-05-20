@@ -121,17 +121,17 @@ return <main>
         </div>
         <div className="titleSection">
             <h2>{elem.item} </h2>
-            <h3>price:{elem.price}</h3>
+            <h3>Price:{elem.price}</h3>
         </div>
 
         <div className="itemInfo">
           <div className="details">
             <h2>{elem.item} </h2>
-            <h3>price:{elem.price}</h3>
             <h3>{elem.description}</h3>
-            <h5>Category:{elem.category.category}</h5>
-            <h5>Owner:{elem.owner.firstName}</h5>
-            <h6>Added On:{elem.addedOn.split("T")[0]}</h6>
+            <h3>Price:{elem.price}</h3>
+            <h6>Category:{elem.category.category}</h6>
+            <h6>Owner:{elem.owner.firstName}</h6>
+            <h6>Added:{elem.addedOn.split("T")[0]}</h6>
           </div>
 
           <ul className="actionButtons"> 
@@ -139,7 +139,7 @@ return <main>
             {/* buy action starts here*/}
             {elem.sell&& elem.owner._id !=currentUserId &&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{
                 navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
-            }}>buy</li>}
+            }}>Buy</li>}
             {/* buy action ends here*/}
 
 
@@ -150,7 +150,7 @@ return <main>
                 navigate(`/updateitem/${elem._id}/${elem.photos[0]}`)
             }}>Update Item</li>}
 
-            {/* remove from whish list button  strats here: add the condition where the element is not in the wish list or cart*/}
+            {/* remove from whish list button  strats here: add the condistion where the element is not in the wish list or cart*/}
             {elem.owner._id !== currentUserId && currentUserWishList.includes(elem._id)?<li onClick={()=>{
                removeFromWishList(elem._id)
             }}>Remove from WishList</li>:null}
@@ -177,14 +177,14 @@ return <main>
 
         {/* swap action starts here */}
         {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
-        }}>SWAP</li>}
+        }}>Swap</li>}
         {/* swap action button ends here}*/}
 
 
         {/* swap button starts here /it appears in the swapped items page /swap */}
         {type==="swap"&& <li id={elem._id} onClick={()=>{
             navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
-        }}><IoMdSwap/></li>}
+        }}>Swap With<IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>
 

@@ -111,7 +111,7 @@
 
 
 .cardsContainer .card .itemInfo .details h3 {
-    font-size: 0.9em;
+    font-size: 1.1em;
     font-weight: 400;
     color: var(--spanColor);
 }
@@ -119,37 +119,21 @@
 .cardsContainer h3,
 .cardsContainer h5,
 .cardsContainer h6 {
-    font-size: 0.9em;
+    font-size: 1.1rem;
     font-weight: 400;
-
-}
-
-.details .actionButtons {
-    position: relative;
-    margin-top: 5px;
 }
 
 .actionButtons li {
-    margin: 4px;
-    display: flex;
-    display: inline-block;
-    color: #03a9f4;
-
+    border-radius: 1vw;
+    background-color: var(--lightBgColor);
+    width: 5vw;
+    margin: 1vh 1vw;
+    padding: 0.5vh 0.5vw;
+    display: block;
+    text-align: center;
+    align-content: center;
 }
 
-.actionButtons li a {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #294d69;
-    /* icons to be added instead of buy/swap/... */
-    border-radius: 50%;
-    font-size: 1.5em;
-    transition: 0.5s;
-}
-
-.actionButtons li a:hover {
-    transform: rotate(360deg);
+.actionButtons li:hover {
+    transform: scale(1.1);
 }
