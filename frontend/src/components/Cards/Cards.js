@@ -111,7 +111,8 @@ const Cards=({items,setItems,type,swappedItemId})=>{
 
 //! a condition to be added if the userCountry != elem.country no swap or buy buttons will appear!
 //! item img to be rendered instead of using abs_wall
-return <div className="cardsContainer">
+return <main>
+<div className="cardsContainer">
     <ModalBox />
     {items.map((elem)=>{
         return <div className="card" key={elem._id}>
@@ -190,6 +191,7 @@ return <div className="cardsContainer">
     })
     }
     </div>
+    </main>
 };
 
 export default Cards;

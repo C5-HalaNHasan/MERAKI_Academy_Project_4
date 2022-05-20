@@ -75,7 +75,7 @@ const Register=()=>{
 
 
     return ( 
-        <>
+        <main>
         <NavBar/>
         <ModalBox/>
     <div className="mainBox">
@@ -100,7 +100,7 @@ const Register=()=>{
     </div>
     </div>
     </div>
-    </>
+    </main>
     )
 
 };

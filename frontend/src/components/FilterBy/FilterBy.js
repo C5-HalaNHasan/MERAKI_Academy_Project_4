@@ -96,19 +96,27 @@ const FilterBox=()=>{
 
 
 
-    return <div className="filterBox">
+    return <aside>
+
+    <div className="filterBox">
     <div className="filterItems">
 
-    <h3>Categories</h3>
+    <h4>Categories</h4>
     <ul className="categories">
         {categories.map((elem)=>{
             return <li id={elem._id} onClick={getItemsByCategory}>{elem.category}</li>
         })
         }
+    
+    <h4>Type</h4>
     <div className="swapOrBuy">
-        <button id="swap" onClick={getItemsBySwapOrBuy}>Swap</button>
-        <button id="sell" onClick={getItemsBySwapOrBuy}>Buy</button>
+    <ul>
+         <li id="swap" onClick={getItemsBySwapOrBuy}>Swap</li>
+         <li id="sell" onClick={getItemsBySwapOrBuy}>Buy</li>
+    </ul>
     </div>
+
+    <h4>Price</h4>
     <div className="byPrice">
     <input  type="text" placeholder="minPrice..." name="minPrice" onChange={priceOnChange}></input>
     <input  type="text" placeholder="maxPrice.." name="maxPrice" onChange={priceOnChange}></input>
@@ -123,6 +131,7 @@ const FilterBox=()=>{
     <Cards items={items} setItems={setItems} type="search"/>
 
     </div>
+    </aside>
 };
 
 export default FilterBox;

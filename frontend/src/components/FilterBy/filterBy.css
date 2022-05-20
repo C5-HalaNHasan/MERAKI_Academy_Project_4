@@ -1,68 +1,72 @@
-.root {
-    margin-left: 5rem;
-}
-
 .filterBox {
     display: flex;
     min-height: 100vh;
+    grid-area: side;
 }
 
 .filterItems {
     flex: 1 1 0;
     max-width: 300px;
     padding: 2rem 1rem;
-    background-color: aqua;
-    margin: 0 -1rem;
+    background-color: var(--mainBgColor);
+    margin: 0 -2rem;
 
 }
 
 /* will be made as a drop down list */
-.filterItems h3 {
+.filterItems h4 {
     font-size: 1.8rem;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.1em;
     margin-left: 2vw;
+    box-shadow: 10px 0px 100px 0px var(--mainBgColor);
 }
 
 .filterItems ul li {
     font-size: 2vh;
     margin: 1vh 2vw;
+    position: relative;
 }
 
-.filterItems li:hover {
+.categories li::after {
+    content: "";
+    position: absolute;
+    height: 0.3rem;
+    width: 0;
+    left: 0;
+    top: 1.6rem;
+    background-color: var(--mainBgColor);
+    transition: width 0.3s linear;
+}
+
+.categories li:hover::after {
+    width: 100%;
+}
+
+.categories li:hover {
     cursor: pointer;
-    background-color: red;
 }
 
-.swapOrBuy button {
-    display: inline;
-    margin: 1vh 2vw;
-    width: 25%;
-    font-size: 2vh;
-    padding: 1%;
-    border-radius: 2vh;
-    border: none;
-    background-color: whitesmoke;
-    transition: 0.2s ease;
-}
-
-.filterBox button:hover {
-    transform: scale(1.2);
-    background-color: blue;
-    color: whitesmoke;
-    cursor: pointer;
+.byPrice {
+    display: flex;
+    flex-direction: row;
 }
 
 .byPrice input {
     display: block;
-    margin: 1vh 2vw;
-    border-radius: 2vh;
-    border: 1px solid;
-    padding: 1%;
-    font-size: 2vh;
+    flex-wrap: wrap;
+    margin-left: 2vw;
+    margin-right: auto;
+    margin-top: 1vw;
+    width: 6vw;
+    border-radius: 1vw;
+    border: none;
+    padding: 5px;
+    min-width: 60px;
+    background-color: var(--spanColor);
 }
 
+
 .byPrice input:focus {
-    border: none;
     outline: none;
 }
 

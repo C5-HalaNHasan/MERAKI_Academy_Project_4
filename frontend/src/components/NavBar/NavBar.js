@@ -7,7 +7,6 @@ import React,{useState,useContext,useEffect} from "react";
 import axios from "axios";
 import { Route, useNavigate,Link } from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
-import SearchBox from "../SearchBox/SearchBox";
 import UserBoard from "../UserBoard/UserBoard";
 import Cards from "../Cards/Cards";
 
@@ -34,9 +33,9 @@ const NavBar=()=>{
 
     //searchBox function:
     const searchBox=(searchedItem)=>{
+        setSearchedItem(searchedItem);
         let searchUrl="http://localhost:5000/items"
         axios.get(searchUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log(result) //!to be deleted
             if(result&&result.data.items.length>0&&searchedItem){
                let filteredItems= result.data.items.filter((elem)=>{
                     if(elem.item.toLowerCase().includes(searchedItem.toLowerCase())){
@@ -44,7 +43,7 @@ const NavBar=()=>{
                     }
                 })
                 setItems(filteredItems);
-                // setIsRendered(!isRendered); //! it worked but with infinite loop to be handled by saving all the items in a context then filtering the results
+                // setIsRendered(!isRendered); 
             }else{
                 setItems(result.data.items);
             }
@@ -60,32 +59,11 @@ const NavBar=()=>{
         searchBox(searchedItem);
     },[searchedItem])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return <div className="NavBar"> 
+    return <header>
+    <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
     <div  className="navBarLogo">
-    <h1><Link to="/">Logo<IoMdSwap/></Link> </h1>
-    {/* onchange the /search is going to be rendered */}
-    {/* <Link to="/search">Search </Link> */}
+    <h1><Link to="/">SWAPAPP<span>let's do a swap!</span></Link> </h1>
     </div>
     
     <div onClick={()=>setIsClicked(!isClicked)}>
@@ -125,6 +103,7 @@ const NavBar=()=>{
     </ul>
 
     </div>
+    </header>
 };
 
 export default  NavBar;

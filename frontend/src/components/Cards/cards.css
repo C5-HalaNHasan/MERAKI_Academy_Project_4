@@ -18,20 +18,5 @@
     display: block;
 }
 
-li:hover {
-    cursor: pointer;
-    background-color: brown;
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Warlow Sans', sans-serif;
-    color: var(--mainText);
-    text-decoration: none;
-    list-style: none;
-}
 
 /*the new style is down here*/

@@ -1,11 +1,10 @@
 
-// import './App.css';
+import './App.css';
 import React,{createContext,useState} from "react";
 import {Routes,Route, Router,useParams} from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import Register from "./components/Register/register";
 import Login from "./components/Login/Login";
-import SearchBox from "./components/SearchBox/SearchBox";
 import WishList from "./components/WishList/WishList";
 import Cart from "./components/Cart.js/Cart";
 import UserBoard from "./components/UserBoard/UserItems";
@@ -15,7 +14,6 @@ import CheckOut from "./components/CheckOut.js/CheckOut";
 import Swap from "./components/Swap/Swap";
 import UpdateItem from "./components/UserBoard/UpdateItem";
 import AddItem from "./components/UserBoard/AddItem";
-import axios from "axios";
 
 
 //token will be provided from the APP.js to each component where required
@@ -47,11 +45,6 @@ const App=()=> {
     showModalBox:false,
   });
 
-
-
-
-
-
   return (
     <div className="App">
       <TokenContext.Provider value={{token,setToken,currentUserId,setCurrentUserId,isRendered,setIsRendered,allItemsInDb,setAllItemsInDb,currentUserItems,setCurrentUserItems,swappedItem,setSwappedItem,modalBox,setModalBox,currentUserCountry,setCurrentUserCountry}}>
@@ -59,7 +52,6 @@ const App=()=> {
       <Route path="/" element={<HomePage/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="/login" element={<Login/>}/>
-      <Route path="/search" element={<SearchBox/>}/>
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/wishlist" element={<WishList/>}/>
       <Route path="/userboard" element={<UserBoard/>}/>
@@ -69,14 +61,6 @@ const App=()=> {
       <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
       <Route path="/updateitem/:id/:img" element={<UpdateItem />}/>
       <Route path="/additem/" element={<AddItem />}/>
-
-
-
-
-
-
-      
-
       </Routes>
       </TokenContext.Provider>
     </div>

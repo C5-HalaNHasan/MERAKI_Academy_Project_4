@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;500;600&display=swap');
+
+/* darkMode & lightMode*/
+:root {
+    --mainText: #003049;
+    --mainBgImg: url("./components/assets/mainBG.jpg");
+    --mainBgColor: rgba(0, 0, 0, 0.1);
+    --spanColor: rgba(255, 255, 255, 0.7)
+}
+
+
+.darkMode {}
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--mainText);
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Hind Siliguri', sans-serif;
+
+}
+
+#root {
+    background: var(--mainBgImg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    grid-template-columns: 25% 37.5% 37.5%;
+    grid-template-rows: repeat(3, fr);
+    grid-template-areas: "nav nav nav""side main main""footer footer footer";
+}
+
+aside {
+    grid-area: side;
+}
+
+header {
+    grid-area: nav;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+}
