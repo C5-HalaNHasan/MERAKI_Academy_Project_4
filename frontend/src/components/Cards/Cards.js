@@ -112,12 +112,7 @@ const Cards=({items,setItems,type,swappedItemId})=>{
 //! a condition to be added if the userCountry != elem.country no swap or buy buttons will appear!
 //! item img to be rendered instead of using abs_wall
 return <div className="cardsContainer">
-
-    <button onClick={()=>{ //! for testing to be deleted
-    setModalBox({type:"alert", message:"hello from cards component",details:"this is for testing only", showModalBox:true})
-    }}>show modal box </button>
     <ModalBox />
-
     {items.map((elem)=>{
         return <div className="card" key={elem._id}>
         <div className="imgSection">
@@ -164,15 +159,15 @@ return <div className="cardsContainer">
 
 
         {/* add to cart button starts here*/}
-        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{  
+        {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry?<li onClick={()=>{  
             addToCart(elem._id)
-        }}>Add to Cart</li>}
+        }}>Add to Cart</li>:null}
         {/* add to cart button ends here*/}
 
         {/* remove from cart button starts here*/}
-        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{  
+        {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry?<li onClick={()=>{  
               removeFromCart(elem._id)
-        }}>Remove from Cart</li>}
+        }}>Remove from Cart</li>:null}
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here */}

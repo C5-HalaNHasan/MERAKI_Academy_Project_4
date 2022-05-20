@@ -1,4 +1,3 @@
-import "./checkOut.css";
 import React,{useState,useContext,useEffect} from "react";
 import {Link,Routes,Route,useNavigate,useParams} from "react-router-dom";
 import axios from "axios";
@@ -49,7 +48,7 @@ const swapOwnersById=async ()=>{
             console.log(error1)
         })
         console.log("hello from swap owner by id function")
-        navigate("/useritems")
+        // navigate("/useritems") //! it redirect the user to his items directly
 
 };//! end of swapped owner function
 

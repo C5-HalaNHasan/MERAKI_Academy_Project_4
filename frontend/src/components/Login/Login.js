@@ -1,10 +1,11 @@
-import "./login.css";
 import React,{useState,useContext} from "react";
 import {Link,Routes,Route,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js";
 import abs_wall from "../assets/abs_wall.jpg"
 import NavBar from "../NavBar/NavBar";
+import ModalBox from "../ModalBox/ModalBox";
+
 
 
 const Login=()=>{
@@ -12,17 +13,18 @@ const Login=()=>{
     const {token,setToken}=useContext(TokenContext); 
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
+    const navigate=useNavigate();
+    const {modalBox,setModalBox}=useContext(TokenContext); 
 
-    
+
     //the user inputs are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
     const [userData,setUserData]=useState({
         email:"",
         password:"",
     });
 
-    const navigate=useNavigate() //! used to redirect the user to the homePage
 
-    //to update the result message from axios
+    //to update the result message from axios:
      let [resultMessage,setResultMessage]=useState("");
     
     const saveData=(e)=>{
@@ -56,14 +58,16 @@ const Login=()=>{
             setToken(null);
             setCurrentUserId(null);
             setCurrentUserCountry(null);
-            localStorage.clear();//! to remove the userId and token
+            localStorage.clear();
             setResultMessage(error.response.data.message);
+            setModalBox({type:"notOk", message:"Unsuccessful Login!",details:`${resultMessage}`, showModalBox:true});
         })
     };
 
     return (
         <>
         <NavBar/>
+        <ModalBox/>
     <div className="mainBox">
     <div className="registrationBox">
 
@@ -72,21 +76,16 @@ const Login=()=>{
     </div>
 
     <div className="secondPart">
-    
     <h3>Login:</h3>
     <span>Not a member yet?<span><Link to="/register"> Register</Link></span></span>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
     <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
     <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>
     <button onClick={LoginAction} className="btn">Login</button>
-    <h3>{resultMessage}</h3> 
-    {/* //! to be updated (a moving or loading component is going to be created instead of this) */}
     </form>
     </div>
 </div>;
     </div> 
-    
-
     </>)
 
 };

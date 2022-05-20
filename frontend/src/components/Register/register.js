@@ -1,16 +1,19 @@
-import "./register.css";
+import "./form.css";
 import React,{useState,useContext} from "react";
 import {Link,Routes,Route,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; //! to make an automatic login
 import abs_wall from "../assets/abs_wall.jpg";
 import NavBar from "../NavBar/NavBar";
+import ModalBox from "../ModalBox/ModalBox";
+
 
 
 const Register=()=>{
     const {token,setToken}=useContext(TokenContext); 
-    //to save the current userId
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
+    const {modalBox,setModalBox}=useContext(TokenContext); 
+
     //the user inputs are going to be collected in an object and sent to the backend to be checked if the user exists or not: the the status of the process will be sent from the BE to the FE 
     let [userData,setUserData]=useState({
         firstName:"",
@@ -22,12 +25,10 @@ const Register=()=>{
         role:"627f8bde42534475c03d4d23" //user role added for testing //!to be updated when deleting the database
     });
 
-    const navigate=useNavigate() //! used to redirect the user to the homePage
+    const navigate=useNavigate()
 
-    //to redirect the user to the main page after a successful registration //! not used yet
-    // const navigate=useNavigate();
 
-    //to update the result message from axios //! not used yet!
+    //to update the result message from axios 
     let [resultMessage,setResultMessage]=useState("");
 
     const saveData=(e)=>{
@@ -38,10 +39,10 @@ const Register=()=>{
         setUserData({...userData,[targetField]:newVal})
     };
 
-    const RegisterAction=()=>{ 
+    const RegisterAction=async ()=>{ 
         //when the user clicks on the register button: the userData is going to be sent to the BE by axios!
         let url="http://localhost:5000/users/";
-        axios.post(url,userData).then((result)=>{
+        await axios.post(url,userData).then(async (result)=>{
             // will make the login automatically so that the user can navigate the site once registered(by using the login component here
             if(result.data.result.success == true){
                 //the currentUserId is going to be saved and transferred across other components:
@@ -51,23 +52,24 @@ const Register=()=>{
               
 
     //an automatic login in is going to be made and the user will be redirected to the main page (once created)
-        axios.post("http://localhost:5000/users/login",{
+        await axios.post("http://localhost:5000/users/login",{
             email:userData.email,
             password:userData.password,
-        }).then((result1)=>{
+        }).then(async (result1)=>{
                     let reult1Token="Bearer "+result1.data.token;
                     localStorage.setItem("token",reult1Token);
                     setToken(reult1Token);
-                    //to redirect the user to the homePage
                     navigate("/");
                 }).catch((error1)=>{
-                    console.log("from inside the autologin",error1) //! to be deleted
+
                 })
             }
-            setResultMessage(result.data.result.message) //to set the result message below the action button //! not used yet
-        }).catch((error)=>{
+            setModalBox({type:"ok", message: `Hi ${result.data.result.user.firstName}`,details:"Hope you will engoy your experience with us!", showModalBox:true});
+
+            }).catch((error)=>{
             console.log(error);
             setResultMessage(error.response.data.message);
+            setModalBox({type:"notOk", message:"Unsuccessful Registration!",details:"all fields must be filled!", showModalBox:true});
         })
 };
 
@@ -75,6 +77,7 @@ const Register=()=>{
     return ( 
         <>
         <NavBar/>
+        <ModalBox/>
     <div className="mainBox">
     
     <div className="registrationBox">
@@ -93,9 +96,7 @@ const Register=()=>{
         <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
         <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>
         <button onClick={RegisterAction} className="btn">Register</button>
-        <h3>{resultMessage}</h3> 
         </form>
-        {/* //! to be updated (a modalBox with settime out is going to be shown) */}
     </div>
     </div>
     </div>

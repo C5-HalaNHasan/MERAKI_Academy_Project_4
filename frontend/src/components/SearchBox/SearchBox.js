@@ -1,12 +1,10 @@
-import "./searchBox.css"
 import React,{useState,useContext,useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import axios from "axios";
-import NavBar from "../NavBar/NavBar";
 import Cards from "../Cards/Cards";
 
-
+//! 20/5 to be deleted and the live search is going to be handelled in the NavBar component
 const SearchBox=({searchedItem})=>{
     console.log(searchedItem);
     const {token,setToken}=useContext(TokenContext);
@@ -44,7 +42,6 @@ const SearchBox=({searchedItem})=>{
     console.log("TODAY77777items from the search box",items)
     
     return <div className="SearchBox">
-    <NavBar/>
     <h1>this is the SearchBox</h1>
     {/* testing the rendered cards here: stil the CARDS component is not finalized but will be used here for testing only */}
     <Cards items={items} setItems={setItems} type="search"/>

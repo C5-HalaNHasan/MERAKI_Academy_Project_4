@@ -5,11 +5,13 @@ import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/fr
 import axios from "axios";
 import Cards from "../Cards/Cards";
 import NavBar from "../NavBar/NavBar";
+import ModalBox from "../ModalBox/ModalBox";
 
 //! 19/5: CREATE NEW ITEM IS NOT WORKIG/KEEPS GIVING SERVER ERROR 500:
 const AddItem=()=>{
     const {token,setToken}=useContext(TokenContext);
     let [resultMessage,setResultMessage]=useState("");
+    const {modalBox,setModalBox}=useContext(TokenContext); 
     const navigate=useNavigate();
 
 const [itemPic,setItemPic]=useState([])
@@ -54,11 +56,12 @@ const addItemInDb=()=>{
    setItemData({...itemData,photos:[itemPic]}); //! to be checked :supposed to be an array
    let createItemUrl=`http://localhost:5000/items`
 axios.post(createItemUrl,{itemData},{headers:{authorization:token}}).then((result)=>{
-   console.log("item added to the database")
-   console.log(result.data) 
+   setModalBox({type:"ok", message:`${result.data.item.item}`,details:`${result.data.item.item} is successfully added to your items!`, showModalBox:true});
    navigate("/useritems")
 }).catch((error)=>{
-console.log(error)
+   setModalBox({type:"notOk", message:"Can't Add your Item!",details:`${error.response.data}`, showModalBox:true}); //! please fill all the required fields
+   console.log(error)
+
 })
 };
   
@@ -66,6 +69,7 @@ console.log(error)
 
 return( <>
     <NavBar/>
+    <ModalBox/>
     <div className="mainBox">
      <div className="registrationBox">
     <div className="firstPart">

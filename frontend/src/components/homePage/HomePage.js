@@ -7,7 +7,6 @@ import FilterBox from "../FilterBy/FilterBy";
 
 
 const HomePage=()=>{
-    //some home page components are going to be shown only for registered users //!not used yet
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const navigate = useNavigate();
@@ -16,7 +15,6 @@ const HomePage=()=>{
     {/* //! to be rendered differntly if the user is not logged in */}
     <NavBar/> 
     <FilterBox />
-    <h1>this is the main page</h1>
     </div>
 };
 
