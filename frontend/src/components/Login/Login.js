@@ -5,6 +5,8 @@ import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/fr
 import abs_wall from "../assets/abs_wall.jpg"
 import NavBar from "../NavBar/NavBar";
 import ModalBox from "../ModalBox/ModalBox";
+import login from "../assets/logIn.jpg";
+
 
 
 
@@ -72,12 +74,12 @@ const Login=()=>{
     <div className="registrationBox">
 
     <div className="firstPart">
-    <img src={abs_wall} />
+    <img src={login} />
     </div>
 
     <div className="secondPart">
-    <h3>Login:</h3>
-    <span>Not a member yet?<span><Link to="/register"> Register</Link></span></span>
+    <h3>Login</h3>
+    Not a member yet? <span><Link to="/register">Register</Link></span>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
     <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
     <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>

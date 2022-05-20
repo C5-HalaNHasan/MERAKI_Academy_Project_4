@@ -48,7 +48,7 @@ return <div className="modalBox">
 {/* the buttons are going to be rendered based on the clicked button on the card (as symbols)*/}
 <button className="actionButton" onClick={()=>{
     setModalBox({type:"", message:"",details:"", showModalBox:false})
-}}>Ok</button>
+}}>OK</button>
 {/* {modalBox.action=="goHome"&&navigate("/")&&setModalBox({type:"", message:"",details:"", showModalBox:false})} */}
 </div>
 
