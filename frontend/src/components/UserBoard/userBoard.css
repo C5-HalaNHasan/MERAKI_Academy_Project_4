@@ -1,17 +1,17 @@
 .userBoard ul {
+    position: fixed;
     display: flex;
     flex-direction: column;
     background-color: var(--mainBgColor);
     border-radius: 1vh;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    margin-top: 1.5vh;
+    margin-top: 3.1vh;
     padding: 1rem 5rem;
     position: absolute;
     right: 0;
     justify-content: space-evenly;
-    gap: 1.3vh;
-
+    gap: 1.6vh;
 }
 
 .dropDownMenu {
@@ -24,7 +24,7 @@
 }
 
 .dropDownMenu li {
-    background-color: var(--mainColor);
+    background-color: var(--mainText);
     cursor: pointer;
 }
 
@@ -43,5 +43,28 @@
     height: 100%;
     font-size: 1.2rem;
     transition: all 0.5 ease;
+
+}
+
+#addItem {
+    position: relative;
+    top: 80vh;
+    left: 90vw;
+    width: 7vw;
+    height: 5vh;
+    margin: 1vh 2vw;
+    font-size: 1.3rem;
+    text-align: center;
+    float: bottom;
+    border: none;
+    border-radius: 2vw;
+    background-color: var(--mainText);
+    color: var(--spanColor);
+    transition: all 0.2s ease;
+}
+
+#addItem:hover {
+    transform: translateX(-30px) translateY(-30px);
+    cursor: pointer;
 
 }

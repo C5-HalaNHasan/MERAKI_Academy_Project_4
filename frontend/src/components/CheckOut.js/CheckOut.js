@@ -3,7 +3,7 @@ import {Link,Routes,Route,useNavigate,useParams} from "react-router-dom";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; //! to make an automatic login
-import abs_wall from "../assets/abs_wall.jpg";
+import cart from "../assets/cart.jpg";
 import NavBar from "../NavBar/NavBar";
 import ModalBox from "../ModalBox/ModalBox";
 
@@ -70,7 +70,6 @@ const buyAction=(tokenPay)=>{
 
     }).catch((error)=>{
         console.log(error)
-
     });
 
 }
@@ -99,7 +98,7 @@ return (
     <div className="registrationBox">
      <div className="firstPart">
      {/* //! the swappd item will be shown b y setting a ternary operator if swapped item id saved in context===the id sent to the checkout page */}
-    <img src={abs_wall} /> 
+    <img src={cart} /> 
     </div>
 
     <div className="secondPart">

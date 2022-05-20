@@ -3,10 +3,9 @@ import React,{useState,useContext,useEffect} from "react";
 import { useNavigate,useParams,usenavigate} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import axios from "axios";
-import Cards from "../Cards/Cards";
 import NavBar from "../NavBar/NavBar";
 import ModalBox from "../ModalBox/ModalBox";
-
+import addItem from "../assets/addItem.jpg"
 //! 19/5: CREATE NEW ITEM IS NOT WORKIG/KEEPS GIVING SERVER ERROR 500:
 const AddItem=()=>{
     const {token,setToken}=useContext(TokenContext);
@@ -14,7 +13,7 @@ const AddItem=()=>{
     const {modalBox,setModalBox}=useContext(TokenContext); 
     const navigate=useNavigate();
 
-const [itemPic,setItemPic]=useState([])
+const [itemPic,setItemPic]=useState()
 //the item added data are going to be collected in an object and sent to the backend to be added accordingly
 const [itemData,setItemData]=useState({
     item:undefined,
@@ -73,7 +72,7 @@ return( <>
     <div className="mainBox">
      <div className="registrationBox">
     <div className="firstPart">
-    <img src={itemPic} />
+    {itemPic?<img src={itemPic}/>:<img src={addItem}/>}
     </div>
     <div className="secondPart">
     <h3>Add New Item</h3>

@@ -36,7 +36,7 @@
 .registrationBox input {
     border-radius: 2vh;
     border: 1px solid var(--spanColor);
-    padding: 1em;
+    padding: 0.3rem 0.8rem;
     display: block;
     background-color: var(--mainBgColor);
 }
@@ -48,8 +48,12 @@
     font-size: 1.1rem;
     font-weight: 900;
     cursor: pointer;
-    padding: 1.5vh;
+    padding: 1.2vh;
     border-radius: 2vh;
+}
+
+.registrationBox .btn:hover {
+    transform: scale(1.1);
 }
 
 .left {

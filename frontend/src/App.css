@@ -61,6 +61,7 @@ input:focus {
 
 input {
     background-color: var(--lightBgColor);
+    font-size: 1vw;
 }
 
 aside {

@@ -14,14 +14,14 @@
 
 /* will be made as a drop down list */
 .filterItems h4 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin-bottom: 0.1em;
     margin-left: 2vw;
     box-shadow: 10px 0px 100px 0px var(--mainBgColor);
 }
 
 .filterItems ul li {
-    font-size: 2vh;
+    font-size: 1.2rem;
     margin: 1vh 2vw;
     position: relative;
 }
@@ -32,7 +32,7 @@
     height: 0.3rem;
     width: 0;
     left: 0;
-    top: 1.6rem;
+    top: 1.9rem;
     background-color: var(--mainBgColor);
     transition: width 0.3s linear;
 }
@@ -61,6 +61,7 @@
     border: none;
     padding: 5px;
     min-width: 60px;
+
 }
 
 
