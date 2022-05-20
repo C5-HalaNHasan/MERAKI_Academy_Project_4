@@ -9,16 +9,27 @@
     min-width: 100vw;
 }
 
-.NavBar span {
-    font-size: small;
-    color: var(--spanColor);
+.navBarItem span {
+    position: absolute;
+    right: -2.3vw;
+    top: -8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
     font-size: 2vh;
-    letter-spacing: 0px;
-    margin-left: 1vw;
+    color: var(--spanColor);
+}
+
+.NavBar h1 span {
+    font-size: 1.1rem;
+    margin-left: 0.7vw;
 }
 
 .NavBar input {
     display: inline;
+    border-radius: 3vw;
+    padding: 0.25vw;
+    border: none;
 }
 
 .navBarLogo :hover {
@@ -30,25 +41,28 @@
 }
 
 .NavBar ul li {
-    margin: 0 1rem;
+    margin: 0 1.7rem;
 }
 
 .navBarItem a {
     display: block;
     position: relative;
+    font-size: 1.3rem;
+    transition: all 0.5 ease;
 }
 
 .navBarItem a:hover {
-    color: black;
+    color: var(--spanColor);
+    transform: scale(1.3);
 }
 
 .navBarItem a::after {
     content: "";
     position: absolute;
-    height: 0.1rem;
+    height: 0.15rem;
     width: 0;
     left: 0;
-    top: 1.5rem;
+    top: 1.8rem;
     background-color: var(--mainBgColor);
     transition: width 0.3s linear;
 }

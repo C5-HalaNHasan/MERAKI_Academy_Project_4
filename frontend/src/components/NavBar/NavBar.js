@@ -47,11 +47,9 @@ const NavBar=()=>{
             }else{
                 setItems(result.data.items);
             }
-            
         }).catch((error)=>{
             console.log(error)
         })
-
     };
     
 
@@ -75,24 +73,25 @@ const NavBar=()=>{
     <ul className={isClicked? "navBurger": ""}>
 
     {/* setting onClick when the user presses enter e.key /also the search bar will only appear in the MAIN PAGE*/}
-    <li className="navBarItem">
-    <FiSearch/><input onChange={(e)=>searchBox(e.target.value)} placeholder="Search..."></input>
+    <li className="navBarItem searchBox">
+    {token&&<input onChange={(e)=>searchBox(e.target.value)} placeholder="🔍Search..."></input>}
     </li>
     {searchedItem&&<Cards items={items} setItems={setItems} type="search"/>}
 
     <li className="navBarItem">
-    <Link to="/wishlist" onClick={()=>setIsClicked(!isClicked)}><AiOutlineHeart/>wishList </Link>
+    {token&&<Link to="/wishlist" onClick={()=>setIsClicked(!isClicked)}>wishList<AiOutlineHeart style={{position:"absolute",top:"5px"}}/><span>1</span></Link>}
     </li>
 
     <li className="navBarItem">
-    <Link to="/cart" onClick={()=>setIsClicked(!isClicked)}><AiOutlineShoppingCart/>Cart</Link>
+    {token&&<Link to="/cart" onClick={()=>setIsClicked(!isClicked)}>Cart<AiOutlineShoppingCart style={{position:"absolute",top:"5px"}}/><span>1</span></Link>}
     </li>
 
     {/* th userBoard will only appear when the user is logged in else/a register will appear instead! */}
 
     <li className="navBarItem">
-    <Link to="" onClick={()=>setIsDropDown(!isDropDown)}><IoIosArrowDropdownCircle/>UserBoard</Link>
+    {token&&<Link to="" onClick={()=>setIsDropDown(!isDropDown)}>UserBoard<IoIosArrowDropdownCircle style={{position:"absolute",top:"5px"}} /></Link>}
     {token&&isDropDown&&<UserBoard isDropDown={isDropDown} setIsDropDown={setIsDropDown} isClicked={isClicked} setIsClicked={setIsClicked}/>}
+    {!token&&<Link to="/login" onClick={()=>setIsClicked(!isClicked)}>Login<FiLogIn style={{position:"absolute",top:"5px"}}/></Link>}
     </li>
 
     {/* register: not working */}

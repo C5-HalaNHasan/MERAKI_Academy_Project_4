@@ -10,12 +10,11 @@
     padding: 2rem 1rem;
     background-color: var(--mainBgColor);
     margin: 0 -2rem;
-
 }
 
 /* will be made as a drop down list */
 .filterItems h4 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-bottom: 0.1em;
     margin-left: 2vw;
     box-shadow: 10px 0px 100px 0px var(--mainBgColor);
@@ -43,7 +42,7 @@
 }
 
 .categories li:hover {
-    cursor: pointer;
+    color: var(--spanColor);
 }
 
 .byPrice {
@@ -65,10 +64,6 @@
     background-color: var(--spanColor);
 }
 
-
-.byPrice input:focus {
-    outline: none;
-}
 
 /* to be checked again once items cards are properly designed */
 @media (max-width:1024px) {

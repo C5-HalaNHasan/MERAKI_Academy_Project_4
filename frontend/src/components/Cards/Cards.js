@@ -119,6 +119,10 @@ return <main>
         <div className="imgSection">
             <img src={abs_wall}/> 
         </div>
+        <div className="titleSection">
+            <h2>{elem.item} </h2>
+            <h3>price:{elem.price}</h3>
+        </div>
 
         <div className="itemInfo">
           <div className="details">

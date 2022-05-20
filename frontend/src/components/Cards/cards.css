@@ -1,22 +1,155 @@
-.card {
-    border: aqua solid 3px;
-    margin: 2%;
-    padding: 1% 2%;
-    display: inline-block;
+.cardsContainer {
+    position: relative;
+    /* will work further on the responsive design:this value was for testing only */
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* to be checked */
+    column-gap: 0px;
+    /* justify-content: center;
+    align-items: center; */
+    min-height: 100vh;
+    /* to be checked */
+    overflow: auto;
 }
 
-.card button {
-    display: inline-block;
-    margin: 0% 1%;
-    clear: left;
+
+.cardsContainer .card {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    /* depends on the number of buttons that will appear/depending on the item */
+    /* background: linear-gradient(#2196f3, #2196f3 30%, #1d3548 30%, #1d3548); */
+    background: var(--mainBgColor);
+    margin: 10px;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    /* to control the translateY upward movement */
+    overflow: hidden;
+    padding: 10px;
 }
 
-.card img {
+.cardsContainer .card .imgSection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s ease;
+    z-index: 10;
+    transform-origin: top;
+    border-radius: 20px;
+    overflow: hidden;
+    /* display: none; */
+}
+
+.cardsContainer .card .titleSection {
+    position: absolute;
+    top: 30%;
+    padding-left: 0.7vw;
+    width: 100%;
+    height: 40%;
+    z-index: 10;
+    font-size: 1.5rem;
+    background-color: var(--mainBgColor);
+}
+
+.cardsContainer .card:hover .titleSection {
+    display: none;
+}
+
+
+.cardsContainer .card:hover .imgSection {
+    /* depends on the number of buttons that will appear/depending on the item */
+    transform: translateY(10px) scale(0.25);
+    /* display: none; */
+}
+
+
+.cardsContainer .card .imgSection img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardsContainer .card .itemInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 1vh;
+    /* to add smooth Ytransition when hovering over the card */
+    transform: translateY(100%);
+    transition: 0.5s;
+}
+
+.cardsContainer .card:hover .itemInfo {
+    transform: translateY(0);
+}
+
+
+.cardsContainer .card .itemInfo .details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5vw;
+}
+
+
+.cardsContainer .card .itemInfo .details h2 {
+    font-size: 1.7em;
+    font-weight: 500;
+}
+
+
+.cardsContainer .card .itemInfo .details h3 {
+    font-size: 0.9em;
+    font-weight: 400;
+    color: var(--spanColor);
+}
+
+.cardsContainer h3,
+.cardsContainer h5,
+.cardsContainer h6 {
+    font-size: 0.9em;
+    font-weight: 400;
+
+}
+
+.details .actionButtons {
+    position: relative;
+    margin-top: 5px;
+}
+
+.actionButtons li {
+    margin: 4px;
+    display: flex;
+    display: inline-block;
+    color: #03a9f4;
+
+}
+
+.actionButtons li a {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #294d69;
+    /* icons to be added instead of buy/swap/... */
     border-radius: 50%;
-    float: left;
-    width: 100px;
-    display: block;
+    font-size: 1.5em;
+    transition: 0.5s;
 }
 
-
-/*the new style is down here*/
+.actionButtons li a:hover {
+    transform: rotate(360deg);
+}
