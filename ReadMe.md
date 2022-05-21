@@ -21,7 +21,6 @@
 - [Guided By](#guided_by)
 
 ## 🧐 About <a name = "about"></a>
-Write about 1-2 paragraphs describing the purpose of your project.
 Do you have any item you want to get rid off? SWAPapp is the place!
 With this app you can easily swap your items with others or sell them!
 All you have to do is to join us and enjoy the experience!
