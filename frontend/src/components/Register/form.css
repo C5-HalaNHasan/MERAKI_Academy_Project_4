@@ -1,13 +1,15 @@
 /* not responsive yet */
 .mainBox {
-    margin: auto;
+    margin-top: 3vh;
     width: 100vw;
-    height: 92vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    overflow-y: hidden;
 }
+
 
 .secondPart h3 {
     font-size: 1.5rem;

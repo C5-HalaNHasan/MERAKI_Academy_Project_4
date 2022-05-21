@@ -5,8 +5,10 @@
     height: 10vh;
     background-color: var(--mainBgColor);
     padding: 0 5rem;
-    position: relative;
+    position: fixed;
+    top: 0;
     min-width: 100vw;
+
 }
 
 .navBarItem span {
@@ -26,18 +28,21 @@
 }
 
 .NavBar h1 {
-    font-size: 2rem;
+    font-size: 2.7rem;
 }
 
 
 .NavBar input {
     display: inline;
     border-radius: 3vw;
-    padding: 0.25vw;
+    padding: 0.20vw;
     border: none;
+    position: absolute;
+    top: 2.7vh;
+    right: 25vw;
 }
 
-.navBarLogo :hover {
+.navBarLogo a:hover {
     cursor: pointer;
     color: var(--spanColor);
 }
@@ -54,7 +59,7 @@
 .navBarItem a {
     display: block;
     position: relative;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     transition: all 0.5 ease;
 }
 
@@ -69,7 +74,7 @@
     height: 0.15rem;
     width: 0;
     left: 0;
-    top: 1.8rem;
+    top: 2.1rem;
     background-color: var(--mainBgColor);
     transition: width 0.3s linear;
 }

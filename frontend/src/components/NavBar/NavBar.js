@@ -65,7 +65,7 @@ const NavBar=()=>{
     <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
     <div  className="navBarLogo">
-    <h1><Link to="/">SWAPaPP<span>let's do a swap,{spanUserData.firstName}!</span></Link> </h1>
+    <h1><Link to="/">SWAPapp<span>let's do a swap,{spanUserData.firstName}!</span></Link> </h1>
     </div>
     
     <div onClick={()=>setIsClicked(!isClicked)}>

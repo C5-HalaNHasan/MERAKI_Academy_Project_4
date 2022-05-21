@@ -22,7 +22,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
         setToken(null);
         setCurrentUserId(null);
         setCurrentUserCountry(null)
-        setSpanUserData({firstName:null,wishList:null,cartItems:null});
+        setSpanUserData({firstName:null,wishList:0,cartItems:0});
         localStorage.clear();
         setIsRendered(true)
         navigate("/")

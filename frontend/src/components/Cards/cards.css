@@ -5,21 +5,24 @@
     /* will work further on the responsive design:this value was for testing only */
     width: 100vw;
     height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* flex-wrap: wrap; */
+    display: flex;
 
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* set for presentation screen only */
+    margin: -1vh 14vw;
 
     /* to be checked */
-    /* justify-content: center; */
+    justify-content: flex-start;
     align-items: center;
     /* to be checked */
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 
 .cardsContainer .card {
     position: relative;
+    margin: 0 5px;
     width: 300px;
     height: 400px;
     /* depends on the number of buttons that will appear/depending on the item */
