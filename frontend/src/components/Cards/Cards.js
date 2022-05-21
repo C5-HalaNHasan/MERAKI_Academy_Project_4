@@ -7,6 +7,7 @@ import { useNavigate,Link,useParams} from "react-router-dom";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js"; 
 import abs_wall from "../assets/abs_wall.jpg"
 import ModalBox from "../ModalBox/ModalBox";
+import UserBoard from "../UserBoard/UserBoard";
 
 
 //! 19/5: parameter swappedItemiD TO BE DELETD
@@ -25,12 +26,7 @@ const Cards=({items,setItems,type,swappedItemId})=>{
 
     //to send messages by modalbox:
     const {modalBox,setModalBox}=useContext(TokenContext); 
-
-
-
-
     const navigate = useNavigate();
-    console.log("items sent to the cards component",items,"type :",type) //!to console.log the items sent to the Cards component //!to be deleted
 
     // a function to get the current user wishlist and cart items ids/to decide which buttons to show for each card:
     let userCartUrl="http://localhost:5000/users/user";
@@ -48,12 +44,11 @@ const Cards=({items,setItems,type,swappedItemId})=>{
                 })
                 setCurrentUserWishList(wishListItemsIds)
             };
-            console.log("from filtered",currentUserCart) //! to be deleted
             setIsRendered(true)
         }).catch((error)=>{
             console.log(error)
         })
-    },[isRendered])
+    },[isRendered,items])
 
     //a function to remove from wishList onClick ==>remove the item from wishList and re-render the wishListPage
     const removeFromWishList=(itemId)=>{
@@ -78,7 +73,6 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const addToCart=(itemId)=>{
         let addCartItemUrl=`http://localhost:5000/users/cart/${itemId}`
     axios.post(addCartItemUrl,{},{headers:{authorization:token}}).then((result)=>{
-        console.log("hello from add to cart",result.data)
         setIsRendered(!isRendered)
     }).catch((error)=>{
     console.log(error)
@@ -89,8 +83,6 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const removeFromCart=(itemId)=>{
         let addCartItemUrl=`http://localhost:5000/users/cart/${itemId}`
     axios.delete(addCartItemUrl,{headers:{authorization:token}}).then((result)=>{
-        console.log("hello from remove from cart")
-        console.log(result.data) 
         setIsRendered(!isRendered)
     }).catch((error)=>{
     console.log(error)
@@ -115,6 +107,7 @@ return <main>
 <div className="cardsContainer">
     <ModalBox />
     {items.map((elem)=>{
+        if(elem.isSold !=true && type!="userBoard"){
         return <div className="card" key={elem._id}>
         <div className="imgSection">
             <img src={elem.photos}/> 
@@ -196,8 +189,11 @@ return <main>
       
         </div>
         {/* end of array render */}
-    })
     }
+    })
+    
+    }
+    
     </div>
     </main>
 };

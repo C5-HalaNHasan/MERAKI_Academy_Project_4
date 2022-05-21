@@ -12,12 +12,8 @@ import abs_wall from "../assets/abs_wall.jpg"
 
 
 
-//! 19/5: unused variables/functions/components to be deleted
 const ModalBox=({showModalBox,setShowModalBox,message,type})=>{
     // the below three states to be used in every component for authorization and re-rendering:
-    const {token,setToken}=useContext(TokenContext);
-    const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
-    const {isRendered,setIsRendered}=useContext(TokenContext); 
     const {modalBox,setModalBox}=useContext(TokenContext); 
     const navigate=useNavigate();
 
@@ -26,10 +22,8 @@ const ModalBox=({showModalBox,setShowModalBox,message,type})=>{
         return null;
     }
 
-console.log(modalBox)//! to be deleted
 return <div className="modalBox">
 <div className="contentsContainer">
-{/* diferent pictures are going to be rendered based on the success of the operation */}
 {modalBox.type==="ok" && <img src={ok} alt="ok"/>}
 {modalBox.type==="notOk" && <img src={notOk} alt="notOk"/>}
 {modalBox.type==="alert" && <img src={alert} alt="alert"/>}
@@ -49,13 +43,10 @@ return <div className="modalBox">
 <button className="actionButton" onClick={()=>{
     setModalBox({type:"", message:"",details:"", showModalBox:false})
 }}>OK</button>
-{/* {modalBox.action=="goHome"&&navigate("/")&&setModalBox({type:"", message:"",details:"", showModalBox:false})} */}
+{modalBox.action=="goHome"&&navigate("/")&&setModalBox({type:"", message:"",details:"", showModalBox:false})}
 </div>
-
 </div>
-
 </div>
-    
 </div>
 };
 

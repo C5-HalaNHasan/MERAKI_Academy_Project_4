@@ -16,10 +16,9 @@ const UserItems=()=>{
 
 
     //get user by id to show his picture in the update box:
-    let getAllItemsUrl="http://localhost:5000/items"; //!to be updated
-    useEffect(()=>{ //! the items are rendered twice/ the render is going to be invoked on change
+    let getAllItemsUrl="http://localhost:5000/items"; 
+    useEffect(()=>{
         axios.get(getAllItemsUrl,{headers:{authorization:token}}).then((result)=>{
-            console.log("from userItems",result.data.items)
            let filteredItemsByUser= result.data.items.filter((elem)=>{
                return elem.owner._id==currentUserId;
            })

@@ -91,11 +91,6 @@ const FilterBox=()=>{
      },[price])
      
 
-
-
-
-
-
     return <aside>
 
     <div className="filterBox">
@@ -118,8 +113,8 @@ const FilterBox=()=>{
 
     <h4>Price</h4>
     <div className="byPrice">
-    <input  type="text" placeholder="minPrice..." name="minPrice" onChange={priceOnChange}></input>
-    <input  type="text" placeholder="maxPrice.." name="maxPrice" onChange={priceOnChange}></input>
+    <input  type="text" placeholder="minPrice..." name="minPrice" onChange={priceOnChange} autoComplete="off"></input>
+    <input  type="text" placeholder="maxPrice.." name="maxPrice" onChange={priceOnChange} autoComplete="off"></input>
 
     </div>
 
@@ -127,7 +122,6 @@ const FilterBox=()=>{
 
 
     </div>
-    {/* testing the rendered cards here: stil the CARDS component is not finalized but will be used here for testing only */}
     <Cards items={items} setItems={setItems} type="search"/>
 
     </div>

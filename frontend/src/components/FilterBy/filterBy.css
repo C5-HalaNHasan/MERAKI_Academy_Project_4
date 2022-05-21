@@ -5,6 +5,7 @@
 }
 
 .filterItems {
+    border-radius: 1vw;
     position: fixed;
     top: 20vh;
     max-width: 300px;

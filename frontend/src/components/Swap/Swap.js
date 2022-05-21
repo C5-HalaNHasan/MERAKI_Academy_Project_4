@@ -8,7 +8,6 @@ import ModalBox from "../ModalBox/ModalBox";
 
 
 
-//! 19/5: TO BE CHECKED,MODALBOX TO BE SET IF THE COUNTRIES OR THE FILTERED ITEMS CRITERIA //! worked fine with useEffect 
 const Swap=()=>{
     const {token,setToken}=useContext(TokenContext);
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 

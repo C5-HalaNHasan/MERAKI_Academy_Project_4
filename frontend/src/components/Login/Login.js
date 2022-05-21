@@ -9,7 +9,6 @@ import login from "../assets/logIn.jpg";
 
 
 
-
 const Login=()=>{
   //to save the current user id & token
     const {token,setToken}=useContext(TokenContext); 
@@ -18,9 +17,6 @@ const Login=()=>{
     const navigate=useNavigate();
     const {modalBox,setModalBox}=useContext(TokenContext); 
     const {spanUserData,setSpanUserData}=useContext(TokenContext); 
-
-    
-
 
     //the user inputs are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
     const [userData,setUserData]=useState({
@@ -58,8 +54,7 @@ const Login=()=>{
                 localStorage.setItem("cartItems",result.data.userCartItems);
                 setSpanUserData({firstName:result.data.userFirstName,wishList:result.data.userWishList,cartItems:result.data.userCartItems});
 
-                setResultMessage(result.data.message) //to set the result message below the action button 
-                //to redirect the user to the homePage
+                setResultMessage(result.data.message) 
                 navigate("/"); 
             }
         }).catch((error)=>{
@@ -88,8 +83,8 @@ const Login=()=>{
     <h3>Login</h3>
     Not a member yet? <span><Link to="/register">Register</Link></span>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
-    <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
-    <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>
+    <input type="email" placeholder="email..." name="email" onChange={saveData} autoComplete="off"></input>
+    <input type="password" placeholder="Password..." name="password" onChange={saveData} autoComplete="off"></input>
     <button onClick={LoginAction} className="btn">Login</button>
     </form>
     </div>

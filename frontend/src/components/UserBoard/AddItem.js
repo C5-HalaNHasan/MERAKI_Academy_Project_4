@@ -77,11 +77,11 @@ return( <>
     <div className="secondPart">
     <h3>Add New Item</h3>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
-    <input type="text" placeholder="Item..." name="item" onChange={saveItemUpdatedData}></input>
-    <input type="text" placeholder="Description..." name="description" onChange={saveItemUpdatedData}></input>
+    <input type="text" placeholder="Item..." name="item" onChange={saveItemUpdatedData} autoComplete="off"></input>
+    <input type="text" placeholder="Description..." name="description" onChange={saveItemUpdatedData} autoComplete="off"></input>
 
-    <input type="text" placeholder="Price" name="price" onChange={saveItemUpdatedData}></input>
-    <input type="file" placeholder="Item Pic..." name="photos" onChange={changeItemPic}></input>
+    <input type="text" placeholder="Price" name="price" onChange={saveItemUpdatedData} autoComplete="off"></input>
+    <input type="file" placeholder="Item Pic..." name="photos" onChange={changeItemPic} autoComplete="off"></input>
     
     <div className="categoryList">
    <label for="category">Category

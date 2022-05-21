@@ -70,8 +70,6 @@ const buyAction=(tokenPay)=>{
     });
 };
 
-
-
 const CheckOutAction=()=>{ 
         if(ownerId!==swappedItem.ownerId ){
             swapOwnersById(); 
@@ -79,7 +77,6 @@ const CheckOutAction=()=>{
             deleteItemFromDb(id);
         }
 };
-
 
 return ( 
         <>
@@ -95,11 +92,11 @@ return (
     <h3>CheckOut Page</h3>
     <h3>Please fill the following fields:</h3>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
-        <input type="text" placeholder="First Name..." name="firstName" ></input>
-        <input type="text" placeholder="Last Name..." name="lastName" ></input>
-        <input type="text" placeholder="Contact Number..." name="contactNum" ></input>
-        <input type="text" placeholder="City..." name="city" ></input>
-        <input type="text" placeholder="Address..." name="address" ></input>
+        <input type="text" placeholder="First Name..." name="firstName" autoComplete="off"></input>
+        <input type="text" placeholder="Last Name..." name="lastName" autoComplete="off"></input>
+        <input type="text" placeholder="Contact Number..." name="contactNum" autoComplete="off"></input>
+        <input type="text" placeholder="City..." name="city" autoComplete="off"></input>
+        <input type="text" placeholder="Address..." name="address" autoComplete="off"></input>
         {ownerId==currentUserId&&<button onClick={()=>{CheckOutAction()}} className="btn">Proceed SWAPPING</button>}
         <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
         {/* action to be checked */}

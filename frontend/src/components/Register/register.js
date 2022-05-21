@@ -99,12 +99,12 @@ const Register=()=>{
     <h3>Register</h3>
     already a member? <Link to="/login"><span>LogIn</span></Link>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
-        <input type="text" placeholder="First Name..." name="firstName" onChange={saveData}></input>
-        <input type="text" placeholder="Last Name..." name="lastName" onChange={saveData}></input>
-        <input type="text" placeholder="Contact Number..." name="contactNum" onChange={saveData}></input>
-        <input type="text" placeholder="Country..." name="country" onChange={saveData}></input>
-        <input type="email" placeholder="email..." name="email" onChange={saveData}></input>
-        <input type="password" placeholder="Password..." name="password" onChange={saveData}></input>
+        <input type="text" placeholder="First Name..." name="firstName" onChange={saveData}  autoComplete="off"></input>
+        <input type="text" placeholder="Last Name..." name="lastName" onChange={saveData} autoComplete="off"></input>
+        <input type="text" placeholder="Contact Number..." name="contactNum" onChange={saveData} autoComplete="off"></input>
+        <input type="text" placeholder="Country..." name="country" onChange={saveData} autoComplete="off"></input>
+        <input type="email" placeholder="email..." name="email" onChange={saveData} autoComplete="off"></input>
+        <input type="password" placeholder="Password..." name="password" onChange={saveData} autoComplete="off"></input>
         <button onClick={RegisterAction} className="btn">Register</button>
         </form>
     </div>

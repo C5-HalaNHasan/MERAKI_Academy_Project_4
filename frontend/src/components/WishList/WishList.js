@@ -20,7 +20,7 @@ const WishList=()=>{
         })
     },[isRendered])
     
-    return <div className="HomePage">
+    return <div>
     <NavBar/>
     <Cards items={items} type="wishList"/>
     </div>

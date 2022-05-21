@@ -7,7 +7,7 @@
 
 ---
 
-<p align="center"> This web app is built to enable the users to exchange their items with other users and to buy items from other users!
+<p align="center"> This web app is built to enable the users to swap their items with other users and to buy items from other users!
     <br> 
 </p>
 
@@ -72,8 +72,6 @@ If swapping/buying is selected: the user will be redirected to the checkOut page
 The user can modify/delete/add new items to his board,also he can modify his profile.
 
 
-Add notes about how to use the system.
-
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [MongoDB](https://www.mongodb.com/) - Database
@@ -82,7 +80,7 @@ Add notes about how to use the system.
 - [Node JS](https://nodejs.org/en/) - Server Environment
 
 ## 🎞 User Story <a name = "user_story"></a>
-Trello(https://trello.com/b/MLfnQ7a9/itemsexchange-project4)
+-[Trello](https://trello.com/b/MLfnQ7a9/itemsexchange-project4)
 
 ## ⚠️ Guided By <a name = "guided_by"></a>
 

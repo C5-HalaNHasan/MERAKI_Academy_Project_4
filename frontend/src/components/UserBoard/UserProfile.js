@@ -29,16 +29,14 @@ const UserProfile=()=>{
         axios.get(getUserUrl,{headers:{authorization:token}}).then((result)=>{
             setUserPic(result.data.user.photo)
             setIsRendered(true)
-            console.log("from the get user photo",result.data.user) //! to be deleted
         }).catch((error)=>{
             console.log(error)
         })
-        
     },[isRendered])
 
 
     const changeProfilePic=(e)=>{
-        setUserPic(e.target.files[0]);//! not set yet
+        setUserPic(e.target.files[0]);
         //cloudinary is used to uplad the images==>then the url is going to be stored in the database,
         const data = new FormData()
         data.append("file", e.target.files[0]);
@@ -47,11 +45,9 @@ const UserProfile=()=>{
         let uploadPicUrl="https://api.cloudinary.com/v1_1/difjgm3tp/image/upload"
         axios.post(uploadPicUrl,data).then((result)=>{
             setUserPic(result.data.url);
-            console.log(result);
         }).catch((error)=>{
             console.log(error);
         })
-
     };
 
 
@@ -75,10 +71,10 @@ const UserProfile=()=>{
             }
         }).catch((error)=>{
             console.log(error);
-            setResultMessage(error.response.data.message); //! not used yet //! a message telling the user that the update is successful
+            setResultMessage(error.response.data.message); 
         })
     };
-//!
+
 
     return( <>
     <NavBar/>
@@ -90,15 +86,14 @@ const UserProfile=()=>{
     <div className="secondPart">
     <h3>Update Profile</h3>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
-    <input type="text" placeholder="First Name..." name="firstName" onChange={saveUserUpdatedData}></input>
-    <input type="text" placeholder="Last Name..." name="lastName" onChange={saveUserUpdatedData}></input>
-    <input type="text" placeholder="Country..." name="country" onChange={saveUserUpdatedData}></input>
-    <input type="text" placeholder="Contact Number..." name="contactNum" onChange={saveUserUpdatedData}></input>
-    <input type="password" placeholder="Password..." name="password" onChange={saveUserUpdatedData}></input>
-    <input type="file" placeholder="Profile Pic..." name="photo" onChange={changeProfilePic}></input>
+    <input type="text" placeholder="First Name..." name="firstName" onChange={saveUserUpdatedData} autoComplete="off"></input>
+    <input type="text" placeholder="Last Name..." name="lastName" onChange={saveUserUpdatedData} autoComplete="off"></input>
+    <input type="text" placeholder="Country..." name="country" onChange={saveUserUpdatedData} autoComplete="off"></input>
+    <input type="text" placeholder="Contact Number..." name="contactNum" onChange={saveUserUpdatedData} autoComplete="off"></input>
+    <input type="password" placeholder="Password..." name="password" onChange={saveUserUpdatedData} autoComplete="off"></input>
+    <input type="file" placeholder="Profile Pic..." name="photo" onChange={changeProfilePic} autoComplete="off"></input>
     <button onClick={ UpdateUserAction} className="btn">Update Profile</button>
     <h3>{resultMessage}</h3> 
-    {/* //! to be updated (a moving or loading component is going to be created instead of this) */}
     </form>
     </div>
 </div>
