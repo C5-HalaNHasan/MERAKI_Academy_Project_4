@@ -24,6 +24,8 @@ const [itemData,setItemData]=useState({
     photos:undefined,
     swapConfirmed:undefined,
     isSold:undefined,
+    swap:undefined,
+    sell:undefined,
 
 });
 
@@ -49,7 +51,6 @@ let uploadPicUrl="https://api.cloudinary.com/v1_1/difjgm3tp/image/upload"
 axios.post(uploadPicUrl,data).then((result)=>{
    setItemPic(result.data.url);
    setItemData({...itemData,photos:result.data.url});
-   console.log(result);
 }).catch((error)=>{
    console.log(error);
 })
@@ -75,8 +76,7 @@ setModalBox({type:"notOk", message:"Not Updated!",details:`${error.message}`, sh
 console.log(error)
 })
 };
-//! end of update items//! not working/tested yet
-  
+
 
 
 return( <>
@@ -93,9 +93,28 @@ return( <>
     <input type="text" placeholder="Description..." name="description" onChange={saveItemUpdatedData}></input>
     <input type="text" placeholder="Price" name="price" onChange={saveItemUpdatedData}></input>
     <input type="file" placeholder="Item Pic..." name="photos" onChange={changeItemPic}></input>
+
+    <div className="yesNoSelection">
+    <label for="swap">Swap?
+   <select name="swap" id="swap" onChange={saveItemUpdatedData}>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+   </select></label>
+
+   <label for="sell">Sell?
+   <select name="sell" id="sell"  onChange={saveItemUpdatedData}>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+   </select></label>
+
+   <label for="isSold">isSold?
+   <select name="isSold" id="isSold"  onChange={saveItemUpdatedData}>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+   </select></label>
+   </div>
     <button onClick={()=>{UpdateItemInDb(id)}} className="btn">Update Item</button>
     <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
-
     <h3>{resultMessage}</h3> 
     </form>
     </div>

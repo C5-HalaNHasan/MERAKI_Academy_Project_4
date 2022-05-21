@@ -6,7 +6,7 @@ import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import ModalBox from "../ModalBox/ModalBox";
 import addItem from "../assets/addItem.jpg"
-//! 19/5: CREATE NEW ITEM IS NOT WORKIG/KEEPS GIVING SERVER ERROR 500:
+
 const AddItem=()=>{
     const {token,setToken}=useContext(TokenContext);
     let [resultMessage,setResultMessage]=useState("");
@@ -20,7 +20,7 @@ const [itemData,setItemData]=useState({
     description:undefined,
     category:undefined,
     price:undefined,
-    photos: [],
+    photos:undefined,
     swap:"true",
     sell:"true",
 });
@@ -36,7 +36,7 @@ data.append("cloud_name","difjgm3tp")
 let uploadPicUrl="https://api.cloudinary.com/v1_1/difjgm3tp/image/upload"
 axios.post(uploadPicUrl,data).then((result)=>{
    setItemPic(result.data.url);
-   console.log(result);
+   setItemData({...itemData,photos:result.data.url});
 }).catch((error)=>{
    console.log(error);
 })
@@ -52,15 +52,15 @@ setItemData({...itemData,[targetField]:newVal})
 
 //a function to update item in the database by id:
 const addItemInDb=()=>{
-   setItemData({...itemData,photos:[itemPic]}); //! to be checked :supposed to be an array
+   setItemData({...itemData,photos:itemPic}); 
    let createItemUrl=`http://localhost:5000/items`
-axios.post(createItemUrl,{itemData},{headers:{authorization:token}}).then((result)=>{
-   setModalBox({type:"ok", message:`${result.data.item.item}`,details:`${result.data.item.item} is successfully added to your items!`, showModalBox:true});
+axios.post(createItemUrl,itemData,{headers:{authorization:token}}).then((result)=>{
+
+   setModalBox({type:"ok", message:`${result.data.result.item.item}`,details:`${result.data.result.item.item} is successfully added to your items!`, showModalBox:true});
    navigate("/useritems")
 }).catch((error)=>{
-   setModalBox({type:"notOk", message:"Can't Add your Item!",details:`${error.response.data}`, showModalBox:true}); //! please fill all the required fields
+   setModalBox({type:"notOk", message:"Can't Add your Item!",details:"Please fill all the fields!",showModalBox:true}); 
    console.log(error)
-
 })
 };
   
@@ -79,13 +79,34 @@ return( <>
     <form id="form" className="left leftCol" onSubmit={(e)=>{e.preventDefault()}}>
     <input type="text" placeholder="Item..." name="item" onChange={saveItemUpdatedData}></input>
     <input type="text" placeholder="Description..." name="description" onChange={saveItemUpdatedData}></input>
-    {/* category should be a dropdownlist with the avalable categories */}
-    <input type="text" placeholder="Category..." name="category" onChange={saveItemUpdatedData}></input>
+
     <input type="text" placeholder="Price" name="price" onChange={saveItemUpdatedData}></input>
-    {/* swap and sell should be radio buttons */}
-    <input type="text" placeholder="SWAP?..." name="swap" onChange={saveItemUpdatedData}></input>
-    <input type="text" placeholder="SELL?..." name="sell" onChange={saveItemUpdatedData}></input>
     <input type="file" placeholder="Item Pic..." name="photos" onChange={changeItemPic}></input>
+    
+    <div className="categoryList">
+   <label for="category">Category
+   <select name="category" id="category"  onChange={saveItemUpdatedData}>
+    <option value="627f8c687b629f6fa60a2fed" name="category">Vehicles</option>
+    <option value="627f8c6e7b629f6fa60a2ff0" name="category">Hiking Gears</option>
+    <option value="627f8c757b629f6fa60a2ff3" name="category">Musical Instruments</option>
+    <option value="627f8c7c7b629f6fa60a2ff6" name="category">Electronics</option>
+    <option value="627f8c827b629f6fa60a2ff9" name="category">Clothes</option>
+   </select></label>
+   </div>
+
+    <div className="yesNoSelection">
+    <label for="swap">Swap?
+   <select name="swap" id="swap" onChange={saveItemUpdatedData}>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+   </select></label>
+
+   <label for="sell">Sell?
+   <select name="sell" id="sell"  onChange={saveItemUpdatedData}>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+   </select></label>
+   </div>
     <button onClick={addItemInDb} className="btn">Add Item</button>
     <button onClick={()=>{navigate(-1)}} className="btn">Cancel</button>
 
