@@ -42,17 +42,25 @@ You need to have these softwares in your machine in order to run the app:
 
 ### Installing
 
-1.Clone the repo to your local machine using git bash.
-```git clone https://github.com/C5-HalaNHasan/MERAKI_Academy_Project_4.git
+1. Clone the repo to your local machine using git bash.
+```sh
+git clone https://github.com/C5-HalaNHasan/MERAKI_Academy_Project_4.git
+ ```
 
-2.install npm packages in the fronend and backend
-```npm i
+2. install npm packages in the fronend and backend
+```sh
+npm i
+ ```
 
-3.run server using git bash inside backend folder
-```npm run dev
+3. run server using git bash inside backend folder
+```sh 
+npm run dev
+  ```
 
-4.run application using git bash inside frontend folder
-```npm run start
+4. run application using git bash inside frontend folder
+```sh
+npm run start
+ ```
 
 Now you are ready to use the app!
 
