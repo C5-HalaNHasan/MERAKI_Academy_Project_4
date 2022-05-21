@@ -3,7 +3,7 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">AWAPapp</h3>
+<h3 align="center">SWAPapp</h3>
 
 ---
 
@@ -33,13 +33,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 You need to have these softwares in your machine in order to run the app:
-- [Visual Studio Code](#https://visualstudio.microsoft.com/)
-- [GitBash](#https://gitforwindows.org/)
+- [Visual Studio Code](https://visualstudio.microsoft.com/)
+- [GitBash](https://gitforwindows.org/)
 - [MongoDB](https://www.mongodb.com/)
 - [Node.js](https://nodejs.org/en/)
 
 
-### Installing
+ #Installing
 
 1. Clone the repo to your local machine using git bash.
 ```sh
