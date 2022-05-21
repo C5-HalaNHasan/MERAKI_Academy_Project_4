@@ -3,7 +3,7 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">sWAPapp</h3>
+<h3 align="center">SWAPapp</h3>
 
 ---
 
@@ -39,7 +39,7 @@ You need to have these softwares in your machine in order to run the app:
 - [Node.js](https://nodejs.org/en/)
 
 
-### Installing
+ Installing
 
 1.Clone the repo to your local machine using git bash.
 ```git clone https://github.com/C5-HalaNHasan/MERAKI_Academy_Project_4.git
