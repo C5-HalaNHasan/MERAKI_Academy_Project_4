@@ -73,9 +73,9 @@ const getItemById= (req, res) => {
 
 // this function updates an item by its id:
 const updateItemById= (req, res) => {
-  let{  swapConfirmed,isSold,description,swap,sell,photos,price,owner} =req.body;
+  let{ swapConfirmed,isSold,description,swap,sell,photos,price,owner,item} =req.body;
   let itemId=req.params.id;
-  itemModel.findOneAndUpdate({_id:itemId},{swapConfirmed,isSold,description,swap,sell,photos,owner},{new:true}).populate({path:"category",model:"category"}).then((result)=>{
+  itemModel.findOneAndUpdate({_id:itemId},{swapConfirmed,isSold,description,swap,sell,photos,price,owner,item},{new:true}).populate({path:"category",model:"category"}).then((result)=>{
     console.log(result)//!
    if(result){
       res.status(200).json({

@@ -14,19 +14,12 @@ const CheckOut=()=>{
     //to save the current userId
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {modalBox,setModalBox}=useContext(TokenContext); 
-
-
-
+    const {isRendered,setIsRendered}=useContext(TokenContext);
     //to save the swapped item data so that it can be transferred to the check out page
     const {id,price,country,category,ownerId,img}=useParams();//! this is my item info if swap is clicked
     const {swappedItem,setSwappedItem}=useContext(TokenContext);//this is the swapped item info if swap is clicked
 
-    const navigate=useNavigate() //! used to redirect the user to the onlinePaymentPage if he clicked proceed
-    //!and THIS DEPENDS IF THE OPERATION IS SWAP OR BY//and return to the previous page if he clicked cancel
-    console.log("from ckeckoutpage: my item data ",id,price,country,category,ownerId,img)
-    //to show messages by modal box: //!MODALBOX WILL BE USED AS CONTEXT FROM APP: SHOW,TYPE,MESSAGE
-    const [modalBoxMessage,setModalBoxlMessage]=useState(false) //! to be handelled as context
-    const [modalBoxMessageType,setModalBoxlMessageType]=useState("notOk") //! to be handelled as context
+    const navigate=useNavigate()
 
     //! THIS FUNCTION either SWAP OR REDIRECT TO THE ONLINE PAYMENT PAGE: THIS DEPENDS on:
     //! amodalBox will appear telling the user that it's a successful operation //then when pressing ok it will redirect the user to the main page
@@ -43,15 +36,25 @@ const swapOwnersById=async ()=>{
         }).catch((error2)=>{
             console.log(error2);
         })
-
     }).catch((error1)=>{
             console.log(error1)
         })
         console.log("hello from swap owner by id function")
         // navigate("/useritems") //! it redirect the user to his items directly
+};//end of swapped owner function
 
-};//! end of swapped owner function
 
+
+//a function to remove item from database by id:
+const deleteItemFromDb=(itemId)=>{
+    let DeleteItemUrl=`http://localhost:5000/items/${itemId}`
+axios.delete(DeleteItemUrl,{headers:{authorization:token}}).then((result)=>{
+    setModalBox({type:"ok", message:"Successful Payment",details:"Get ready!your item will be delivered in a few days!", showModalBox:true}) //! to be checked when it will appear
+    setIsRendered(!isRendered)
+}).catch((error)=>{
+console.log(error)
+})
+};
 
 const buyAction=(tokenPay)=>{
     const body={
@@ -65,27 +68,20 @@ const buyAction=(tokenPay)=>{
     let paymentUrl="http://localhost:5000/items/buy"
     axios.post(paymentUrl,body,headers).then((result)=>{
         console.log("payment is done",result)
-         //! sameswap action and the user will be redirected to the main page
-        
 
     }).catch((error)=>{
         console.log(error)
     });
 
-}
+};
+
+
 
 const CheckOutAction=()=>{ 
-        console.log("from the checkout page ",swappedItem)
-        console.log("swapped item info ",swappedItem.ownerId)
-        console.log("my item info:  ",ownerId)
-
-        if(ownerId!==swappedItem.ownerId ){//! swap action==>swapping is done then redirected to his items page: it worked when moved navigate inside the swapOwnersById function
+        if(ownerId!==swappedItem.ownerId ){
             swapOwnersById(); 
-
-        }else{ //! buy action==>the payment box will appear:
-           //! then once payment complete:the item will be swapped as before
-            console.log("not swapped!")//! to be deleted
-            //! modal box will be shown when pressing ok then it will be redirected to the userItems page
+        }else{ 
+            deleteItemFromDb(id); //! not tested yet
         }
 };
 

@@ -3,11 +3,11 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">AWAPaPP</h3>
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> This web app is built to enable the users to exchange their items with other users and to buy items from other users!
     <br> 
 </p>
 
@@ -20,8 +20,15 @@
 - [Guided By](#guided_by)
 
 ## 🧐 About <a name = "about"></a>
-
 Write about 1-2 paragraphs describing the purpose of your project.
+
+The idea of the project is to swap items/buy items with/from other users, the swap/buy will only be available for users residing in the same country.
+Once the user enters the website: if he's not loggedIn or registered then he will be restricted from navigating the site;only the navBar with the login icon appear and a box rendering selected items in the main screen.
+Once registered/loggedIn;the user can search for specific items by item name,category,price,and type if for swapping or selling.
+If the user wants to swap an item with one of his items: the app filters the user items by price;if he has item/items with price greater than the wanted item then he can swap;if not swapping option will not be available for the user.
+If swapping/buying is selected: the user will be redirected to the checkOut page where he's asked to enter his address for delivery,once this form is filled: the user will be redirected to his items with the swapped item added to his board, or redirected to the online payment section where he's asked to enter his card data with the amount equals to the wanted item price to be charged.
+The user can modify/delete/add new items to his board,also he can modify his profile.
+
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 

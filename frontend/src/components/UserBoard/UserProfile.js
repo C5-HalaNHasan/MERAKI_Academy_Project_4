@@ -55,7 +55,6 @@ const UserProfile=()=>{
     };
 
 
-//! the update function is not working (same problem as addtowishlist:forbidden)
     const saveUserUpdatedData=(e)=>{
         //with each change on the input field;the value is going to be saved
         let newVal=e.target.value;
@@ -64,13 +63,12 @@ const UserProfile=()=>{
         setUserData({...userData,[targetField]:newVal})
     };
 
-    const UpdateUserAction=()=>{ //! updates should be checked before being sent
+    const UpdateUserAction=()=>{
         //to save the photo uploaded by the user:
         setUserData({...userData,photo:userPic});
         //when the user clicks on the loginbutton: the userData is going to be sent to the BE by axios!
         let updateUserUrl="http://localhost:5000/users/update/";
         axios.put(updateUserUrl,userData,{headers:{authorization:token}}).then((result)=>{
-          console.log("from update profil",result)
             if(result){
                 setResultMessage(result.data.message) //to set the result message below the action button  //ñot used yet
                 navigate("/")

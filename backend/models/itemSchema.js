@@ -8,7 +8,7 @@ const itemSchema= new mongoose.Schema({
     swap:{type:Boolean,required:true,default:true},
     sell:{type:Boolean,required:true,default:true},
     category:{type:mongoose.Schema.Types.ObjectId,ref:"category"},
-    photos: [{type:String}], //! to be updated later by cloudinary
+    photos: {type:String}, 
     rating:{type:Number,min:0,max:5},//! not used in the project yet
     swapConfirmed:{type:Boolean,required:false,default:true}, //! not used in the project yet
     isSold:{type:Boolean,default:false},//! not used in the project yet

@@ -4,6 +4,7 @@
 :root {
     --mainText: #003049;
     --mainBgColor: rgba(0, 0, 0, 0.1);
+    --mainBgColorHeavy: rgba(0, 0, 0, 0.85);
     --spanColor: rgba(255, 255, 255, 0.9);
     --lightBgColor: rgba(255, 255, 255, 0.7);
     --onHover: rgba(255, 226, 76, 0.6);
@@ -43,6 +44,7 @@
     grid-template-columns: 25% 37.5% 37.5%;
     grid-template-rows: repeat(3, fr);
     grid-template-areas: "nav nav nav""side main main""footer footer footer";
+    /* overflow: scroll; */
 }
 
 

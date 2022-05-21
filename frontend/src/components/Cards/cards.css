@@ -1,17 +1,18 @@
 .cardsContainer {
     margin: 4vh 4vw;
 
-
     /* position: absolute; */
     /* will work further on the responsive design:this value was for testing only */
     width: 100vw;
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    /* flex-wrap: wrap; */
+
 
     /* to be checked */
-    /* justify-content: center;
-    align-items: center; */
+    /* justify-content: center; */
+    align-items: center;
     /* to be checked */
     overflow: scroll;
 }
@@ -48,12 +49,18 @@
 .cardsContainer .card .titleSection {
     position: absolute;
     top: 30%;
-    padding-left: 0.7vw;
+    left: 0%;
+    padding: 0 0.8vw;
     width: 100%;
     height: 40%;
     z-index: 10;
     font-size: 1.5rem;
-    background-color: var(--mainBgColor);
+    background-color: var(--mainBgColorHeavy);
+}
+
+.cardsContainer .card .titleSection h3,
+.cardsContainer .card .titleSection h2 {
+    color: var(--spanColor);
 }
 
 .cardsContainer .card:hover .titleSection {

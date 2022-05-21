@@ -117,18 +117,18 @@ return <main>
     {items.map((elem)=>{
         return <div className="card" key={elem._id}>
         <div className="imgSection">
-            <img src={abs_wall}/> 
+            <img src={elem.photos}/> 
         </div>
         <div className="titleSection">
             <h2>{elem.item} </h2>
-            <h3>Price:{elem.price}</h3>
+            <h3>Price:{elem.price}$</h3>
         </div>
 
         <div className="itemInfo">
           <div className="details">
             <h2>{elem.item} </h2>
             <h3>{elem.description}</h3>
-            <h3>Price:{elem.price}</h3>
+            <h3>Price:{elem.price}$</h3>
             <h6>Category:{elem.category.category}</h6>
             <h6>Owner:{elem.owner.firstName}</h6>
             <h6>Added:{elem.addedOn.split("T")[0]}</h6>
@@ -147,7 +147,7 @@ return <main>
                 deleteItemFromDb(elem._id)
             }}>Delete Item</li>}
             {type==="userBoard" &&elem.owner._id ==currentUserId&&<li onClick={()=>{
-                navigate(`/updateitem/${elem._id}/${elem.photos[0]}`)
+                navigate(`/updateitem/${elem._id}`)
             }}>Update Item</li>}
 
             {/* remove from whish list button  strats here: add the condistion where the element is not in the wish list or cart*/}
@@ -176,14 +176,14 @@ return <main>
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here */}
-        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos}`)
         }}>Swap</li>}
         {/* swap action button ends here}*/}
 
 
         {/* swap button starts here /it appears in the swapped items page /swap */}
         {type==="swap"&& <li id={elem._id} onClick={()=>{
-            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos}`)
         }}>Swap With<IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>

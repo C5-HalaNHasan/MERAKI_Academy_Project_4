@@ -59,7 +59,7 @@ const App=()=> {
       <Route path="/useritems" element={<UserItems/>}/>
       <Route path="/swap/:id/:price/:country/:category/:ownerId/:img" element={<Swap/>}/>
       <Route path="/checkout/:id/:price/:country/:category/:ownerId/:img" element={<CheckOut/>}/>
-      <Route path="/updateitem/:id/:img" element={<UpdateItem />}/>
+      <Route path="/updateitem/:id" element={<UpdateItem />}/>
       <Route path="/additem/" element={<AddItem />}/>
       </Routes>
       </TokenContext.Provider>
