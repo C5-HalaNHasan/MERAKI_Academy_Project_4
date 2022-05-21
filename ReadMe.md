@@ -39,7 +39,7 @@ You need to have these softwares in your machine in order to run the app:
 - [Node.js](https://nodejs.org/en/)
 
 
- Installing
+ #Installing
 
 1.Clone the repo to your local machine using git bash.
 ```git clone https://github.com/C5-HalaNHasan/MERAKI_Academy_Project_4.git
