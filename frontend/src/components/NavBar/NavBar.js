@@ -16,6 +16,7 @@ const NavBar=()=>{
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const [isRendered,setIsRendered]=useState(TokenContext)
     const [searchedItem,setSearchedItem]=useState();
+    const {spanUserData,setSpanUserData}=useContext(TokenContext); 
     const [items,setItems]=useState([]);
 
 
@@ -57,11 +58,14 @@ const NavBar=()=>{
         searchBox(searchedItem);
     },[searchedItem])
 
+    console.log(spanUserData)
+
+
     return <header>
     <div className="NavBar"> 
     {/* routes will be navigated once the icons clicked */}
     <div  className="navBarLogo">
-    <h1><Link to="/">SWAPAPP<span>let's do a swap!</span></Link> </h1>
+    <h1><Link to="/">SWAPaPP<span>let's do a swap,{spanUserData.firstName}!</span></Link> </h1>
     </div>
     
     <div onClick={()=>setIsClicked(!isClicked)}>
@@ -79,11 +83,11 @@ const NavBar=()=>{
     {searchedItem&&<Cards items={items} setItems={setItems} type="search"/>}
 
     <li className="navBarItem">
-    {token&&<Link to="/wishlist" onClick={()=>setIsClicked(!isClicked)}>wishList<AiOutlineHeart style={{position:"absolute",top:"5px"}}/><span>1</span></Link>}
+    {token&&<Link to="/wishlist" onClick={()=>setIsClicked(!isClicked)}>wishList<AiOutlineHeart style={{position:"absolute",top:"5px"}}/><span>{spanUserData.wishList}</span></Link>}
     </li>
 
     <li className="navBarItem">
-    {token&&<Link to="/cart" onClick={()=>setIsClicked(!isClicked)}>Cart<AiOutlineShoppingCart style={{position:"absolute",top:"5px"}}/><span>1</span></Link>}
+    {token&&<Link to="/cart" onClick={()=>setIsClicked(!isClicked)}>Cart<AiOutlineShoppingCart style={{position:"absolute",top:"5px"}}/><span>{spanUserData.cartItems}</span></Link>}
     </li>
 
     {/* th userBoard will only appear when the user is logged in else/a register will appear instead! */}

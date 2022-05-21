@@ -12,6 +12,8 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const navigate = useNavigate();
     const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext);
+    const {spanUserData,setSpanUserData}=useContext(TokenContext); 
+
 
 
     //logout function that is going to delete the token & userId and remove some components/elements from the homePage & the NavBar
@@ -20,6 +22,7 @@ const UserBoard=({isClicked,setIsClicked,isDropDown,setIsDropDown})=>{
         setToken(null);
         setCurrentUserId(null);
         setCurrentUserCountry(null)
+        setSpanUserData({firstName:null,wishList:null,cartItems:null});
         localStorage.clear();
         setIsRendered(true)
         navigate("/")

@@ -15,6 +15,8 @@ const Register=()=>{
     const {token,setToken}=useContext(TokenContext); 
     const {currentUserId,setCurrentUserId}=useContext(TokenContext); 
     const {modalBox,setModalBox}=useContext(TokenContext); 
+    const {spanUserData,setSpanUserData}=useContext(TokenContext); 
+
 
     //the user inputs are going to be collected in an object and sent to the backend to be checked if the user exists or not: the the status of the process will be sent from the BE to the FE 
     let [userData,setUserData]=useState({
@@ -58,9 +60,15 @@ const Register=()=>{
             email:userData.email,
             password:userData.password,
         }).then(async (result1)=>{
-                    let reult1Token="Bearer "+result1.data.token;
-                    localStorage.setItem("token",reult1Token);
-                    setToken(reult1Token);
+                    localStorage.setItem("token","Bearer "+result1.data.token);
+                    localStorage.setItem("currentUserId",result1.data.userId);
+                    localStorage.setItem("currentUserCountry",result.data.userCountry);
+                    localStorage.setItem("firstName",result1.data.userFirstName);
+                    localStorage.setItem("wishList",result1.data.userWishList);
+                    localStorage.setItem("cartItems",result1.data.userCartItems);
+                    setSpanUserData({firstName:result.data.userFirstName,wishList:result.data.userWishList,cartItems:result.data.userCartItems});
+                    setToken("Bearer "+result1.data.token);
+                    setSpanUserData({firstName:result1.data.userFirstName,wishList:result1.data.userWishList,cartItems:result1.data.userCartItems});
                     navigate("/");
                 }).catch((error1)=>{
 

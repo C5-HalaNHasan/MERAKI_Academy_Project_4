@@ -18,7 +18,7 @@ const Cards=({items,setItems,type,swappedItemId})=>{
     const {isRendered,setIsRendered}=useContext(TokenContext); 
     const {currentUserItems,setCurrentUserItems}=useContext(TokenContext); //! 19/5 to be deleted 
     const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
-
+    const {spanUserData,setSpanUserData}=useContext(TokenContext); 
 
     const [currentUserWishList,setCurrentUserWishList]=useState([])
     const [currentUserCart,setCurrentUserCart]=useState([])
@@ -138,7 +138,7 @@ return <main>
 
             {/* buy action starts here*/}
             {elem.sell&& elem.owner._id !=currentUserId &&elem.owner.country.toLowerCase()==currentUserCountry&&<li onClick={()=>{
-                navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos[0]}`)
+                navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}`)
             }}>Buy</li>}
             {/* buy action ends here*/}
 
@@ -153,37 +153,41 @@ return <main>
             {/* remove from whish list button  strats here: add the condistion where the element is not in the wish list or cart*/}
             {elem.owner._id !== currentUserId && currentUserWishList.includes(elem._id)?<li onClick={()=>{
                removeFromWishList(elem._id)
+               {spanUserData.cartItems>=0?setSpanUserData({...spanUserData,wishList:spanUserData.wishList-1}):setSpanUserData({...spanUserData,wishList:0})}
             }}>Remove from WishList</li>:null}
         {/* remove from whish list button ends here*/}
 
         {/* add to wish list button starts here*/}
        {elem.owner._id !== currentUserId && !currentUserWishList.includes(elem._id)?<li onClick={()=>{  
              addToWishList(elem._id)
-        }}>Add to WishList</li>:null}
+             {spanUserData.cartItems>=0?setSpanUserData({...spanUserData,wishList:spanUserData.wishList+1}):setSpanUserData({...spanUserData,wishList:0})}  
+            }}>Add to WishList</li>:null}
         {/* add to wish list button ends here*/}
 
 
         {/* add to cart button starts here*/}
         {elem.owner._id !== currentUserId && !currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry?<li onClick={()=>{  
             addToCart(elem._id)
+            {spanUserData.cartItems>=0?setSpanUserData({...spanUserData,cartItems:spanUserData.cartItems+1}):setSpanUserData({...spanUserData,cartItems:0})}
         }}>Add to Cart</li>:null}
         {/* add to cart button ends here*/}
 
         {/* remove from cart button starts here*/}
         {elem.owner._id !== currentUserId && currentUserCart.includes(elem._id)&&elem.owner.country.toLowerCase()==currentUserCountry?<li onClick={()=>{  
               removeFromCart(elem._id)
+              {spanUserData.cartItems>=0?setSpanUserData({...spanUserData,cartItems:spanUserData.cartItems-1}):setSpanUserData({...spanUserData,cartItems:0})}
         }}>Remove from Cart</li>:null}
         {/* remove from cart button ends here/end of actionButtons div here*/}
 
         {/* swap action starts here */}
-        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos}`)
+        {elem.owner._id !== currentUserId&&elem.owner.country.toLowerCase()==currentUserCountry&& <li onClick={()=>{navigate(`/swap/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}`)
         }}>Swap</li>}
         {/* swap action button ends here}*/}
 
 
         {/* swap button starts here /it appears in the swapped items page /swap */}
         {type==="swap"&& <li id={elem._id} onClick={()=>{
-            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}/${elem.photos}`)
+            navigate(`/checkout/${elem._id}/${elem.price}/${elem.owner.country}/${elem.category.category}/${elem.owner._id}`)
         }}>Swap With<IoMdSwap/></li>}
         {/* swap button button ends here/end of actionButtons div here*/}
         </ul>

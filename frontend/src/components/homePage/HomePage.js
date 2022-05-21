@@ -17,8 +17,8 @@ const HomePage=()=>{
     return <div className="HomePage">
     {/* //! to be rendered differntly if the user is not logged in */}
     <NavBar/> 
-    <FilterBox />
-    <Cards items={allItemsInDb}/>
+    {token&&<FilterBox />}
+    {token&&<Cards items={allItemsInDb}/>}
     </div>
 };
 

@@ -1,4 +1,4 @@
-import React,{useState,useContext} from "react";
+import React,{useState,useContext, useEffect} from "react";
 import {Link,Routes,Route,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {TokenContext} from "D:/MA/Projects/project_4/MERAKI_Academy_Project_4/frontend/src/App.js";
@@ -17,6 +17,9 @@ const Login=()=>{
     const {currentUserCountry,setCurrentUserCountry}=useContext(TokenContext); 
     const navigate=useNavigate();
     const {modalBox,setModalBox}=useContext(TokenContext); 
+    const {spanUserData,setSpanUserData}=useContext(TokenContext); 
+
+    
 
 
     //the user inputs are going to be collected in an object and sent to the backend to be checked if trhe user exists or not: the the status of the process will be sent from the BE to the FE 
@@ -50,6 +53,10 @@ const Login=()=>{
                 localStorage.setItem("token",reultToken);
                 localStorage.setItem("currentUserId",result.data.userId);
                 localStorage.setItem("currentUserCountry",result.data.userCountry);
+                localStorage.setItem("firstName",result.data.userFirstName);
+                localStorage.setItem("wishList",result.data.userWishList);
+                localStorage.setItem("cartItems",result.data.userCartItems);
+                setSpanUserData({firstName:result.data.userFirstName,wishList:result.data.userWishList,cartItems:result.data.userCartItems});
 
                 setResultMessage(result.data.message) //to set the result message below the action button 
                 //to redirect the user to the homePage

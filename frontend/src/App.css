@@ -44,7 +44,7 @@
     grid-template-columns: 25% 37.5% 37.5%;
     grid-template-rows: repeat(3, fr);
     grid-template-areas: "nav nav nav""side main main""footer footer footer";
-    /* overflow: scroll; */
+    overflow: scroll;
 }
 
 

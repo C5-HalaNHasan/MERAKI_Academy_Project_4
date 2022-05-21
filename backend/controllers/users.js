@@ -88,6 +88,9 @@ const login = (req, res) => {
         bcrypt.compare(password, result.password, (err, result1) => {
           if (result1 === true) {
             let payload = {
+              userFirstName:result.firstName,
+              userWishList:result.wishList.length,
+              userCartItems:result.cartItems.length,
               userId: result._id,
               userCountry:result.country,
               userEmail: result.email,
@@ -103,6 +106,9 @@ const login = (req, res) => {
               message: "Valid login credentials",
               userId:result._id,
               userCountry:result.country.toLowerCase(),
+              userFirstName:result.firstName,
+              userWishList:result.wishList.length,
+              userCartItems:result.cartItems.length,
               token: token,
             });
           } else {

@@ -17,7 +17,7 @@ const Swap=()=>{
     const {modalBox,setModalBox}=useContext(TokenContext); 
 
     //to save the swapped item data so that it can be transferred to the check out page
-    const {id,price,country,category,ownerId,img}=useParams();
+    const {id,price,country,category,ownerId}=useParams();
     const {swappedItem,setSwappedItem}=useContext(TokenContext);
     const [canSwap,setCanSwap]=useState(false)
 
@@ -25,7 +25,6 @@ const Swap=()=>{
         setSwappedItem({ 
             id:id,
             price:price,
-            img:img,
             category:category,
             country:country,
             ownerId:ownerId,
@@ -33,7 +32,7 @@ const Swap=()=>{
     },[])
     
 //a function that checks if the user canSwap or not: by searching both countries and searching in the user items if he has items with value> wanted items they will be rendered after setting canSwap to true:
-const canSwapThis=async (id,price,country,category,ownerId,img)=>{
+const canSwapThis=async (id,price,country,category,ownerId)=>{
     //to search for the current user country:
     let getUser="http://localhost:5000/users/user";
     await axios.get(getUser,{headers:{authorization:token}}).then((result1)=>{
@@ -75,7 +74,7 @@ const canSwapThis=async (id,price,country,category,ownerId,img)=>{
 };
 
 useEffect(()=>{
-    canSwapThis(id,price,country,category,ownerId,img);
+    canSwapThis(id,price,country,category,ownerId);
 },[canSwap])
 
 
