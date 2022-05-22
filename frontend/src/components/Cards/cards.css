@@ -1,7 +1,6 @@
 .cardsContainer {
     margin: 4vh 4vw;
 
-    /* position: absolute; */
     /* will work further on the responsive design:this value was for testing only */
     width: 100vw;
     height: 100vh;
@@ -10,7 +9,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     /* set for presentation screen only */
-    margin: -1vh 14vw;
+    margin: 1vh 14vw;
 
     /* to be checked */
     justify-content: flex-start;

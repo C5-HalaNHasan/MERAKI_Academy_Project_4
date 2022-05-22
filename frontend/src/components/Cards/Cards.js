@@ -107,7 +107,7 @@ return <main>
 <div className="cardsContainer">
     <ModalBox />
     {items.map((elem)=>{
-        if(elem.isSold !=true && type!="userBoard"){
+
         return <div className="card" key={elem._id}>
         <div className="imgSection">
             <img src={elem.photos}/> 
@@ -124,7 +124,7 @@ return <main>
             <h3>Price:{elem.price}$</h3>
             <h6>Category:{elem.category.category}</h6>
             <h6>Owner:{elem.owner.firstName}</h6>
-            <h6>Added:{elem.addedOn.split("T")[0]}</h6>
+            <h6>Country:{elem.owner.country.toLowerCase().charAt(0).toUpperCase()+elem.owner.country.slice(1)}</h6>
           </div>
 
           <ul className="actionButtons"> 
@@ -189,7 +189,6 @@ return <main>
       
         </div>
         {/* end of array render */}
-    }
     })
     
     }

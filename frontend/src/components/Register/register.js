@@ -74,7 +74,7 @@ const Register=()=>{
 
                 })
             }
-            setModalBox({type:"ok", message: `Hi ${result.data.result.user.firstName}`,details:"Hope you will engoy your experience with us!", showModalBox:true});
+            setModalBox({type:"ok", message: `Hi ${result.data.result.user.firstName}`,details:"Hope you will enjoy your experience with us!", showModalBox:true});
 
             }).catch((error)=>{
             console.log(error);
